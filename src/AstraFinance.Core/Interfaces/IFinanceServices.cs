@@ -109,6 +109,17 @@ public static class SettingKeys
     public const string NumberFormat = "Regional.NumberFormat";
     public const string DateFormat = "Regional.DateFormat";
     public const string BudgetWarningThreshold = "Budgets.WarningThresholdPercent";
+    public const string NotificationsEnabled = "Notifications.Enabled";
+    public const string BillRemindersEnabled = "Notifications.BillReminders";
+    public const string BillReminderDays = "Notifications.BillReminderDays";
+    public const string BudgetWarningsEnabled = "Notifications.BudgetWarnings";
+    public const string WindowsNotificationsEnabled = "Notifications.Windows";
+
+    /// <summary>Prefix of per-bill reminder bookkeeping ("{prefix}{billId}" holds "yyyy-MM-dd:stage").</summary>
+    public const string BillReminderSentPrefix = "Reminders.Bill.";
+
+    /// <summary>Prefix of per-budget warning bookkeeping ("{prefix}{budgetId}" holds "yyyy-MM:status").</summary>
+    public const string BudgetWarningSentPrefix = "Reminders.Budget.";
 }
 
 /// <summary>Outcome of opening the database at startup.</summary>

@@ -51,6 +51,7 @@ Language (UI text) is separate from regional formatting (currency/number/date), 
 - Soft delete (`IsDeleted`, `DeletedAtUtc`) + EF global query filters: deleted rows are invisible to balances, totals and budgets.
 - Dates: `DateOnly` for financial dates (stored `yyyy-MM-dd`), UTC `DateTime` for audit timestamps.
 - Constraints also live in the database (CHECKs, RESTRICT foreign keys, unique indexes).
+- Bills: `Bill` holds the schedule (first due date + recurrence); `BillPayment` records how one occurrence was handled — paid (`TransactionId` → the Expense it created) or skipped (`TransactionId` null), unique per (bill, due date). The next due date is derived (first occurrence after the latest handled one); a payment whose Expense was deleted counts as unpaid.
 
 ## Database lifecycle
 
@@ -75,6 +76,7 @@ UI-only preferences (language, theme, accent, sidebar) live in `preferences.json
 - Data lives under the user profile (`%LOCALAPPDATA%`), outside the install directory.
 - Logs contain technical events only — never PINs, amounts, descriptions or balances.
 - The PIN (Phase 3) is an access control, not database encryption; this limitation will be documented in the app and README.
+- Reminders (Phase 7) are checked only while the app is unlocked. Windows notifications never include amounts. The first Windows notification registers the app's notification identity for the current user (`HKCU\Software\Classes\AppUserModelId\Aprotoos.AstraFinance`).
 
 ## Adding a module (pattern for later phases)
 

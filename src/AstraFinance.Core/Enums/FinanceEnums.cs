@@ -42,6 +42,16 @@ public enum BudgetStatus
     Exceeded = 2,
 }
 
+/// <summary>State of a bill's next open occurrence relative to today.</summary>
+public enum BillStatus
+{
+    Upcoming = 0,
+    DueSoon = 1,
+    DueToday = 2,
+    Overdue = 3,
+    Paused = 4,
+}
+
 public enum SavingsGoalStatus
 {
     Active = 0,

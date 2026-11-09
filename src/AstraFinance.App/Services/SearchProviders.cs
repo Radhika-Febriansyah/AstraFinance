@@ -158,3 +158,39 @@ public sealed class SavingsGoalSearchProvider : ISearchProvider
             .ToList();
     }
 }
+
+/// <summary>Bills and subscriptions by name (paused ones included).</summary>
+public sealed class BillSearchProvider : ISearchProvider
+{
+    private readonly IBillService _bills;
+    private readonly IRegionalFormatService _format;
+    private readonly ILocalizationService _localization;
+    private readonly IClock _clock;
+
+    public BillSearchProvider(IBillService bills, IRegionalFormatService format, ILocalizationService localization, IClock clock)
+    {
+        _bills = bills;
+        _format = format;
+        _localization = localization;
+        _clock = clock;
+    }
+
+    public async Task<IReadOnlyList<SearchResult>> SearchAsync(string query, int maxResults, CancellationToken cancellationToken)
+    {
+        var normalized = SearchMatcher.Normalize(query);
+        var bills = await _bills.ListAsync(_clock.Today, includePaused: true, cancellationToken).ConfigureAwait(true);
+        return bills
+            .Select(b => (Bill: b, Score: SearchMatcher.Score(normalized, b.Bill.Name)))
+            .Where(x => x.Score > 0)
+            .OrderByDescending(x => x.Score)
+            .Take(maxResults)
+            .Select(x => new SearchResult(
+                SearchCategory.Bills,
+                x.Bill.Bill.Name,
+                _localization.Format("Search.BillSubtitle", _format.FormatMoney(x.Bill.Bill.Amount), _localization.GetString($"Recurrence.{x.Bill.Bill.Recurrence}"), _format.FormatDate(x.Bill.NextDue)),
+                x.Bill.Category?.IconKey ?? "Icon.Bills",
+                new NavigationTarget(AppPage.Bills, x.Bill.Bill.Id),
+                x.Score))
+            .ToList();
+    }
+}

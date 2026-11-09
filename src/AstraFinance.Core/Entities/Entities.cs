@@ -197,7 +197,10 @@ public sealed class Bill : AuditedEntity
     public bool IsActive { get; set; } = true;
 }
 
-/// <summary>Confirmed payment of one bill occurrence. Unique per (bill, due date) to prevent duplicates.</summary>
+/// <summary>
+/// How one bill occurrence was handled: paid (with the Expense it created) or skipped (no expense).
+/// Unique per (bill, due date) to prevent duplicate payment records.
+/// </summary>
 public sealed class BillPayment
 {
     public Guid Id { get; set; }
@@ -206,9 +209,13 @@ public sealed class BillPayment
 
     public DateOnly DueDate { get; set; }
 
-    /// <summary>The Expense transaction created when the payment was confirmed.</summary>
-    public Guid TransactionId { get; set; }
+    /// <summary>
+    /// The Expense transaction created when the payment was confirmed; null when the occurrence was skipped.
+    /// If that transaction is later deleted, the occurrence counts as unpaid again.
+    /// </summary>
+    public Guid? TransactionId { get; set; }
 
+    /// <summary>When the payment (or skip) was recorded.</summary>
     public DateTime PaidAtUtc { get; set; }
 }
 

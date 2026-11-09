@@ -195,7 +195,7 @@ namespace AstraFinance.Infrastructure.Database.Migrations
                     b.Property<DateTime>("PaidAtUtc")
                         .HasColumnType("TEXT");
 
-                    b.Property<Guid>("TransactionId")
+                    b.Property<Guid?>("TransactionId")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -505,8 +505,7 @@ namespace AstraFinance.Infrastructure.Database.Migrations
                     b.HasOne("AstraFinance.Core.Entities.Transaction", null)
                         .WithMany()
                         .HasForeignKey("TransactionId")
-                        .OnDelete(DeleteBehavior.Restrict)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("AstraFinance.Core.Entities.Budget", b =>

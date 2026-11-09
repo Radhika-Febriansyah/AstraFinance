@@ -232,7 +232,7 @@
     <value>Digunakan untuk sorotan, pilihan, dan tindakan utama.</value>
   </data>
   <data name="Settings.Upcoming" xml:space="preserve">
-    <value>Pengaturan format regional, kategori, notifikasi, keamanan, dan manajemen data ditambahkan pada fase pengembangan berikutnya.</value>
+    <value>Pengaturan format regional, kategori, keamanan, dan pengelolaan data ditambahkan pada fase pengembangan berikutnya.</value>
   </data>
   <data name="About.Version" xml:space="preserve">
     <value>Versi</value>
@@ -1301,5 +1301,323 @@
   </data>
   <data name="Search.BudgetSubtitle" xml:space="preserve">
     <value>Anggaran bulanan {0}</value>
+  </data>
+  <data name="Recurrence.Daily" xml:space="preserve">
+    <value>Harian</value>
+  </data>
+  <data name="Recurrence.Weekly" xml:space="preserve">
+    <value>Mingguan</value>
+  </data>
+  <data name="Recurrence.Monthly" xml:space="preserve">
+    <value>Bulanan</value>
+  </data>
+  <data name="Recurrence.Yearly" xml:space="preserve">
+    <value>Tahunan</value>
+  </data>
+  <data name="BillStatus.Upcoming" xml:space="preserve">
+    <value>Akan datang</value>
+  </data>
+  <data name="BillStatus.DueSoon" xml:space="preserve">
+    <value>Segera jatuh tempo</value>
+  </data>
+  <data name="BillStatus.DueToday" xml:space="preserve">
+    <value>Jatuh tempo hari ini</value>
+  </data>
+  <data name="BillStatus.Overdue" xml:space="preserve">
+    <value>Terlambat</value>
+  </data>
+  <data name="BillStatus.Paused" xml:space="preserve">
+    <value>Dijeda</value>
+  </data>
+  <data name="Bills.Intro" xml:space="preserve">
+    <value>Tagihan dan langganan berulang. Tanggal jatuh tempo tidak pernah mengubah saldo; hanya pembayaran yang Anda konfirmasi yang dicatat sebagai pengeluaran.</value>
+  </data>
+  <data name="Bills.Upcoming" xml:space="preserve">
+    <value>Perkiraan dalam 30 hari ke depan</value>
+  </data>
+  <data name="Bills.UpcomingCount" xml:space="preserve">
+    <value>{0} pembayaran dalam {1} hari ke depan, dengan jumlah biasa</value>
+  </data>
+  <data name="Bills.UpcomingCountOne" xml:space="preserve">
+    <value>{0} pembayaran dalam {1} hari ke depan, dengan jumlah biasa</value>
+  </data>
+  <data name="Bills.OverdueSummaryOne" xml:space="preserve">
+    <value>{0} tagihan terlambat</value>
+  </data>
+  <data name="Bills.OverdueSummary" xml:space="preserve">
+    <value>{0} tagihan terlambat</value>
+  </data>
+  <data name="Bills.NothingOverdue" xml:space="preserve">
+    <value>Tidak ada yang terlambat</value>
+  </data>
+  <data name="Bills.Explainer" xml:space="preserve">
+    <value>Bayar mencatat pengeluaran dari akun yang dipilih. Lewati menandai pembayaran sebagai selesai tanpa mencatat pengeluaran, misalnya jika Anda sudah mencatatnya sendiri.</value>
+  </data>
+  <data name="Bills.ShowPaused" xml:space="preserve">
+    <value>Tampilkan tagihan yang dijeda</value>
+  </data>
+  <data name="Bills.Empty.Title" xml:space="preserve">
+    <value>Belum ada tagihan berulang</value>
+  </data>
+  <data name="Bills.Empty.Body" xml:space="preserve">
+    <value>Tambahkan listrik, internet, paket seluler, atau langganan untuk melihat yang akan jatuh tempo dan mendapat pengingat sebelum tanggalnya.</value>
+  </data>
+  <data name="Bills.Add.Title" xml:space="preserve">
+    <value>Tambah tagihan</value>
+  </data>
+  <data name="Bills.Edit.Title" xml:space="preserve">
+    <value>Ubah tagihan</value>
+  </data>
+  <data name="Bills.Saved.Title" xml:space="preserve">
+    <value>Tagihan disimpan</value>
+  </data>
+  <data name="Bills.NoAccounts" xml:space="preserve">
+    <value>Tidak ada akun aktif untuk membayar tagihan.</value>
+  </data>
+  <data name="Bills.Details.Title" xml:space="preserve">
+    <value>Detail tagihan</value>
+  </data>
+  <data name="Bills.PausedHint" xml:space="preserve">
+    <value>Dijeda: tanpa pengingat dan tanpa status jatuh tempo</value>
+  </data>
+  <data name="Bills.Missed" xml:space="preserve">
+    <value>{0} pembayaran terlewat sejak {1}</value>
+  </data>
+  <data name="Bills.OverdueOne" xml:space="preserve">
+    <value>Terlambat {0} hari (jatuh tempo {1})</value>
+  </data>
+  <data name="Bills.OverdueDays" xml:space="preserve">
+    <value>Terlambat {0} hari (jatuh tempo {1})</value>
+  </data>
+  <data name="Bills.DueTodayOn" xml:space="preserve">
+    <value>Jatuh tempo hari ini ({0})</value>
+  </data>
+  <data name="Bills.DueInOne" xml:space="preserve">
+    <value>Jatuh tempo besok ({1})</value>
+  </data>
+  <data name="Bills.DueInDays" xml:space="preserve">
+    <value>Jatuh tempo dalam {0} hari ({1})</value>
+  </data>
+  <data name="Bills.LastPaid" xml:space="preserve">
+    <value>Terakhir dibayar {0} pada {1}</value>
+  </data>
+  <data name="Bills.LastSkipped" xml:space="preserve">
+    <value>Pembayaran jatuh tempo {0} dilewati</value>
+  </data>
+  <data name="Bills.Pay" xml:space="preserve">
+    <value>Bayar</value>
+  </data>
+  <data name="Bills.PayNamed" xml:space="preserve">
+    <value>Bayar {0}</value>
+  </data>
+  <data name="Bills.Pay.Title" xml:space="preserve">
+    <value>Konfirmasi pembayaran</value>
+  </data>
+  <data name="Bills.Pay.Confirm" xml:space="preserve">
+    <value>Catat pembayaran</value>
+  </data>
+  <data name="Bills.Pay.Due" xml:space="preserve">
+    <value>Pembayaran jatuh tempo {0}</value>
+  </data>
+  <data name="Bills.Pay.Explanation" xml:space="preserve">
+    <value>Ini mencatat satu pengeluaran dari akun yang dipilih. Jumlahnya boleh berbeda dari jumlah biasa.</value>
+  </data>
+  <data name="Bills.Pay.Amount" xml:space="preserve">
+    <value>Jumlah dibayar</value>
+  </data>
+  <data name="Bills.Pay.Account" xml:space="preserve">
+    <value>Dibayar dari</value>
+  </data>
+  <data name="Bills.Pay.Date" xml:space="preserve">
+    <value>Tanggal pembayaran</value>
+  </data>
+  <data name="Bills.Paid.Title" xml:space="preserve">
+    <value>Pembayaran dicatat</value>
+  </data>
+  <data name="Bills.Paid.Body" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Bills.Skip" xml:space="preserve">
+    <value>Lewati</value>
+  </data>
+  <data name="Bills.Skip.Title" xml:space="preserve">
+    <value>Lewati pembayaran ini?</value>
+  </data>
+  <data name="Bills.Skip.Body" xml:space="preserve">
+    <value>Pembayaran "{0}" yang jatuh tempo {1} akan ditandai selesai tanpa mencatat pengeluaran. Saldo Anda tidak berubah.</value>
+  </data>
+  <data name="Bills.Skip.Confirm" xml:space="preserve">
+    <value>Lewati</value>
+  </data>
+  <data name="Bills.SkipMissed.Title" xml:space="preserve">
+    <value>Lewati pembayaran terlewat</value>
+  </data>
+  <data name="Bills.SkipMissed.Body" xml:space="preserve">
+    <value>Tandai semua {1} pembayaran "{0}" yang terlewat sebagai selesai tanpa mencatat pengeluaran? Tagihan berlanjut dari tanggal jatuh tempo berikutnya.</value>
+  </data>
+  <data name="Bills.UndoSkip" xml:space="preserve">
+    <value>Batalkan lewati</value>
+  </data>
+  <data name="Bills.Pause" xml:space="preserve">
+    <value>Jeda tagihan</value>
+  </data>
+  <data name="Bills.Pause.Title" xml:space="preserve">
+    <value>Jeda tagihan ini?</value>
+  </data>
+  <data name="Bills.Pause.Body" xml:space="preserve">
+    <value>"{0}" tidak akan memiliki status jatuh tempo dan tidak mengirim pengingat sampai Anda melanjutkannya. Riwayat pembayarannya tetap disimpan.</value>
+  </data>
+  <data name="Bills.Resume" xml:space="preserve">
+    <value>Lanjutkan tagihan</value>
+  </data>
+  <data name="Bills.Delete.Title" xml:space="preserve">
+    <value>Hapus tagihan</value>
+  </data>
+  <data name="Bills.Delete.Body" xml:space="preserve">
+    <value>Hapus "{0}"? Tagihan ini belum memiliki riwayat pembayaran, jadi tidak ada yang terpengaruh.</value>
+  </data>
+  <data name="Bills.Delete.Confirm" xml:space="preserve">
+    <value>Hapus</value>
+  </data>
+  <data name="Bills.History" xml:space="preserve">
+    <value>Riwayat pembayaran</value>
+  </data>
+  <data name="Bills.History.Empty" xml:space="preserve">
+    <value>Belum ada pembayaran yang dicatat.</value>
+  </data>
+  <data name="Bills.History.Due" xml:space="preserve">
+    <value>Jatuh tempo {0}</value>
+  </data>
+  <data name="Bills.History.Paid" xml:space="preserve">
+    <value>Dibayar {0} dari {1}</value>
+  </data>
+  <data name="Bills.History.Skipped" xml:space="preserve">
+    <value>Dilewati (tanpa pengeluaran)</value>
+  </data>
+  <data name="Bills.History.Voided" xml:space="preserve">
+    <value>Pengeluaran pembayaran dihapus: dihitung belum dibayar</value>
+  </data>
+  <data name="Bills.Field.Name" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="Bills.Field.Name.Placeholder" xml:space="preserve">
+    <value>mis. Listrik</value>
+  </data>
+  <data name="Bills.Field.Amount" xml:space="preserve">
+    <value>Jumlah biasa</value>
+  </data>
+  <data name="Bills.Field.Amount.Hint" xml:space="preserve">
+    <value>Anda dapat memasukkan jumlah sebenarnya setiap kali membayar.</value>
+  </data>
+  <data name="Bills.Field.Recurrence" xml:space="preserve">
+    <value>Berulang</value>
+  </data>
+  <data name="Bills.Field.FirstDue" xml:space="preserve">
+    <value>Tanggal jatuh tempo pertama</value>
+  </data>
+  <data name="Bills.Field.FirstDue.Hint" xml:space="preserve">
+    <value>Tanggal jatuh tempo berikutnya mengikuti tanggal ini. Tagihan tanggal 31 jatuh pada hari terakhir untuk bulan yang lebih pendek.</value>
+  </data>
+  <data name="Bills.Field.Account" xml:space="preserve">
+    <value>Akun pembayaran</value>
+  </data>
+  <data name="Search.BillSubtitle" xml:space="preserve">
+    <value>{0}, {1}, jatuh tempo berikutnya {2}</value>
+  </data>
+  <data name="Validation.BillNotFound" xml:space="preserve">
+    <value>Tagihan ini sudah tidak ada.</value>
+  </data>
+  <data name="Validation.BillPaused" xml:space="preserve">
+    <value>Tagihan ini sedang dijeda. Lanjutkan terlebih dahulu.</value>
+  </data>
+  <data name="Validation.BillOccurrenceNotOpen" xml:space="preserve">
+    <value>Pembayaran ini bukan lagi yang berikutnya jatuh tempo. Daftar telah dimuat ulang.</value>
+  </data>
+  <data name="Validation.BillAlreadyHandled" xml:space="preserve">
+    <value>Pembayaran ini sudah dicatat.</value>
+  </data>
+  <data name="Validation.BillHasHistory" xml:space="preserve">
+    <value>Tagihan ini memiliki riwayat pembayaran, jadi hanya dapat dijeda.</value>
+  </data>
+  <data name="Validation.ReminderDaysOutOfRange" xml:space="preserve">
+    <value>Pilih 0 sampai 14 hari.</value>
+  </data>
+  <data name="Reminder.Bill.DueSoon.Title" xml:space="preserve">
+    <value>{0} segera jatuh tempo</value>
+  </data>
+  <data name="Reminder.Bill.DueTomorrow" xml:space="preserve">
+    <value>Jatuh tempo besok ({1})</value>
+  </data>
+  <data name="Reminder.Bill.DueInDays" xml:space="preserve">
+    <value>Jatuh tempo dalam {0} hari ({1})</value>
+  </data>
+  <data name="Reminder.Bill.DueToday.Title" xml:space="preserve">
+    <value>{0} jatuh tempo hari ini</value>
+  </data>
+  <data name="Reminder.Bill.DueToday.Body" xml:space="preserve">
+    <value>Jatuh tempo {0}</value>
+  </data>
+  <data name="Reminder.Bill.Overdue.Title" xml:space="preserve">
+    <value>{0} terlambat</value>
+  </data>
+  <data name="Reminder.Bill.Overdue.Body" xml:space="preserve">
+    <value>Jatuh tempo {0}</value>
+  </data>
+  <data name="Reminder.Budget.Warning.Title" xml:space="preserve">
+    <value>Anggaran {0} hampir habis</value>
+  </data>
+  <data name="Reminder.Budget.Exceeded.Title" xml:space="preserve">
+    <value>Anggaran {0} terlampaui</value>
+  </data>
+  <data name="Reminder.Budget.Body" xml:space="preserve">
+    <value>{0}% dari {1} terpakai bulan ini</value>
+  </data>
+  <data name="Reminder.Budget.BodyPrivate" xml:space="preserve">
+    <value>{0}% terpakai bulan ini</value>
+  </data>
+  <data name="Settings.Section.Notifications" xml:space="preserve">
+    <value>Notifikasi</value>
+  </data>
+  <data name="Settings.Notifications.Enabled" xml:space="preserve">
+    <value>Pengingat dan peringatan</value>
+  </data>
+  <data name="Settings.Notifications.Enabled.Hint" xml:space="preserve">
+    <value>Ditampilkan di daftar notifikasi (ikon lonceng) saat Astra Finance terbuka dan tidak terkunci.</value>
+  </data>
+  <data name="Settings.Notifications.Bills" xml:space="preserve">
+    <value>Pengingat tagihan</value>
+  </data>
+  <data name="Settings.Notifications.Bills.When" xml:space="preserve">
+    <value>Ingatkan saya</value>
+  </data>
+  <data name="Settings.Notifications.Bills.Hint" xml:space="preserve">
+    <value>Setiap tagihan mengingatkan sekali sebelum jatuh tempo, pada tanggal jatuh tempo, dan sekali jika terlambat. Ini juga menentukan kapan tagihan dianggap "segera jatuh tempo".</value>
+  </data>
+  <data name="Settings.Notifications.Budgets" xml:space="preserve">
+    <value>Peringatan anggaran</value>
+  </data>
+  <data name="Settings.Notifications.Budgets.Threshold" xml:space="preserve">
+    <value>Peringatkan pada</value>
+  </data>
+  <data name="Settings.Notifications.Budgets.Hint" xml:space="preserve">
+    <value>Ambang bawaan untuk anggaran yang tidak memiliki ambang sendiri. Anda diperingatkan sekali per bulan saat anggaran mencapainya dan sekali saat terlampaui.</value>
+  </data>
+  <data name="Settings.Notifications.Windows" xml:space="preserve">
+    <value>Tampilkan juga sebagai notifikasi Windows</value>
+  </data>
+  <data name="Settings.Notifications.Windows.Hint" xml:space="preserve">
+    <value>Digunakan saat Astra Finance tidak berada di depan. Notifikasi Windows tidak pernah menyertakan jumlah uang, karena dapat muncul di layar kunci.</value>
+  </data>
+  <data name="Settings.Notifications.SaveFailed" xml:space="preserve">
+    <value>Pengaturan tidak dapat disimpan. Silakan coba lagi.</value>
+  </data>
+  <data name="Settings.Reminders.OnDueDate" xml:space="preserve">
+    <value>Pada tanggal jatuh tempo</value>
+  </data>
+  <data name="Settings.Reminders.OneDay" xml:space="preserve">
+    <value>1 hari sebelumnya</value>
+  </data>
+  <data name="Settings.Reminders.Days" xml:space="preserve">
+    <value>{0} hari sebelumnya</value>
   </data>
 </root>

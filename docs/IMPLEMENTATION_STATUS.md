@@ -1,6 +1,6 @@
 # Astra Finance — Implementation Status
 
-Last updated: 2026-11-10 (Phase 6)
+Last updated: 2026-11-10 (Phase 7)
 
 | Phase | Name | Status |
 |---|---|---|
@@ -10,9 +10,9 @@ Last updated: 2026-11-10 (Phase 6)
 | 4 | Transactions | ✅ Complete (built, tested, run-verified) |
 | 5 | Dashboard | ✅ Complete (built, tested, run-verified) |
 | 6 | Budgets and Savings Goals | ✅ Complete (built, tested, run-verified) |
-| 7 | Bills and Subscriptions | ⏳ Next |
-| 8 | Analytics and Reports | Not started |
-| 9 | Settings and Data Protection | Partially started (language, theme, accent, About) |
+| 7 | Bills and Subscriptions | ✅ Complete (built, tested, run-verified) |
+| 8 | Analytics and Reports | ⏳ Next |
+| 9 | Settings and Data Protection | Partially started (language, theme, accent, notifications, About) |
 | 10 | QA and Release | Not started |
 
 ## Environment
@@ -496,6 +496,69 @@ New coverage: budget create/validate/duplicate/threshold, expense-only spending 
 
 ---
 
-## Phase 7 — Bills and Subscriptions (next)
+## Phase 7 — Bills and Subscriptions
 
-Planned: recurring bill management (daily/weekly/monthly/yearly), payment confirmation creating a single Expense (no automatic balance changes on due dates), duplicate-payment prevention, local Windows notifications and reminder preferences.
+### Completed tasks
+
+- **Recurrence rules** (`BillSchedule`, Core): daily, weekly, monthly, yearly. Occurrence *n* is always computed from the first due date, so a bill due on the 31st falls on the last day of shorter months and returns to the 31st; 29 February falls on 28 February in common years. Counting is capped (999) so a long-neglected daily bill can't cause a long loop.
+- **Bill service** (`IBillService`, `BillService`): create, edit, pause/resume, delete (only without history), list and details with status, pay, skip, skip missed, undo skip, history.
+  - **Next due** = the first occurrence after the latest *handled* occurrence (paid or skipped); the first due date when nothing is handled yet.
+  - **Status**: Overdue, Due today, Due soon (within the reminder window, default 3 days), Upcoming, Paused. Overdue bills report how many payments were missed.
+  - **Reaching a due date never changes a balance.** Only **Pay** (a confirmed payment) creates an Expense — through the same validation as every other transaction (`TransactionService.AddValidatedAsync`) and in **one database transaction** with the payment record. The amount, account and date can differ from the bill's usual values.
+  - **Duplicate prevention**: unique (bill, due date) index; only the next open occurrence can be paid; the payment dialog's request id makes a double-submitted confirmation return the first result; a concurrent second confirmation is refused.
+  - **Skip** marks an occurrence handled without an expense (for payments already entered by hand). **Skip missed** jumps an overdue bill to its next future occurrence. The latest skip can be undone.
+  - **Deleting the payment's expense** (Transactions page) makes that occurrence unpaid again; paying it again reuses the record.
+  - Migration `BillPaymentSkips`: `BillPayments.TransactionId` is now nullable (null = skipped).
+- **Bills & Subscriptions page**: summary (expected payments in the next 30 days at usual amounts, overdue count), bill rows (status badge, relative due text, recurrence and account, amount, Pay button — prominent when due soon/today/overdue), details panel (Confirm payment, Skip, Skip missed, Edit, Pause/Resume, Delete when no history, payment history with undo), show-paused toggle, empty state. Forms: bill form (name, usual amount, recurrence, first due date, category — defaults to Bills & Utilities, payment account, notes) and payment confirmation (amount, account, date, note).
+- **Reminders** (`IReminderService`, `ReminderService` + `ReminderScheduler` in the app):
+  - Bill reminders once per occurrence and stage (due soon, due today, overdue); budget warnings (deferred from Phase 6) once per budget, month and level (warning, then exceeded). What was shown is remembered in the settings table, so restarts don't repeat reminders.
+  - Checks run right after unlock, every 30 minutes, after transactions change and after bill changes. **Checks stop while the app is locked.**
+  - Every reminder goes to the in-app notification list. When enabled, it is also shown as a **Windows notification** when Astra isn't in the foreground — **without amounts**, because Windows notifications can appear on the lock screen and in the notification centre.
+- **Settings → Notifications**: master switch, bill reminders and how many days before (on the due date, 1, 2, 3, 5, 7 or 14 days), budget warnings and the default warning threshold (1–100 %), Windows notifications on/off. Stored in the database (backed up with the data).
+- **Global search**: bills (including paused) by name; results open the bill's details.
+- Indonesian and English strings for everything above (106 keys).
+
+### Build status
+
+`dotnet build` — **succeeded, 0 warnings, 0 errors**.
+
+### Test status
+
+`dotnet test` — **283 passed, 0 failed** (253 previous + 30 new).
+
+New coverage: recurrence arithmetic (month ends, 29 February, next/latest occurrence, capped counting); bill status by due date; due dates never changing balances; payment creating exactly one expense, idempotent retries, refusing a second payment of the same occurrence, paying only the next open occurrence (early payment allowed); normal transaction validation on payments with nothing written on failure; deleting the payment expense reopening the occurrence and re-payment reusing the record; skip / undo skip / skip missed (no expenses); pause, delete rules and validation; bill payments counting toward budgets; reminders once per stage, settings respected, budget warnings once per level and month; Bills page add/pay/skip/undo, overdue summary, pause/delete; scheduler stops while locked, Windows notifications without amounts and not while in the foreground; settings persistence; search.
+
+### Manual verification (real app, 125 % DPI)
+
+- Upgrade path: the Phase 4 test database was migrated (2 migrations) after a verified safety copy.
+- Added Electricity and Internet (monthly, due today), paid Electricity with a different amount (Rp362.500): one expense recorded, next due moved to 10/12/2026, history shows the payment; "Internet is due today" appeared in the notification list (with amount).
+- Settings → Notifications shown and working; turning bill reminders off and back on with the window minimised delivered a Windows notification (Windows recorded it for `Aprotoos.AstraFinance`; the banner itself wasn't captured on screen, possibly because Do Not Disturb was on).
+- Test data was only borrowed; the real data folder is back to a clean setup state.
+
+### Bugs found and fixed during this phase
+
+- The "expected in the next 30 days" total counted a monthly bill twice (today and 30 days later); the window is now exactly 30 days.
+- "payment(s)" wording replaced by proper singular/plural strings.
+- Bill changes didn't trigger a reminder check until a transaction changed; they now do.
+
+### Remaining / notes
+
+- Clicking a Windows notification only dismisses it in version 1 (no activation handler); the in-app list has every reminder.
+- The installer (Phase 10) should give its Start-menu shortcut the same AppUserModelID (`Aprotoos.AstraFinance`) and remove the per-user registration on uninstall.
+- Backup reminders are part of Phase 9 (backup settings).
+- If a deleted payment expense is restored after the occurrence was paid again, both expenses exist (restoring is an explicit user action, and both appear in the history of transactions).
+
+### Important decisions
+
+1. **Handled occurrences, not a status flag**: a bill's state is derived from its payment records; there is no stored "paid" flag that could drift from the transactions.
+2. **Skip without an expense** exists so users who already recorded a payment manually never have to create a duplicate expense.
+3. **Bills with history can only be paused**, never deleted, so every payment stays explainable.
+4. **Windows notifications carry no amounts**; amounts only appear inside the unlocked app. Reminders pause while the app is locked.
+5. **Windows notification identity**: the unpackaged app registers its notification display name and icon for the current user only (`HKCU\Software\Classes\AppUserModelId\Aprotoos.AstraFinance`, icon copied to the data folder as `notification-icon.ico`) the first time it shows a Windows notification. No system-wide settings are changed.
+6. **Notification preferences live in the database** (not `preferences.json`), because they are about financial reminders and should travel with backups.
+
+---
+
+## Phase 8 — Analytics and Reports (next)
+
+Planned: analytics charts (income vs expenses, cash flow, expense breakdown, monthly trends, income sources, spending habits) with weekly/monthly/yearly/custom filters and empty-data handling; Income, Expense, Cash Flow, Account Balance, Budget and Savings Goals reports exported to PDF (library chosen after a licence check), Excel (ClosedXML) and CSV, respecting filters and formatting.

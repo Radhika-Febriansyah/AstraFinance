@@ -34,6 +34,9 @@ public partial class App : Application
             return;
         }
 
+        // Same identity for the process and its Windows notifications (set before any window opens).
+        WindowsToastNotifier.SetProcessIdentity();
+
         try
         {
             var paths = new AppPaths();

@@ -31,6 +31,9 @@ internal sealed class FinanceTestContext : IAsyncDisposable
         Backup = new BackupService(Settings, Paths, Clock, NullLogger<BackupService>.Instance);
         Budgets = new BudgetService(Factory, Settings, Clock);
         Goals = new SavingsGoalService(Factory, Clock);
+        NotificationSettings = new NotificationSettingsService(Settings);
+        Bills = new BillService(Factory, NotificationSettings, Clock);
+        Reminders = new ReminderService(NotificationSettings, Bills, Budgets, Settings);
         Initializer = new DatabaseInitializer(Factory, Paths, Categories, Clock, NullLogger<DatabaseInitializer>.Instance);
     }
 
@@ -59,6 +62,12 @@ internal sealed class FinanceTestContext : IAsyncDisposable
     public BudgetService Budgets { get; }
 
     public SavingsGoalService Goals { get; }
+
+    public NotificationSettingsService NotificationSettings { get; }
+
+    public BillService Bills { get; }
+
+    public ReminderService Reminders { get; }
 
     public DatabaseInitializer Initializer { get; }
 

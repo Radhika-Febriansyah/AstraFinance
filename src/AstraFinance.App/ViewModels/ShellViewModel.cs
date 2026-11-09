@@ -34,6 +34,7 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
     private readonly IPinService _pin;
     private readonly IBackupService _backup;
     private readonly INotificationService _notificationService;
+    private readonly ReminderScheduler _reminders;
     private readonly Func<OnboardingViewModel> _onboardingFactory;
     private readonly Func<LockViewModel> _lockFactory;
     private readonly Func<AstraFinance.App.ViewModels.Dialogs.TransactionFormViewModel> _transactionFormFactory;
@@ -50,6 +51,7 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
         IPinService pin,
         IBackupService backup,
         INotificationService notificationService,
+        ReminderScheduler reminders,
         Func<OnboardingViewModel> onboardingFactory,
         Func<LockViewModel> lockFactory,
         Func<AstraFinance.App.ViewModels.Dialogs.TransactionFormViewModel> transactionFormFactory)
@@ -59,6 +61,7 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
         _pin = pin;
         _backup = backup;
         _notificationService = notificationService;
+        _reminders = reminders;
         _onboardingFactory = onboardingFactory;
         _lockFactory = lockFactory;
         _navigation = navigation;
@@ -183,10 +186,11 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
         Search.Clear();
         Notifications.IsOpen = false;
         IsOverlayOpen = false;
+        _reminders.Stop(); // nothing is announced while the app is locked
         await ShowLockAsync(() =>
         {
             SetGate(null);
-            return Task.CompletedTask;
+            return _reminders.StartAsync();
         }).ConfigureAwait(true);
     }
 
@@ -225,6 +229,7 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
         SetGate(null);
         await _navigation.NavigateAsync(PageCatalog.StartupPage).ConfigureAwait(true);
         _ = RunScheduledBackupAsync();
+        _ = _reminders.StartAsync();
     }
 
     private void SetGate(object? gate)

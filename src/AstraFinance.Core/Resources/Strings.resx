@@ -232,7 +232,7 @@
     <value>Used for highlights, selection, and primary actions.</value>
   </data>
   <data name="Settings.Upcoming" xml:space="preserve">
-    <value>Regional formats, categories, notifications, security, and data management settings are added in later development phases.</value>
+    <value>Regional formats, categories, security, and data management settings are added in later development phases.</value>
   </data>
   <data name="About.Version" xml:space="preserve">
     <value>Version</value>
@@ -1301,5 +1301,323 @@
   </data>
   <data name="Search.BudgetSubtitle" xml:space="preserve">
     <value>Monthly budget {0}</value>
+  </data>
+  <data name="Recurrence.Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="Recurrence.Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="Recurrence.Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Recurrence.Yearly" xml:space="preserve">
+    <value>Yearly</value>
+  </data>
+  <data name="BillStatus.Upcoming" xml:space="preserve">
+    <value>Upcoming</value>
+  </data>
+  <data name="BillStatus.DueSoon" xml:space="preserve">
+    <value>Due soon</value>
+  </data>
+  <data name="BillStatus.DueToday" xml:space="preserve">
+    <value>Due today</value>
+  </data>
+  <data name="BillStatus.Overdue" xml:space="preserve">
+    <value>Overdue</value>
+  </data>
+  <data name="BillStatus.Paused" xml:space="preserve">
+    <value>Paused</value>
+  </data>
+  <data name="Bills.Intro" xml:space="preserve">
+    <value>Recurring bills and subscriptions. A due date never changes a balance; only a payment you confirm records an expense.</value>
+  </data>
+  <data name="Bills.Upcoming" xml:space="preserve">
+    <value>Expected in the next 30 days</value>
+  </data>
+  <data name="Bills.UpcomingCount" xml:space="preserve">
+    <value>{0} payments in the next {1} days, at the usual amounts</value>
+  </data>
+  <data name="Bills.UpcomingCountOne" xml:space="preserve">
+    <value>{0} payment in the next {1} days, at the usual amount</value>
+  </data>
+  <data name="Bills.OverdueSummaryOne" xml:space="preserve">
+    <value>{0} bill is overdue</value>
+  </data>
+  <data name="Bills.OverdueSummary" xml:space="preserve">
+    <value>{0} bills are overdue</value>
+  </data>
+  <data name="Bills.NothingOverdue" xml:space="preserve">
+    <value>Nothing overdue</value>
+  </data>
+  <data name="Bills.Explainer" xml:space="preserve">
+    <value>Pay records an expense from the chosen account. Skip marks a payment as handled without recording an expense, for example when you already entered it yourself.</value>
+  </data>
+  <data name="Bills.ShowPaused" xml:space="preserve">
+    <value>Show paused bills</value>
+  </data>
+  <data name="Bills.Empty.Title" xml:space="preserve">
+    <value>No recurring bills</value>
+  </data>
+  <data name="Bills.Empty.Body" xml:space="preserve">
+    <value>Add electricity, internet, phone plans or subscriptions to see what is due and get reminders before the due date.</value>
+  </data>
+  <data name="Bills.Add.Title" xml:space="preserve">
+    <value>Add bill</value>
+  </data>
+  <data name="Bills.Edit.Title" xml:space="preserve">
+    <value>Edit bill</value>
+  </data>
+  <data name="Bills.Saved.Title" xml:space="preserve">
+    <value>Bill saved</value>
+  </data>
+  <data name="Bills.NoAccounts" xml:space="preserve">
+    <value>There is no active account to pay bills from.</value>
+  </data>
+  <data name="Bills.Details.Title" xml:space="preserve">
+    <value>Bill details</value>
+  </data>
+  <data name="Bills.PausedHint" xml:space="preserve">
+    <value>Paused: no reminders and no due status</value>
+  </data>
+  <data name="Bills.Missed" xml:space="preserve">
+    <value>{0} payments missed since {1}</value>
+  </data>
+  <data name="Bills.OverdueOne" xml:space="preserve">
+    <value>Overdue by {0} day (due {1})</value>
+  </data>
+  <data name="Bills.OverdueDays" xml:space="preserve">
+    <value>Overdue by {0} days (due {1})</value>
+  </data>
+  <data name="Bills.DueTodayOn" xml:space="preserve">
+    <value>Due today ({0})</value>
+  </data>
+  <data name="Bills.DueInOne" xml:space="preserve">
+    <value>Due tomorrow ({1})</value>
+  </data>
+  <data name="Bills.DueInDays" xml:space="preserve">
+    <value>Due in {0} days ({1})</value>
+  </data>
+  <data name="Bills.LastPaid" xml:space="preserve">
+    <value>Last paid {0} on {1}</value>
+  </data>
+  <data name="Bills.LastSkipped" xml:space="preserve">
+    <value>Payment due {0} was skipped</value>
+  </data>
+  <data name="Bills.Pay" xml:space="preserve">
+    <value>Pay</value>
+  </data>
+  <data name="Bills.PayNamed" xml:space="preserve">
+    <value>Pay {0}</value>
+  </data>
+  <data name="Bills.Pay.Title" xml:space="preserve">
+    <value>Confirm payment</value>
+  </data>
+  <data name="Bills.Pay.Confirm" xml:space="preserve">
+    <value>Record payment</value>
+  </data>
+  <data name="Bills.Pay.Due" xml:space="preserve">
+    <value>Payment due {0}</value>
+  </data>
+  <data name="Bills.Pay.Explanation" xml:space="preserve">
+    <value>This records one expense from the selected account. The amount can differ from the usual amount.</value>
+  </data>
+  <data name="Bills.Pay.Amount" xml:space="preserve">
+    <value>Amount paid</value>
+  </data>
+  <data name="Bills.Pay.Account" xml:space="preserve">
+    <value>Paid from</value>
+  </data>
+  <data name="Bills.Pay.Date" xml:space="preserve">
+    <value>Payment date</value>
+  </data>
+  <data name="Bills.Paid.Title" xml:space="preserve">
+    <value>Payment recorded</value>
+  </data>
+  <data name="Bills.Paid.Body" xml:space="preserve">
+    <value>{0}: {1}</value>
+  </data>
+  <data name="Bills.Skip" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="Bills.Skip.Title" xml:space="preserve">
+    <value>Skip this payment?</value>
+  </data>
+  <data name="Bills.Skip.Body" xml:space="preserve">
+    <value>The payment of "{0}" due {1} will be marked as handled without recording an expense. Your balances do not change.</value>
+  </data>
+  <data name="Bills.Skip.Confirm" xml:space="preserve">
+    <value>Skip</value>
+  </data>
+  <data name="Bills.SkipMissed.Title" xml:space="preserve">
+    <value>Skip missed payments</value>
+  </data>
+  <data name="Bills.SkipMissed.Body" xml:space="preserve">
+    <value>Mark all {1} missed payments of "{0}" as handled without recording expenses? The bill continues from its next due date.</value>
+  </data>
+  <data name="Bills.UndoSkip" xml:space="preserve">
+    <value>Undo skip</value>
+  </data>
+  <data name="Bills.Pause" xml:space="preserve">
+    <value>Pause bill</value>
+  </data>
+  <data name="Bills.Pause.Title" xml:space="preserve">
+    <value>Pause this bill?</value>
+  </data>
+  <data name="Bills.Pause.Body" xml:space="preserve">
+    <value>"{0}" will have no due status and send no reminders until you resume it. Its payment history is kept.</value>
+  </data>
+  <data name="Bills.Resume" xml:space="preserve">
+    <value>Resume bill</value>
+  </data>
+  <data name="Bills.Delete.Title" xml:space="preserve">
+    <value>Delete bill</value>
+  </data>
+  <data name="Bills.Delete.Body" xml:space="preserve">
+    <value>Delete "{0}"? It has no payment history, so nothing else is affected.</value>
+  </data>
+  <data name="Bills.Delete.Confirm" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Bills.History" xml:space="preserve">
+    <value>Payment history</value>
+  </data>
+  <data name="Bills.History.Empty" xml:space="preserve">
+    <value>No payments recorded yet.</value>
+  </data>
+  <data name="Bills.History.Due" xml:space="preserve">
+    <value>Due {0}</value>
+  </data>
+  <data name="Bills.History.Paid" xml:space="preserve">
+    <value>Paid {0} from {1}</value>
+  </data>
+  <data name="Bills.History.Skipped" xml:space="preserve">
+    <value>Skipped (no expense recorded)</value>
+  </data>
+  <data name="Bills.History.Voided" xml:space="preserve">
+    <value>Payment expense deleted: counts as unpaid</value>
+  </data>
+  <data name="Bills.Field.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Bills.Field.Name.Placeholder" xml:space="preserve">
+    <value>e.g. Electricity</value>
+  </data>
+  <data name="Bills.Field.Amount" xml:space="preserve">
+    <value>Usual amount</value>
+  </data>
+  <data name="Bills.Field.Amount.Hint" xml:space="preserve">
+    <value>You can enter the actual amount each time you pay.</value>
+  </data>
+  <data name="Bills.Field.Recurrence" xml:space="preserve">
+    <value>Repeats</value>
+  </data>
+  <data name="Bills.Field.FirstDue" xml:space="preserve">
+    <value>First due date</value>
+  </data>
+  <data name="Bills.Field.FirstDue.Hint" xml:space="preserve">
+    <value>Later due dates follow from this date. A bill due on the 31st falls on the last day of shorter months.</value>
+  </data>
+  <data name="Bills.Field.Account" xml:space="preserve">
+    <value>Payment account</value>
+  </data>
+  <data name="Search.BillSubtitle" xml:space="preserve">
+    <value>{0}, {1}, next due {2}</value>
+  </data>
+  <data name="Validation.BillNotFound" xml:space="preserve">
+    <value>This bill no longer exists.</value>
+  </data>
+  <data name="Validation.BillPaused" xml:space="preserve">
+    <value>This bill is paused. Resume it first.</value>
+  </data>
+  <data name="Validation.BillOccurrenceNotOpen" xml:space="preserve">
+    <value>This payment is no longer the next one due. The list has been refreshed.</value>
+  </data>
+  <data name="Validation.BillAlreadyHandled" xml:space="preserve">
+    <value>This payment has already been recorded.</value>
+  </data>
+  <data name="Validation.BillHasHistory" xml:space="preserve">
+    <value>This bill has payment history, so it can only be paused.</value>
+  </data>
+  <data name="Validation.ReminderDaysOutOfRange" xml:space="preserve">
+    <value>Choose 0 to 14 days.</value>
+  </data>
+  <data name="Reminder.Bill.DueSoon.Title" xml:space="preserve">
+    <value>{0} is due soon</value>
+  </data>
+  <data name="Reminder.Bill.DueTomorrow" xml:space="preserve">
+    <value>Due tomorrow ({1})</value>
+  </data>
+  <data name="Reminder.Bill.DueInDays" xml:space="preserve">
+    <value>Due in {0} days ({1})</value>
+  </data>
+  <data name="Reminder.Bill.DueToday.Title" xml:space="preserve">
+    <value>{0} is due today</value>
+  </data>
+  <data name="Reminder.Bill.DueToday.Body" xml:space="preserve">
+    <value>Due {0}</value>
+  </data>
+  <data name="Reminder.Bill.Overdue.Title" xml:space="preserve">
+    <value>{0} is overdue</value>
+  </data>
+  <data name="Reminder.Bill.Overdue.Body" xml:space="preserve">
+    <value>Was due {0}</value>
+  </data>
+  <data name="Reminder.Budget.Warning.Title" xml:space="preserve">
+    <value>{0} budget is nearly used</value>
+  </data>
+  <data name="Reminder.Budget.Exceeded.Title" xml:space="preserve">
+    <value>{0} budget exceeded</value>
+  </data>
+  <data name="Reminder.Budget.Body" xml:space="preserve">
+    <value>{0}% of {1} used this month</value>
+  </data>
+  <data name="Reminder.Budget.BodyPrivate" xml:space="preserve">
+    <value>{0}% used this month</value>
+  </data>
+  <data name="Settings.Section.Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Settings.Notifications.Enabled" xml:space="preserve">
+    <value>Reminders and warnings</value>
+  </data>
+  <data name="Settings.Notifications.Enabled.Hint" xml:space="preserve">
+    <value>Shown in the notification list (bell icon) while Astra Finance is open and unlocked.</value>
+  </data>
+  <data name="Settings.Notifications.Bills" xml:space="preserve">
+    <value>Bill reminders</value>
+  </data>
+  <data name="Settings.Notifications.Bills.When" xml:space="preserve">
+    <value>Remind me</value>
+  </data>
+  <data name="Settings.Notifications.Bills.Hint" xml:space="preserve">
+    <value>Each bill reminds you once before it is due, on the due date, and once if it becomes overdue. This also sets when a bill counts as "due soon".</value>
+  </data>
+  <data name="Settings.Notifications.Budgets" xml:space="preserve">
+    <value>Budget warnings</value>
+  </data>
+  <data name="Settings.Notifications.Budgets.Threshold" xml:space="preserve">
+    <value>Warn at</value>
+  </data>
+  <data name="Settings.Notifications.Budgets.Hint" xml:space="preserve">
+    <value>Default threshold for budgets without their own. You are warned once per month when a budget reaches it and once when it is exceeded.</value>
+  </data>
+  <data name="Settings.Notifications.Windows" xml:space="preserve">
+    <value>Also show as Windows notifications</value>
+  </data>
+  <data name="Settings.Notifications.Windows.Hint" xml:space="preserve">
+    <value>Used when Astra Finance is not in the foreground. Windows notifications never include amounts, because they can appear on the lock screen.</value>
+  </data>
+  <data name="Settings.Notifications.SaveFailed" xml:space="preserve">
+    <value>The setting could not be saved. Please try again.</value>
+  </data>
+  <data name="Settings.Reminders.OnDueDate" xml:space="preserve">
+    <value>On the due date</value>
+  </data>
+  <data name="Settings.Reminders.OneDay" xml:space="preserve">
+    <value>1 day before</value>
+  </data>
+  <data name="Settings.Reminders.Days" xml:space="preserve">
+    <value>{0} days before</value>
   </data>
 </root>

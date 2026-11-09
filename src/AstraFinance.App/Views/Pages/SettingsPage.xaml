@@ -108,6 +108,44 @@
                 </StackPanel>
             </Border>
 
+            <!-- Notifications -->
+            <Border Style="{StaticResource Card}" Margin="0,16,0,0">
+                <StackPanel>
+                    <TextBlock Text="{loc:Loc Settings.Section.Notifications}" Style="{StaticResource SectionHeader}" />
+                    <Separator Margin="0,8,0,16" />
+
+                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding NotificationsEnabled}" Content="{loc:Loc Settings.Notifications.Enabled}" />
+                    <TextBlock Text="{loc:Loc Settings.Notifications.Enabled.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,14" />
+
+                    <StackPanel IsEnabled="{Binding NotificationsEnabled}">
+                        <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BillReminders}" Content="{loc:Loc Settings.Notifications.Bills}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0" IsEnabled="{Binding BillReminders}">
+                            <TextBlock Text="{loc:Loc Settings.Notifications.Bills.When}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                            <ComboBox ItemsSource="{Binding ReminderDayOptions}" SelectedItem="{Binding SelectedReminderDays}" DisplayMemberPath="Label" Width="200"
+                                      AutomationProperties.Name="{loc:Loc Settings.Notifications.Bills.When}" />
+                        </StackPanel>
+                        <TextBlock Text="{loc:Loc Settings.Notifications.Bills.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
+
+                        <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BudgetWarnings}" Content="{loc:Loc Settings.Notifications.Budgets}" />
+                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                            <TextBlock Text="{loc:Loc Settings.Notifications.Budgets.Threshold}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                            <TextBox Text="{Binding BudgetThresholdText, UpdateSourceTrigger=PropertyChanged}" Width="80" MaxLength="3" InputScope="Number"
+                                     AutomationProperties.Name="{loc:Loc Settings.Notifications.Budgets.Threshold}" />
+                            <TextBlock Text="%" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="8,0,0,0" />
+                        </StackPanel>
+                        <TextBlock Text="{Binding BudgetThresholdError}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}" Margin="0,4,0,0"
+                                   Visibility="{Binding BudgetThresholdError, Converter={StaticResource NullToVisibility}}" />
+                        <TextBlock Text="{loc:Loc Settings.Notifications.Budgets.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
+
+                        <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding WindowsNotifications}" Content="{loc:Loc Settings.Notifications.Windows}" />
+                        <TextBlock Text="{loc:Loc Settings.Notifications.Windows.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,0" />
+                    </StackPanel>
+
+                    <TextBlock Text="{loc:Loc Settings.Notifications.SaveFailed}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
+                               TextWrapping="Wrap" Margin="0,8,0,0" Visibility="{Binding IsNotificationSaveFailed, Converter={StaticResource BoolToVisibility}}" />
+                </StackPanel>
+            </Border>
+
             <!-- Upcoming settings sections -->
             <Border Style="{StaticResource Card}" Margin="0,16,0,0" Padding="16">
                 <StackPanel Orientation="Horizontal">

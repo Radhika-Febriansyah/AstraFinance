@@ -77,4 +77,10 @@ public static class ValidationCodes
     public const string ThresholdOutOfRange = "ThresholdOutOfRange";
     public const string GoalNotFound = "GoalNotFound";
     public const string GoalArchived = "GoalArchived";
+    public const string BillNotFound = "BillNotFound";
+    public const string BillPaused = "BillPaused";
+    public const string BillOccurrenceNotOpen = "BillOccurrenceNotOpen";
+    public const string BillAlreadyHandled = "BillAlreadyHandled";
+    public const string BillHasHistory = "BillHasHistory";
+    public const string ReminderDaysOutOfRange = "ReminderDaysOutOfRange";
 }

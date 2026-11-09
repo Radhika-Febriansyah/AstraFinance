@@ -34,6 +34,15 @@
     <DataTemplate DataType="{x:Type pages:AllocationFormViewModel}">
         <forms:AllocationForm />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:BillsViewModel}">
+        <views:BillsPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:BillFormViewModel}">
+        <forms:BillForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:PayBillFormViewModel}">
+        <forms:PayBillForm />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type pages:AccountsViewModel}">
         <views:AccountsPage />
     </DataTemplate>

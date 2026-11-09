@@ -1,0 +1,257 @@
+<UserControl x:Class="AstraFinance.App.Views.Pages.BillsPage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:AstraFinance.App.Controls"
+             xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:pages="clr-namespace:AstraFinance.App.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=pages:BillsViewModel}">
+    <UserControl.Resources>
+        <!-- Whole row selects the bill; the Pay button inside stays its own control. -->
+        <Style x:Key="BillRow" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Margin" Value="0,0,0,10" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
+            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Astra}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" Style="{StaticResource Card}" Padding="16,14">
+                            <ContentPresenter HorizontalAlignment="Stretch" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource Brush.Border.Strong}" />
+                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Surface.Raised}" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Margin="{DynamicResource Padding.Page.Current}">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+            <StackPanel MaxWidth="900" HorizontalAlignment="Stretch">
+                <Grid Margin="0,0,0,16">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Margin="0,0,16,0">
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource Text.PageTitle}" />
+                        <TextBlock Text="{loc:Loc Bills.Intro}" Style="{StaticResource Text.Secondary}" Margin="0,4,0,0" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <Button Grid.Column="1" Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Plus" Content="{loc:Loc Bills.Add.Title}" Command="{Binding AddCommand}"
+                            VerticalAlignment="Top" />
+                </Grid>
+
+                <!-- Summary -->
+                <Border Style="{StaticResource Card}" Padding="20,16" Margin="0,0,0,12"
+                        Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <StackPanel Margin="0,0,16,0">
+                            <TextBlock Text="{loc:Loc Bills.Upcoming}" Style="{StaticResource Text.Caption}" />
+                            <TextBlock Text="{Binding UpcomingTotalText}" Style="{StaticResource Text.Title}" Margin="0,4,0,2" />
+                            <TextBlock Text="{Binding UpcomingCountText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" />
+                        </StackPanel>
+                        <StackPanel Grid.Column="1">
+                            <TextBlock Text="{loc:Loc BillStatus.Overdue}" Style="{StaticResource Text.Caption}" />
+                            <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
+                                <c:AstraIcon Data="{StaticResource Icon.CircleCheck}" Width="18" Height="18" Foreground="{DynamicResource Brush.Success}" Margin="0,0,8,0"
+                                             Visibility="{Binding HasOverdue, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
+                                <c:AstraIcon Data="{StaticResource Icon.AlertTriangle}" Width="18" Height="18" Foreground="{DynamicResource Brush.Danger}" Margin="0,0,8,0"
+                                             Visibility="{Binding HasOverdue, Converter={StaticResource BoolToVisibility}}" />
+                                <TextBlock Text="{Binding OverdueText}" Style="{StaticResource Text.BodyStrong}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                            </StackPanel>
+                        </StackPanel>
+                    </Grid>
+                </Border>
+
+                <TextBlock Text="{loc:Loc Bills.Explainer}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" Margin="0,0,0,12"
+                           Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
+
+                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowPaused}" Content="{loc:Loc Bills.ShowPaused}" Margin="0,0,0,14" />
+
+                <!-- Empty -->
+                <Border Style="{StaticResource Card}" Padding="32" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}}">
+                    <StackPanel HorizontalAlignment="Center" MaxWidth="440">
+                        <c:AstraIcon Data="{StaticResource Icon.Bills}" Width="32" Height="32" Foreground="{DynamicResource Brush.Text.Tertiary}" />
+                        <TextBlock Text="{loc:Loc Bills.Empty.Title}" Style="{StaticResource Text.Subtitle}" HorizontalAlignment="Center" Margin="0,12,0,4" />
+                        <TextBlock Text="{loc:Loc Bills.Empty.Body}" Style="{StaticResource Text.Paragraph}" TextAlignment="Center" />
+                        <Button Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Plus" Content="{loc:Loc Bills.Add.Title}" Command="{Binding AddCommand}"
+                                HorizontalAlignment="Center" Margin="0,16,0,0" />
+                    </StackPanel>
+                </Border>
+
+                <ItemsControl ItemsSource="{Binding Bills}" Focusable="False">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="{x:Type pages:BillRowViewModel}">
+                            <Button x:Name="Row" Style="{StaticResource BillRow}" AutomationProperties.Name="{Binding Name}"
+                                    Command="{Binding DataContext.SelectCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding Id}">
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Width="40" Height="40" VerticalAlignment="Top">
+                                        <Ellipse Fill="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.18" />
+                                        <c:AstraIcon IconKey="{Binding IconKey}" Width="20" Height="20" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" Margin="14,0,16,0">
+                                        <WrapPanel>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" VerticalAlignment="Center" Margin="0,0,10,0" />
+                                            <Border x:Name="StatusBadge" Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}">
+                                                <TextBlock x:Name="StatusText" Text="{Binding StatusText}" Style="{StaticResource Text.Caption}" FontWeight="SemiBold" />
+                                            </Border>
+                                        </WrapPanel>
+                                        <TextBlock x:Name="Due" Text="{Binding DueText}" Style="{StaticResource Text.Secondary}" TextWrapping="Wrap" Margin="0,4,0,0" />
+                                        <TextBlock Text="{Binding ScheduleText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" Margin="0,2,0,0" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="2" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding AmountText}" Style="{StaticResource Text.BodyStrong}" HorizontalAlignment="Right" />
+                                        <!-- Pay: prominent when the bill is due soon, due today or overdue. -->
+                                        <Button Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Check" Content="{loc:Loc Bills.Pay}"
+                                                AutomationProperties.Name="{Binding PayAutomationName}" ToolTip="{Binding PayAutomationName}" Margin="0,8,0,0" HorizontalAlignment="Right"
+                                                Command="{Binding DataContext.PayCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"
+                                                Visibility="{Binding IsPayProminent, Converter={StaticResource BoolToVisibility}}" />
+                                        <Button c:Assist.Icon="Icon.Check" Content="{loc:Loc Bills.Pay}"
+                                                AutomationProperties.Name="{Binding PayAutomationName}" ToolTip="{Binding PayAutomationName}" Margin="0,8,0,0" HorizontalAlignment="Right"
+                                                Command="{Binding DataContext.PayCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"
+                                                Visibility="{Binding IsPayQuiet, Converter={StaticResource BoolToVisibility}}" />
+                                    </StackPanel>
+                                </Grid>
+                            </Button>
+                            <DataTemplate.Triggers>
+                                <DataTrigger Binding="{Binding Status}" Value="DueSoon">
+                                    <Setter TargetName="StatusBadge" Property="Background" Value="{DynamicResource Brush.Warning.Subtle}" />
+                                    <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="DueToday">
+                                    <Setter TargetName="StatusBadge" Property="Background" Value="{DynamicResource Brush.Warning.Subtle}" />
+                                    <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Overdue">
+                                    <Setter TargetName="StatusBadge" Property="Background" Value="{DynamicResource Brush.Danger.Subtle}" />
+                                    <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                    <Setter TargetName="Due" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                </DataTrigger>
+                                <DataTrigger Binding="{Binding Status}" Value="Paused">
+                                    <Setter TargetName="Row" Property="Opacity" Value="0.7" />
+                                </DataTrigger>
+                            </DataTemplate.Triggers>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </ScrollViewer>
+
+        <!-- Bill details -->
+        <Border Grid.Column="1" Width="340" Margin="16,0,0,0" Style="{StaticResource Card}"
+                Visibility="{Binding HasSelection, Converter={StaticResource BoolToVisibility}}"
+                AutomationProperties.Name="{loc:Loc Bills.Details.Title}">
+            <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+                <StackPanel>
+                    <Grid>
+                        <TextBlock Text="{loc:Loc Bills.Details.Title}" Style="{StaticResource Text.Overline}" VerticalAlignment="Center" />
+                        <Button Style="{StaticResource Button.Icon}" Width="28" Height="28" HorizontalAlignment="Right" c:Assist.Icon="Icon.X"
+                                ToolTip="{loc:Loc Dialog.Close}" AutomationProperties.Name="{loc:Loc Dialog.Close}" Command="{Binding CloseDetailsCommand}" />
+                    </Grid>
+                    <TextBlock Text="{Binding Selected.Name}" Style="{StaticResource Text.Title}" TextWrapping="Wrap" Margin="0,8,0,2" />
+                    <TextBlock Text="{Binding Selected.AmountText}" Style="{StaticResource Text.BodyStrong}" />
+                    <TextBlock Text="{Binding Selected.DueText}" Style="{StaticResource Text.Secondary}" TextWrapping="Wrap" Margin="0,6,0,0" />
+
+                    <Grid Margin="0,14,0,0">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
+                        <TextBlock Text="{loc:Loc Bills.Field.Recurrence}" Style="{StaticResource Text.Caption}" Margin="0,2,16,2" />
+                        <TextBlock Grid.Column="1" Text="{Binding Selected.RecurrenceText}" Style="{StaticResource Text.Body}" Margin="0,2" />
+                        <TextBlock Grid.Row="1" Text="{loc:Loc Transactions.Field.Category}" Style="{StaticResource Text.Caption}" Margin="0,2,16,2" />
+                        <TextBlock Grid.Row="1" Grid.Column="1" Text="{Binding Selected.CategoryName}" Style="{StaticResource Text.Body}" Margin="0,2" />
+                        <TextBlock Grid.Row="2" Text="{loc:Loc Bills.Field.Account}" Style="{StaticResource Text.Caption}" Margin="0,2,16,2" />
+                        <TextBlock Grid.Row="2" Grid.Column="1" Text="{Binding Selected.Summary.AccountName}" Style="{StaticResource Text.Body}" Margin="0,2" TextWrapping="Wrap" />
+                    </Grid>
+                    <TextBlock Text="{Binding Selected.Notes}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" Margin="0,8,0,0"
+                               Visibility="{Binding Selected.Notes, Converter={StaticResource NullToVisibility}}" />
+
+                    <!-- Actions -->
+                    <StackPanel Margin="0,16,0,0" Visibility="{Binding Selected.IsActive, Converter={StaticResource BoolToVisibility}}">
+                        <Button Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Check" Content="{loc:Loc Bills.Pay.Title}" HorizontalAlignment="Stretch"
+                                Command="{Binding PayCommand}" Margin="0,0,0,8" />
+                        <UniformGrid Columns="2" Margin="0,0,0,8">
+                            <Button c:Assist.Icon="Icon.SkipForward" Content="{loc:Loc Bills.Skip}" Command="{Binding SkipCommand}" Margin="0,0,4,0" />
+                            <Button c:Assist.Icon="Icon.Pencil" Content="{loc:Loc Bills.Edit.Title}" Command="{Binding EditCommand}" Margin="4,0,0,0" />
+                        </UniformGrid>
+                        <Button Style="{StaticResource Button.Ghost}" c:Assist.Icon="Icon.SkipForward" Content="{loc:Loc Bills.SkipMissed.Title}" HorizontalAlignment="Stretch"
+                                Command="{Binding SkipMissedCommand}" Visibility="{Binding Selected.CanSkipMissed, Converter={StaticResource BoolToVisibility}}" />
+                        <Button Style="{StaticResource Button.Ghost}" c:Assist.Icon="Icon.Pause" Content="{loc:Loc Bills.Pause}" HorizontalAlignment="Stretch"
+                                Command="{Binding TogglePausedCommand}" />
+                    </StackPanel>
+                    <StackPanel Margin="0,16,0,0" Visibility="{Binding Selected.IsPaused, Converter={StaticResource BoolToVisibility}}">
+                        <Button Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Play" Content="{loc:Loc Bills.Resume}" HorizontalAlignment="Stretch"
+                                Command="{Binding TogglePausedCommand}" Margin="0,0,0,8" />
+                        <Button c:Assist.Icon="Icon.Pencil" Content="{loc:Loc Bills.Edit.Title}" HorizontalAlignment="Stretch" Command="{Binding EditCommand}" />
+                    </StackPanel>
+                    <Button Style="{StaticResource Button.Ghost}" Foreground="{DynamicResource Brush.Danger}" c:Assist.Icon="Icon.Trash" Content="{loc:Loc Bills.Delete.Title}"
+                            HorizontalAlignment="Stretch" Command="{Binding DeleteCommand}"
+                            Visibility="{Binding Selected.CanDelete, Converter={StaticResource BoolToVisibility}}" />
+
+                    <!-- History -->
+                    <TextBlock Text="{loc:Loc Bills.History}" Style="{StaticResource Text.Overline}" Margin="0,20,0,6" />
+                    <TextBlock Text="{loc:Loc Bills.History.Empty}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap"
+                               Visibility="{Binding HasNoHistory, Converter={StaticResource BoolToVisibility}}" />
+                    <ItemsControl ItemsSource="{Binding History}" Focusable="False">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="{x:Type pages:BillHistoryRow}">
+                                <Grid Margin="0,5">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <StackPanel>
+                                        <TextBlock Text="{Binding DueText}" Style="{StaticResource Text.Body}" />
+                                        <TextBlock x:Name="Caption" Text="{Binding Caption}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" />
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="8,0,0,0">
+                                        <TextBlock Text="{Binding AmountText}" Style="{StaticResource Text.BodyStrong}" VerticalAlignment="Center" />
+                                        <Button Style="{StaticResource Button.Icon}" Width="28" Height="28" c:Assist.Icon="Icon.Undo"
+                                                ToolTip="{loc:Loc Bills.UndoSkip}" AutomationProperties.Name="{loc:Loc Bills.UndoSkip}"
+                                                Command="{Binding DataContext.UndoSkipCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}"
+                                                Visibility="{Binding CanUndo, Converter={StaticResource BoolToVisibility}}" />
+                                    </StackPanel>
+                                </Grid>
+                                <DataTemplate.Triggers>
+                                    <DataTrigger Binding="{Binding IsVoided}" Value="True">
+                                        <Setter TargetName="Caption" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                    </DataTrigger>
+                                </DataTemplate.Triggers>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                </StackPanel>
+            </ScrollViewer>
+        </Border>
+    </Grid>
+</UserControl>

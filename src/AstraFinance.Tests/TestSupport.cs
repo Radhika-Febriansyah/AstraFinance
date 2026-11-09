@@ -104,3 +104,12 @@ internal static class RepoPaths
 
     public static string Core => System.IO.Path.Combine(Root, "src", "AstraFinance.Core");
 }
+
+internal sealed class FakeWindowsNotifier : AstraFinance.App.Services.IWindowsNotifier
+{
+    public List<(string Title, string Body)> Shown { get; } = [];
+
+    public bool IsAppInForeground { get; set; }
+
+    public void Show(string title, string body) => Shown.Add((title, body));
+}

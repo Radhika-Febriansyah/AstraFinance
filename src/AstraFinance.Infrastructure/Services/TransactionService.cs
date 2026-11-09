@@ -372,6 +372,25 @@ public sealed class TransactionService : ITransactionService
          .Replace("%", "\\%", StringComparison.Ordinal)
          .Replace("_", "\\_", StringComparison.Ordinal);
 
+    /// <summary>
+    /// Validates an income or expense draft and adds it to <paramref name="db"/> without saving. Used by services
+    /// that must write a transaction together with their own records in one database transaction (bill payments),
+    /// so every transaction still goes through the same validation rules.
+    /// </summary>
+    internal static async Task<Transaction> AddValidatedAsync(AstraDbContext db, TransactionDraft draft, DateTime now, CancellationToken ct)
+    {
+        if (draft.Type == TransactionType.Transfer || draft.TransferFee != 0)
+        {
+            throw new ArgumentException("Only income and expense drafts can be added this way.", nameof(draft));
+        }
+
+        var valid = await ValidateAsync(db, draft, existing: null, ct).ConfigureAwait(false);
+        var transaction = new Transaction { Id = draft.Id, CreatedAtUtc = now };
+        Apply(transaction, valid, now);
+        db.Transactions.Add(transaction);
+        return transaction;
+    }
+
     private static void Apply(Transaction t, ValidDraft v, DateTime now)
     {
         t.Type = v.Type;
