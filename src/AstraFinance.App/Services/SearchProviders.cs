@@ -82,3 +82,79 @@ public sealed class CategorySearchProvider : ISearchProvider
             .ToList();
     }
 }
+
+/// <summary>Global search over budgets (by category name). Opens the Budgets page.</summary>
+public sealed class BudgetSearchProvider : ISearchProvider
+{
+    private readonly IBudgetService _budgets;
+    private readonly ICategoryService _categories;
+    private readonly IRegionalFormatService _format;
+    private readonly ILocalizationService _localization;
+
+    public BudgetSearchProvider(IBudgetService budgets, ICategoryService categories, IRegionalFormatService format, ILocalizationService localization)
+    {
+        _budgets = budgets;
+        _categories = categories;
+        _format = format;
+        _localization = localization;
+    }
+
+    public async Task<IReadOnlyList<SearchResult>> SearchAsync(string query, int maxResults, CancellationToken cancellationToken)
+    {
+        var normalized = SearchMatcher.Normalize(query);
+        var budgets = await _budgets.ListAsync(cancellationToken).ConfigureAwait(true);
+        if (budgets.Count == 0)
+        {
+            return [];
+        }
+
+        var categories = (await _categories.ListAsync(null, true, cancellationToken).ConfigureAwait(true)).ToDictionary(c => c.Id);
+        return budgets
+            .Where(b => categories.ContainsKey(b.CategoryId))
+            .Select(b => (Budget: b, Category: categories[b.CategoryId], Name: DefaultCategories.DisplayName(categories[b.CategoryId], _localization)))
+            .Select(x => (x.Budget, x.Category, x.Name, Score: SearchMatcher.Score(normalized, x.Name)))
+            .Where(x => x.Score > 0)
+            .OrderByDescending(x => x.Score)
+            .Take(maxResults)
+            .Select(x => new SearchResult(
+                SearchCategory.Budgets,
+                x.Name,
+                _localization.Format("Search.BudgetSubtitle", _format.FormatMoney(x.Budget.Amount)),
+                x.Category.IconKey,
+                new NavigationTarget(AppPage.Budgets, x.Budget.Id),
+                x.Score))
+            .ToList();
+    }
+}
+
+/// <summary>Global search over savings goals. Opens the goal's details.</summary>
+public sealed class SavingsGoalSearchProvider : ISearchProvider
+{
+    private readonly ISavingsGoalService _goals;
+    private readonly IRegionalFormatService _format;
+
+    public SavingsGoalSearchProvider(ISavingsGoalService goals, IRegionalFormatService format)
+    {
+        _goals = goals;
+        _format = format;
+    }
+
+    public async Task<IReadOnlyList<SearchResult>> SearchAsync(string query, int maxResults, CancellationToken cancellationToken)
+    {
+        var normalized = SearchMatcher.Normalize(query);
+        var goals = await _goals.ListAsync(includeArchived: true, cancellationToken).ConfigureAwait(true);
+        return goals
+            .Select(g => (Goal: g, Score: SearchMatcher.Score(normalized, g.Goal.Name)))
+            .Where(x => x.Score > 0)
+            .OrderByDescending(x => x.Score)
+            .Take(maxResults)
+            .Select(x => new SearchResult(
+                SearchCategory.SavingsGoals,
+                x.Goal.Goal.Name,
+                $"{_format.FormatMoney(x.Goal.Allocated)} / {_format.FormatMoney(x.Goal.Goal.TargetAmount)}",
+                x.Goal.Goal.IconKey,
+                new NavigationTarget(AppPage.SavingsGoals, x.Goal.Goal.Id),
+                x.Score))
+            .ToList();
+    }
+}

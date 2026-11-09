@@ -1056,9 +1056,6 @@
   <data name="Dashboard.Budgets" xml:space="preserve">
     <value>Budget summary</value>
   </data>
-  <data name="Dashboard.Budgets.Pending" xml:space="preserve">
-    <value>Budgets are set up in development phase 6. Once you create budgets, this month's usage per category appears here.</value>
-  </data>
   <data name="Compact.Thousand" xml:space="preserve">
     <value>K</value>
   </data>
@@ -1070,5 +1067,239 @@
   </data>
   <data name="Compact.Trillion" xml:space="preserve">
     <value>T</value>
+  </data>
+  <data name="Budgets.Intro" xml:space="preserve">
+    <value>Monthly spending limits per expense category. Only expenses count; income and transfers never do.</value>
+  </data>
+  <data name="Budgets.Add.Title" xml:space="preserve">
+    <value>Create budget</value>
+  </data>
+  <data name="Budgets.Edit.Title" xml:space="preserve">
+    <value>Edit budget</value>
+  </data>
+  <data name="Budgets.Saved.Title" xml:space="preserve">
+    <value>Budget saved</value>
+  </data>
+  <data name="Budgets.PrevMonth" xml:space="preserve">
+    <value>Previous month</value>
+  </data>
+  <data name="Budgets.NextMonth" xml:space="preserve">
+    <value>Next month</value>
+  </data>
+  <data name="Budgets.ThisMonth" xml:space="preserve">
+    <value>Back to this month</value>
+  </data>
+  <data name="Budgets.TotalSpent" xml:space="preserve">
+    <value>Spent of total budget</value>
+  </data>
+  <data name="Budgets.Left" xml:space="preserve">
+    <value>{0} left</value>
+  </data>
+  <data name="Budgets.Over" xml:space="preserve">
+    <value>{0} over budget</value>
+  </data>
+  <data name="Budgets.DefaultThreshold" xml:space="preserve">
+    <value>A budget shows a warning at {0}% unless it sets its own threshold.</value>
+  </data>
+  <data name="Budgets.Empty.Title" xml:space="preserve">
+    <value>No budgets created</value>
+  </data>
+  <data name="Budgets.Empty.Body" xml:space="preserve">
+    <value>Set a monthly limit for a category, such as Food &amp; Drinks, to see how much is left as you spend.</value>
+  </data>
+  <data name="Budgets.ShowExpenses" xml:space="preserve">
+    <value>Show expenses</value>
+  </data>
+  <data name="Budgets.Delete.Title" xml:space="preserve">
+    <value>Delete budget</value>
+  </data>
+  <data name="Budgets.Delete.Body" xml:space="preserve">
+    <value>Delete the budget for "{0}"? Your transactions are not affected.</value>
+  </data>
+  <data name="Budgets.AllCategoriesBudgeted" xml:space="preserve">
+    <value>Every active expense category already has a budget. Edit an existing budget or add a new category.</value>
+  </data>
+  <data name="Budgets.Field.Amount" xml:space="preserve">
+    <value>Monthly limit</value>
+  </data>
+  <data name="Budgets.Field.Start" xml:space="preserve">
+    <value>Starts in</value>
+  </data>
+  <data name="Budgets.Field.Start.Hint" xml:space="preserve">
+    <value>The budget applies from this month onward.</value>
+  </data>
+  <data name="Budgets.Field.Threshold" xml:space="preserve">
+    <value>Warning threshold</value>
+  </data>
+  <data name="Budgets.Field.Threshold.Custom" xml:space="preserve">
+    <value>Use a custom warning threshold</value>
+  </data>
+  <data name="Budgets.Field.Threshold.Default" xml:space="preserve">
+    <value>The default warning threshold is {0}%.</value>
+  </data>
+  <data name="BudgetStatus.Normal" xml:space="preserve">
+    <value>On track</value>
+  </data>
+  <data name="BudgetStatus.Warning" xml:space="preserve">
+    <value>Nearly used</value>
+  </data>
+  <data name="BudgetStatus.Exceeded" xml:space="preserve">
+    <value>Exceeded</value>
+  </data>
+  <data name="Validation.BudgetNotFound" xml:space="preserve">
+    <value>This budget no longer exists.</value>
+  </data>
+  <data name="Validation.BudgetExistsForCategory" xml:space="preserve">
+    <value>This category already has a budget.</value>
+  </data>
+  <data name="Validation.ThresholdOutOfRange" xml:space="preserve">
+    <value>Enter a percentage from 1 to 100.</value>
+  </data>
+  <data name="Validation.GoalNotFound" xml:space="preserve">
+    <value>This goal no longer exists.</value>
+  </data>
+  <data name="Validation.GoalArchived" xml:space="preserve">
+    <value>This goal is archived.</value>
+  </data>
+  <data name="GoalStatus.Active" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="GoalStatus.Completed" xml:space="preserve">
+    <value>Completed</value>
+  </data>
+  <data name="GoalStatus.Archived" xml:space="preserve">
+    <value>Archived</value>
+  </data>
+  <data name="Goals.Add.Title" xml:space="preserve">
+    <value>Create goal</value>
+  </data>
+  <data name="Goals.Edit.Title" xml:space="preserve">
+    <value>Edit goal</value>
+  </data>
+  <data name="Goals.Created.Title" xml:space="preserve">
+    <value>Goal created</value>
+  </data>
+  <data name="Goals.Completed.Title" xml:space="preserve">
+    <value>Goal completed</value>
+  </data>
+  <data name="Goals.Reached" xml:space="preserve">
+    <value>Target reached</value>
+  </data>
+  <data name="Goals.Remaining" xml:space="preserve">
+    <value>{0} to go</value>
+  </data>
+  <data name="Goals.TargetDate" xml:space="preserve">
+    <value>Target date {0}</value>
+  </data>
+  <data name="Goals.PerMonth" xml:space="preserve">
+    <value>Allocate about {0} per month to reach it on time</value>
+  </data>
+  <data name="Goals.Overdue" xml:space="preserve">
+    <value>The target date has passed</value>
+  </data>
+  <data name="Goals.DueThisMonth" xml:space="preserve">
+    <value>Due this month</value>
+  </data>
+  <data name="Goals.OverAllocated" xml:space="preserve">
+    <value>The balance of {0} is now lower than the amount allocated to goals. Release some of the allocation or add funds to that account.</value>
+  </data>
+  <data name="Goals.Explainer" xml:space="preserve">
+    <value>Allocating earmarks money that is already in your accounts. It doesn't move money or change any balance.</value>
+  </data>
+  <data name="Goals.TotalAllocated" xml:space="preserve">
+    <value>Currently allocated:</value>
+  </data>
+  <data name="Goals.ShowArchived" xml:space="preserve">
+    <value>Show archived goals</value>
+  </data>
+  <data name="Goals.Empty.Title" xml:space="preserve">
+    <value>No savings goals</value>
+  </data>
+  <data name="Goals.Empty.Body" xml:space="preserve">
+    <value>Create a goal, such as a new laptop, and allocate money to it from your accounts.</value>
+  </data>
+  <data name="Goals.Details.Title" xml:space="preserve">
+    <value>Goal details</value>
+  </data>
+  <data name="Goals.Allocate.Title" xml:space="preserve">
+    <value>Allocate</value>
+  </data>
+  <data name="Goals.Allocate.Primary" xml:space="preserve">
+    <value>Allocate</value>
+  </data>
+  <data name="Goals.Allocate.Explanation" xml:space="preserve">
+    <value>Earmark money from an account for this goal. The account balance stays the same; the amount is no longer counted as available for other goals.</value>
+  </data>
+  <data name="Goals.Allocate.Available" xml:space="preserve">
+    <value>Available to allocate: {0}</value>
+  </data>
+  <data name="Goals.Allocate.NoAccounts" xml:space="preserve">
+    <value>There is no active account to allocate from.</value>
+  </data>
+  <data name="Goals.Release.Title" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="Goals.Release.Primary" xml:space="preserve">
+    <value>Release</value>
+  </data>
+  <data name="Goals.Release.Explanation" xml:space="preserve">
+    <value>Return allocated money to the account's available balance. The account balance doesn't change.</value>
+  </data>
+  <data name="Goals.Release.Held" xml:space="preserve">
+    <value>Allocated from this account: {0}</value>
+  </data>
+  <data name="Goals.Release.Nothing" xml:space="preserve">
+    <value>Nothing is allocated to this goal yet.</value>
+  </data>
+  <data name="Goals.MarkCompleted" xml:space="preserve">
+    <value>Mark as completed</value>
+  </data>
+  <data name="Goals.Reopen" xml:space="preserve">
+    <value>Reopen goal</value>
+  </data>
+  <data name="Goals.Archive.Title" xml:space="preserve">
+    <value>Archive goal?</value>
+  </data>
+  <data name="Goals.Archive.Body" xml:space="preserve">
+    <value>"{0}" will be archived and its allocation of {1} released back to your accounts. The history is kept.</value>
+  </data>
+  <data name="Goals.Archive.Confirm" xml:space="preserve">
+    <value>Archive</value>
+  </data>
+  <data name="Goals.ByAccount" xml:space="preserve">
+    <value>Allocated from</value>
+  </data>
+  <data name="Goals.History" xml:space="preserve">
+    <value>Contribution history</value>
+  </data>
+  <data name="Goals.History.Empty" xml:space="preserve">
+    <value>No allocations yet.</value>
+  </data>
+  <data name="Goals.Field.Name" xml:space="preserve">
+    <value>Goal name</value>
+  </data>
+  <data name="Goals.Field.Name.Placeholder" xml:space="preserve">
+    <value>e.g. New laptop</value>
+  </data>
+  <data name="Goals.Field.Target" xml:space="preserve">
+    <value>Target amount</value>
+  </data>
+  <data name="Goals.Field.TargetDate" xml:space="preserve">
+    <value>Target date (optional)</value>
+  </data>
+  <data name="Goals.Field.TargetDate.Hint" xml:space="preserve">
+    <value>Used to suggest how much to allocate each month.</value>
+  </data>
+  <data name="Goals.Field.Note" xml:space="preserve">
+    <value>Note (optional)</value>
+  </data>
+  <data name="Dashboard.Budgets.More" xml:space="preserve">
+    <value>+{0} more budgets</value>
+  </data>
+  <data name="Dashboard.Budgets.Empty" xml:space="preserve">
+    <value>No budgets yet.</value>
+  </data>
+  <data name="Search.BudgetSubtitle" xml:space="preserve">
+    <value>Monthly budget {0}</value>
   </data>
 </root>

@@ -72,4 +72,9 @@ public static class ValidationCodes
     public const string PinMismatch = "PinMismatch";
     public const string PinIncorrect = "PinIncorrect";
     public const string DirectoryNotWritable = "DirectoryNotWritable";
+    public const string BudgetNotFound = "BudgetNotFound";
+    public const string BudgetExistsForCategory = "BudgetExistsForCategory";
+    public const string ThresholdOutOfRange = "ThresholdOutOfRange";
+    public const string GoalNotFound = "GoalNotFound";
+    public const string GoalArchived = "GoalArchived";
 }

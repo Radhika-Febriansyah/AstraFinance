@@ -213,14 +213,55 @@
                     </DockPanel>
                 </Border>
 
-                <!-- Budget summary (budgets arrive in phase 6) -->
+                <!-- Budget summary: budgets for this month, most at risk first -->
                 <Border x:Name="BudgetCard" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource Card}">
                     <StackPanel>
-                        <TextBlock Text="{loc:Loc Dashboard.Budgets}" Style="{StaticResource Text.Subtitle}" />
-                        <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
-                            <c:AstraIcon Data="{StaticResource Icon.Budgets}" Width="18" Height="18" Foreground="{DynamicResource Brush.Text.Tertiary}" Margin="0,0,10,0" VerticalAlignment="Top" />
-                            <TextBlock Text="{loc:Loc Dashboard.Budgets.Pending}" Style="{StaticResource Text.Paragraph}" MaxWidth="720" />
+                        <Grid Margin="0,0,0,8">
+                            <TextBlock Text="{loc:Loc Dashboard.Budgets}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center" />
+                            <Button Style="{StaticResource Button.Link}" HorizontalAlignment="Right" Content="{loc:Loc Dashboard.ViewAll}"
+                                    Command="{Binding OpenBudgetsCommand}" />
+                        </Grid>
+                        <StackPanel Orientation="Horizontal" Margin="0,4,0,0" Visibility="{Binding HasNoBudgets, Converter={StaticResource BoolToVisibility}}">
+                            <c:AstraIcon Data="{StaticResource Icon.Budgets}" Width="18" Height="18" Foreground="{DynamicResource Brush.Text.Tertiary}" Margin="0,0,10,0" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Loc Dashboard.Budgets.Empty}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" TextWrapping="Wrap" />
+                            <Button Style="{StaticResource Button.Link}" Content="{loc:Loc Budgets.Add.Title}" Command="{Binding OpenBudgetsCommand}" Margin="12,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
+                        <ItemsControl ItemsSource="{Binding Budgets}" Focusable="False">
+                            <ItemsControl.ItemsPanel>
+                                <ItemsPanelTemplate>
+                                    <UniformGrid Columns="2" />
+                                </ItemsPanelTemplate>
+                            </ItemsControl.ItemsPanel>
+                            <ItemsControl.ItemTemplate>
+                                <DataTemplate DataType="{x:Type pages:BudgetRowViewModel}">
+                                    <StackPanel Margin="0,8,24,8">
+                                        <Grid>
+                                            <StackPanel Orientation="Horizontal">
+                                                <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Margin="0,0,8,0" />
+                                                <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" />
+                                            </StackPanel>
+                                            <TextBlock Text="{Binding PercentText}" Style="{StaticResource Text.Caption}" HorizontalAlignment="Right" />
+                                        </Grid>
+                                        <ProgressBar x:Name="Bar" Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Height="6" Margin="0,8,0,4"
+                                                     Foreground="{DynamicResource Brush.Success}" />
+                                        <TextBlock x:Name="Detail" Style="{StaticResource Text.Caption}">
+                                            <Run Text="{Binding SpentText, Mode=OneWay}" /><Run Text=" / " /><Run Text="{Binding LimitText, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding RemainingText, Mode=OneWay}" />
+                                        </TextBlock>
+                                    </StackPanel>
+                                    <DataTemplate.Triggers>
+                                        <DataTrigger Binding="{Binding Status}" Value="Warning">
+                                            <Setter TargetName="Bar" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Status}" Value="Exceeded">
+                                            <Setter TargetName="Bar" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                            <Setter TargetName="Detail" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                        </DataTrigger>
+                                    </DataTemplate.Triggers>
+                                </DataTemplate>
+                            </ItemsControl.ItemTemplate>
+                        </ItemsControl>
+                        <TextBlock Text="{Binding MoreBudgetsText}" Style="{StaticResource Text.Caption}" Margin="0,4,0,0"
+                                   Visibility="{Binding MoreBudgetsText, Converter={StaticResource NullToVisibility}}" />
                     </StackPanel>
                 </Border>
             </Grid>

@@ -39,6 +39,9 @@ public sealed partial class DashboardViewModel : PageViewModel
     private readonly Func<TransactionFormViewModel> _formFactory;
     private readonly CancellationTokenSource _cts = new();
     private readonly ThemeService _theme;
+    private readonly IBudgetService _budgets;
+
+    public const int BudgetSummaryCount = 4;
 
     /// <summary>Raised when theme colours change so the view can repaint the chart.</summary>
     public event EventHandler? ChartStyleChanged;
@@ -55,9 +58,11 @@ public sealed partial class DashboardViewModel : PageViewModel
         INotificationService notifications,
         DataChangeNotifier changes,
         Func<TransactionFormViewModel> formFactory,
-        ThemeService theme)
+        ThemeService theme,
+        IBudgetService budgets)
         : base(AppPage.Dashboard, localization)
     {
+        _budgets = budgets;
         _theme = theme;
         _theme.ThemeApplied += OnThemeApplied;
         _clock = clock;
@@ -121,6 +126,16 @@ public sealed partial class DashboardViewModel : PageViewModel
 
     public bool IsLoaded { get; private set; }
 
+    // ---------------- Budget summary ----------------
+    /// <summary>Budgets for this month, most at risk first (up to four).</summary>
+    public ObservableCollection<BudgetRowViewModel> Budgets { get; } = [];
+
+    [ObservableProperty]
+    public partial bool HasNoBudgets { get; private set; }
+
+    [ObservableProperty]
+    public partial string? MoreBudgetsText { get; private set; }
+
     /// <summary>Localized text for chart series names (the chart is built in code).</summary>
     public string Text(string key) => Localization.GetString(key);
 
@@ -142,6 +157,9 @@ public sealed partial class DashboardViewModel : PageViewModel
 
     [RelayCommand]
     private Task OpenAnalyticsAsync() => _navigation.NavigateAsync(AppPage.Analytics);
+
+    [RelayCommand]
+    private Task OpenBudgetsAsync() => _navigation.NavigateAsync(AppPage.Budgets);
 
     [RelayCommand]
     private Task OpenTransactionsAsync() => _navigation.NavigateAsync(AppPage.Transactions);
@@ -202,6 +220,18 @@ public sealed partial class DashboardViewModel : PageViewModel
             }
 
             HasNoTransactions = recent.TotalCount == 0;
+
+            var overview = await _budgets.GetOverviewAsync(today).ConfigureAwait(true);
+            Budgets.Clear();
+            foreach (var item in overview.Items.Take(BudgetSummaryCount))
+            {
+                Budgets.Add(new BudgetRowViewModel(item, _format, Localization));
+            }
+
+            HasNoBudgets = overview.Items.Count == 0;
+            MoreBudgetsText = overview.Items.Count > BudgetSummaryCount
+                ? Localization.Format("Dashboard.Budgets.More", overview.Items.Count - BudgetSummaryCount)
+                : null;
             IsLoaded = true;
         }
         finally

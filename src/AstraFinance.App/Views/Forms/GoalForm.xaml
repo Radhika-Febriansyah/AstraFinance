@@ -1,0 +1,46 @@
+<UserControl x:Class="AstraFinance.App.Views.Forms.GoalForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:AstraFinance.App.Controls"
+             xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:conv="clr-namespace:AstraFinance.App.Converters"
+             xmlns:pages="clr-namespace:AstraFinance.App.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=pages:GoalFormViewModel}">
+    <UserControl.Resources>
+        <conv:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTime" />
+    </UserControl.Resources>
+    <StackPanel>
+        <TextBlock Text="{loc:Loc Goals.Field.Name}" Style="{StaticResource FieldLabel}" />
+        <TextBox x:Name="NameBox" Text="{Binding Name, UpdateSourceTrigger=PropertyChanged}" MaxLength="100"
+                 c:Assist.Placeholder="{loc:Loc Goals.Field.Name.Placeholder}" AutomationProperties.Name="{loc:Loc Goals.Field.Name}" Margin="0,0,0,22" />
+
+        <TextBlock Text="{loc:Loc Goals.Field.Target}" Style="{StaticResource FieldLabel}" />
+        <TextBox Text="{Binding TargetText, UpdateSourceTrigger=PropertyChanged}" InputScope="Number" c:Assist.Placeholder="0"
+                 AutomationProperties.Name="{loc:Loc Goals.Field.Target}" Margin="0,0,0,22" />
+
+        <TextBlock Text="{loc:Loc Goals.Field.TargetDate}" Style="{StaticResource FieldLabel}" />
+        <DatePicker SelectedDate="{Binding TargetDate, Converter={StaticResource DateOnlyToDateTime}}" Width="220" HorizontalAlignment="Left"
+                    AutomationProperties.HelpText="{loc:Loc Goals.Field.TargetDate}" Margin="0,0,0,4" />
+        <TextBlock Text="{loc:Loc Goals.Field.TargetDate.Hint}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" TextTrimming="None" Margin="0,0,0,18" />
+
+        <TextBlock Text="{loc:Loc Accounts.Field.Icon}" Style="{StaticResource FieldLabel}" />
+        <ListBox ItemsSource="{Binding IconOptions}" SelectedItem="{Binding SelectedIcon}" Style="{StaticResource PickerList}"
+                 ItemContainerStyle="{StaticResource IconPickerItem}" AutomationProperties.Name="{loc:Loc Accounts.Field.Icon}" Margin="0,0,0,14">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <c:AstraIcon IconKey="{Binding}" Width="18" Height="18" />
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <TextBlock Text="{loc:Loc Accounts.Field.Color}" Style="{StaticResource FieldLabel}" />
+        <ListBox ItemsSource="{Binding ColorOptions}" SelectedItem="{Binding SelectedColor}" Style="{StaticResource PickerList}"
+                 ItemContainerStyle="{StaticResource ColorPickerItem}" AutomationProperties.Name="{loc:Loc Accounts.Field.Color}" />
+
+        <TextBlock Text="{Binding GeneralError}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
+                   TextWrapping="Wrap" Margin="0,12,0,0" Visibility="{Binding GeneralError, Converter={StaticResource NullToVisibility}}" />
+    </StackPanel>
+</UserControl>

@@ -1056,9 +1056,6 @@
   <data name="Dashboard.Budgets" xml:space="preserve">
     <value>Ringkasan anggaran</value>
   </data>
-  <data name="Dashboard.Budgets.Pending" xml:space="preserve">
-    <value>Anggaran diatur pada fase pengembangan 6. Setelah Anda membuat anggaran, penggunaan bulan ini per kategori akan muncul di sini.</value>
-  </data>
   <data name="Compact.Thousand" xml:space="preserve">
     <value>rb</value>
   </data>
@@ -1070,5 +1067,239 @@
   </data>
   <data name="Compact.Trillion" xml:space="preserve">
     <value>T</value>
+  </data>
+  <data name="Budgets.Intro" xml:space="preserve">
+    <value>Batas pengeluaran bulanan per kategori. Hanya pengeluaran yang dihitung; pemasukan dan transfer tidak pernah dihitung.</value>
+  </data>
+  <data name="Budgets.Add.Title" xml:space="preserve">
+    <value>Buat anggaran</value>
+  </data>
+  <data name="Budgets.Edit.Title" xml:space="preserve">
+    <value>Ubah anggaran</value>
+  </data>
+  <data name="Budgets.Saved.Title" xml:space="preserve">
+    <value>Anggaran disimpan</value>
+  </data>
+  <data name="Budgets.PrevMonth" xml:space="preserve">
+    <value>Bulan sebelumnya</value>
+  </data>
+  <data name="Budgets.NextMonth" xml:space="preserve">
+    <value>Bulan berikutnya</value>
+  </data>
+  <data name="Budgets.ThisMonth" xml:space="preserve">
+    <value>Kembali ke bulan ini</value>
+  </data>
+  <data name="Budgets.TotalSpent" xml:space="preserve">
+    <value>Terpakai dari total anggaran</value>
+  </data>
+  <data name="Budgets.Left" xml:space="preserve">
+    <value>Sisa {0}</value>
+  </data>
+  <data name="Budgets.Over" xml:space="preserve">
+    <value>Lebih {0} dari anggaran</value>
+  </data>
+  <data name="Budgets.DefaultThreshold" xml:space="preserve">
+    <value>Anggaran menampilkan peringatan pada {0}% kecuali memiliki ambang sendiri.</value>
+  </data>
+  <data name="Budgets.Empty.Title" xml:space="preserve">
+    <value>Belum ada anggaran</value>
+  </data>
+  <data name="Budgets.Empty.Body" xml:space="preserve">
+    <value>Tetapkan batas bulanan untuk sebuah kategori, misalnya Makanan &amp; Minuman, untuk melihat sisanya saat Anda berbelanja.</value>
+  </data>
+  <data name="Budgets.ShowExpenses" xml:space="preserve">
+    <value>Tampilkan pengeluaran</value>
+  </data>
+  <data name="Budgets.Delete.Title" xml:space="preserve">
+    <value>Hapus anggaran</value>
+  </data>
+  <data name="Budgets.Delete.Body" xml:space="preserve">
+    <value>Hapus anggaran untuk "{0}"? Transaksi Anda tidak terpengaruh.</value>
+  </data>
+  <data name="Budgets.AllCategoriesBudgeted" xml:space="preserve">
+    <value>Setiap kategori pengeluaran aktif sudah memiliki anggaran. Ubah anggaran yang ada atau tambahkan kategori baru.</value>
+  </data>
+  <data name="Budgets.Field.Amount" xml:space="preserve">
+    <value>Batas bulanan</value>
+  </data>
+  <data name="Budgets.Field.Start" xml:space="preserve">
+    <value>Mulai pada</value>
+  </data>
+  <data name="Budgets.Field.Start.Hint" xml:space="preserve">
+    <value>Anggaran berlaku mulai bulan ini dan seterusnya.</value>
+  </data>
+  <data name="Budgets.Field.Threshold" xml:space="preserve">
+    <value>Ambang peringatan</value>
+  </data>
+  <data name="Budgets.Field.Threshold.Custom" xml:space="preserve">
+    <value>Gunakan ambang peringatan khusus</value>
+  </data>
+  <data name="Budgets.Field.Threshold.Default" xml:space="preserve">
+    <value>Ambang peringatan bawaan adalah {0}%.</value>
+  </data>
+  <data name="BudgetStatus.Normal" xml:space="preserve">
+    <value>Sesuai rencana</value>
+  </data>
+  <data name="BudgetStatus.Warning" xml:space="preserve">
+    <value>Hampir habis</value>
+  </data>
+  <data name="BudgetStatus.Exceeded" xml:space="preserve">
+    <value>Terlampaui</value>
+  </data>
+  <data name="Validation.BudgetNotFound" xml:space="preserve">
+    <value>Anggaran ini sudah tidak ada.</value>
+  </data>
+  <data name="Validation.BudgetExistsForCategory" xml:space="preserve">
+    <value>Kategori ini sudah memiliki anggaran.</value>
+  </data>
+  <data name="Validation.ThresholdOutOfRange" xml:space="preserve">
+    <value>Masukkan persentase dari 1 sampai 100.</value>
+  </data>
+  <data name="Validation.GoalNotFound" xml:space="preserve">
+    <value>Target ini sudah tidak ada.</value>
+  </data>
+  <data name="Validation.GoalArchived" xml:space="preserve">
+    <value>Target ini sudah diarsipkan.</value>
+  </data>
+  <data name="GoalStatus.Active" xml:space="preserve">
+    <value>Aktif</value>
+  </data>
+  <data name="GoalStatus.Completed" xml:space="preserve">
+    <value>Selesai</value>
+  </data>
+  <data name="GoalStatus.Archived" xml:space="preserve">
+    <value>Diarsipkan</value>
+  </data>
+  <data name="Goals.Add.Title" xml:space="preserve">
+    <value>Buat target</value>
+  </data>
+  <data name="Goals.Edit.Title" xml:space="preserve">
+    <value>Ubah target</value>
+  </data>
+  <data name="Goals.Created.Title" xml:space="preserve">
+    <value>Target dibuat</value>
+  </data>
+  <data name="Goals.Completed.Title" xml:space="preserve">
+    <value>Target selesai</value>
+  </data>
+  <data name="Goals.Reached" xml:space="preserve">
+    <value>Target tercapai</value>
+  </data>
+  <data name="Goals.Remaining" xml:space="preserve">
+    <value>Kurang {0}</value>
+  </data>
+  <data name="Goals.TargetDate" xml:space="preserve">
+    <value>Tanggal target {0}</value>
+  </data>
+  <data name="Goals.PerMonth" xml:space="preserve">
+    <value>Alokasikan sekitar {0} per bulan agar tercapai tepat waktu</value>
+  </data>
+  <data name="Goals.Overdue" xml:space="preserve">
+    <value>Tanggal target sudah lewat</value>
+  </data>
+  <data name="Goals.DueThisMonth" xml:space="preserve">
+    <value>Jatuh tempo bulan ini</value>
+  </data>
+  <data name="Goals.OverAllocated" xml:space="preserve">
+    <value>Saldo {0} kini lebih kecil dari jumlah yang dialokasikan ke target. Lepaskan sebagian alokasi atau tambahkan dana ke akun tersebut.</value>
+  </data>
+  <data name="Goals.Explainer" xml:space="preserve">
+    <value>Mengalokasikan berarti menyisihkan uang yang sudah ada di akun Anda. Ini tidak memindahkan uang atau mengubah saldo apa pun.</value>
+  </data>
+  <data name="Goals.TotalAllocated" xml:space="preserve">
+    <value>Saat ini dialokasikan:</value>
+  </data>
+  <data name="Goals.ShowArchived" xml:space="preserve">
+    <value>Tampilkan target yang diarsipkan</value>
+  </data>
+  <data name="Goals.Empty.Title" xml:space="preserve">
+    <value>Belum ada target tabungan</value>
+  </data>
+  <data name="Goals.Empty.Body" xml:space="preserve">
+    <value>Buat target, misalnya laptop baru, lalu alokasikan uang ke target itu dari akun Anda.</value>
+  </data>
+  <data name="Goals.Details.Title" xml:space="preserve">
+    <value>Detail target</value>
+  </data>
+  <data name="Goals.Allocate.Title" xml:space="preserve">
+    <value>Alokasikan</value>
+  </data>
+  <data name="Goals.Allocate.Primary" xml:space="preserve">
+    <value>Alokasikan</value>
+  </data>
+  <data name="Goals.Allocate.Explanation" xml:space="preserve">
+    <value>Sisihkan uang dari sebuah akun untuk target ini. Saldo akun tetap sama; jumlah ini tidak lagi dihitung tersedia untuk target lain.</value>
+  </data>
+  <data name="Goals.Allocate.Available" xml:space="preserve">
+    <value>Tersedia untuk dialokasikan: {0}</value>
+  </data>
+  <data name="Goals.Allocate.NoAccounts" xml:space="preserve">
+    <value>Tidak ada akun aktif untuk dialokasikan.</value>
+  </data>
+  <data name="Goals.Release.Title" xml:space="preserve">
+    <value>Lepaskan</value>
+  </data>
+  <data name="Goals.Release.Primary" xml:space="preserve">
+    <value>Lepaskan</value>
+  </data>
+  <data name="Goals.Release.Explanation" xml:space="preserve">
+    <value>Kembalikan uang yang dialokasikan ke saldo tersedia akun. Saldo akun tidak berubah.</value>
+  </data>
+  <data name="Goals.Release.Held" xml:space="preserve">
+    <value>Dialokasikan dari akun ini: {0}</value>
+  </data>
+  <data name="Goals.Release.Nothing" xml:space="preserve">
+    <value>Belum ada yang dialokasikan ke target ini.</value>
+  </data>
+  <data name="Goals.MarkCompleted" xml:space="preserve">
+    <value>Tandai selesai</value>
+  </data>
+  <data name="Goals.Reopen" xml:space="preserve">
+    <value>Buka kembali target</value>
+  </data>
+  <data name="Goals.Archive.Title" xml:space="preserve">
+    <value>Arsipkan target?</value>
+  </data>
+  <data name="Goals.Archive.Body" xml:space="preserve">
+    <value>"{0}" akan diarsipkan dan alokasinya sebesar {1} dikembalikan ke akun Anda. Riwayatnya tetap disimpan.</value>
+  </data>
+  <data name="Goals.Archive.Confirm" xml:space="preserve">
+    <value>Arsipkan</value>
+  </data>
+  <data name="Goals.ByAccount" xml:space="preserve">
+    <value>Dialokasikan dari</value>
+  </data>
+  <data name="Goals.History" xml:space="preserve">
+    <value>Riwayat kontribusi</value>
+  </data>
+  <data name="Goals.History.Empty" xml:space="preserve">
+    <value>Belum ada alokasi.</value>
+  </data>
+  <data name="Goals.Field.Name" xml:space="preserve">
+    <value>Nama target</value>
+  </data>
+  <data name="Goals.Field.Name.Placeholder" xml:space="preserve">
+    <value>mis. Laptop baru</value>
+  </data>
+  <data name="Goals.Field.Target" xml:space="preserve">
+    <value>Jumlah target</value>
+  </data>
+  <data name="Goals.Field.TargetDate" xml:space="preserve">
+    <value>Tanggal target (opsional)</value>
+  </data>
+  <data name="Goals.Field.TargetDate.Hint" xml:space="preserve">
+    <value>Digunakan untuk menyarankan jumlah alokasi setiap bulan.</value>
+  </data>
+  <data name="Goals.Field.Note" xml:space="preserve">
+    <value>Catatan (opsional)</value>
+  </data>
+  <data name="Dashboard.Budgets.More" xml:space="preserve">
+    <value>+{0} anggaran lainnya</value>
+  </data>
+  <data name="Dashboard.Budgets.Empty" xml:space="preserve">
+    <value>Belum ada anggaran.</value>
+  </data>
+  <data name="Search.BudgetSubtitle" xml:space="preserve">
+    <value>Anggaran bulanan {0}</value>
   </data>
 </root>

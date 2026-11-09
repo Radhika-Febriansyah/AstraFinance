@@ -117,7 +117,9 @@ public sealed class AstraDbContext : DbContext
             });
             e.Property(x => x.Notes).HasMaxLength(2000);
             e.HasOne<Category>().WithMany().HasForeignKey(x => x.CategoryId).OnDelete(DeleteBehavior.Restrict);
-            e.HasIndex(x => x.CategoryId);
+
+            // One budget per category (also enforced by the service with a friendly message).
+            e.HasIndex(x => x.CategoryId).IsUnique();
         });
 
         modelBuilder.Entity<SavingsGoal>(e =>

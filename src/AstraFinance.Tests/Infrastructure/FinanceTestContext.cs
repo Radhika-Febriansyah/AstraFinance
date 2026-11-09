@@ -29,6 +29,8 @@ internal sealed class FinanceTestContext : IAsyncDisposable
         Onboarding = new OnboardingService(Settings, Accounts, Pin);
         Regional = new RegionalFormatService(Settings, Accounts);
         Backup = new BackupService(Settings, Paths, Clock, NullLogger<BackupService>.Instance);
+        Budgets = new BudgetService(Factory, Settings, Clock);
+        Goals = new SavingsGoalService(Factory, Clock);
         Initializer = new DatabaseInitializer(Factory, Paths, Categories, Clock, NullLogger<DatabaseInitializer>.Instance);
     }
 
@@ -53,6 +55,10 @@ internal sealed class FinanceTestContext : IAsyncDisposable
     public RegionalFormatService Regional { get; }
 
     public BackupService Backup { get; }
+
+    public BudgetService Budgets { get; }
+
+    public SavingsGoalService Goals { get; }
 
     public DatabaseInitializer Initializer { get; }
 

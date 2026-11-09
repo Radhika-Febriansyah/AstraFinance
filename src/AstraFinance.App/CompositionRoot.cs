@@ -69,12 +69,16 @@ public static class CompositionRoot
         services.AddSingleton<IOnboardingService, OnboardingService>();
         services.AddSingleton<IRegionalFormatService, RegionalFormatService>();
         services.AddSingleton<IBackupService, BackupService>();
+        services.AddSingleton<IBudgetService, BudgetService>();
+        services.AddSingleton<ISavingsGoalService, SavingsGoalService>();
 
         // Global search: each module adds its own ISearchProvider as it is implemented.
         services.AddSingleton<ISearchProvider, PageSearchProvider>();
         services.AddSingleton<ISearchProvider, AccountSearchProvider>();
         services.AddSingleton<ISearchProvider, TransactionSearchProvider>();
         services.AddSingleton<ISearchProvider, CategorySearchProvider>();
+        services.AddSingleton<ISearchProvider, BudgetSearchProvider>();
+        services.AddSingleton<ISearchProvider, SavingsGoalSearchProvider>();
         services.AddSingleton<IGlobalSearchService, GlobalSearchService>();
 
         // Shell services
@@ -90,6 +94,9 @@ public static class CompositionRoot
         AddFactory<AccountEditorViewModel>(services);
         AddFactory<BalanceAdjustmentViewModel>(services);
         AddFactory<TransactionFormViewModel>(services);
+        AddFactory<BudgetFormViewModel>(services);
+        AddFactory<GoalFormViewModel>(services);
+        AddFactory<AllocationFormViewModel>(services);
         AddFactory<OnboardingViewModel>(services);
         AddFactory<LockViewModel>(services);
 
@@ -110,7 +117,9 @@ public static class CompositionRoot
             .Register(AppPage.Dashboard, sp => ActivatorUtilities.CreateInstance<DashboardViewModel>(sp))
             .Register(AppPage.Settings, sp => ActivatorUtilities.CreateInstance<SettingsViewModel>(sp))
             .Register(AppPage.Accounts, sp => ActivatorUtilities.CreateInstance<AccountsViewModel>(sp))
-            .Register(AppPage.Transactions, sp => ActivatorUtilities.CreateInstance<TransactionsViewModel>(sp));
+            .Register(AppPage.Transactions, sp => ActivatorUtilities.CreateInstance<TransactionsViewModel>(sp))
+            .Register(AppPage.Budgets, sp => ActivatorUtilities.CreateInstance<BudgetsViewModel>(sp))
+            .Register(AppPage.SavingsGoals, sp => ActivatorUtilities.CreateInstance<SavingsGoalsViewModel>(sp));
 
         foreach (var descriptor in PageCatalog.All)
         {

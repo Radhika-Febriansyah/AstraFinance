@@ -245,7 +245,8 @@ namespace AstraFinance.Infrastructure.Database.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CategoryId");
+                    b.HasIndex("CategoryId")
+                        .IsUnique();
 
                     b.ToTable("Budgets", null, t =>
                         {

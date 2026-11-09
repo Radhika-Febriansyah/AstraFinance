@@ -19,6 +19,21 @@
     <DataTemplate DataType="{x:Type pages:TransactionsViewModel}">
         <views:TransactionsPage />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:BudgetsViewModel}">
+        <views:BudgetsPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:SavingsGoalsViewModel}">
+        <views:SavingsGoalsPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:BudgetFormViewModel}">
+        <forms:BudgetForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:GoalFormViewModel}">
+        <forms:GoalForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:AllocationFormViewModel}">
+        <forms:AllocationForm />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type pages:AccountsViewModel}">
         <views:AccountsPage />
     </DataTemplate>

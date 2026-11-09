@@ -1,6 +1,6 @@
 # Astra Finance — Implementation Status
 
-Last updated: 2026-11-10 (Phase 5)
+Last updated: 2026-11-10 (Phase 6)
 
 | Phase | Name | Status |
 |---|---|---|
@@ -9,8 +9,8 @@ Last updated: 2026-11-10 (Phase 5)
 | 3 | Onboarding and Accounts | ✅ Complete (built, tested, run-verified) |
 | 4 | Transactions | ✅ Complete (built, tested, run-verified) |
 | 5 | Dashboard | ✅ Complete (built, tested, run-verified) |
-| 6 | Budgets and Savings Goals | ⏳ Next |
-| 7 | Bills and Subscriptions | Not started |
+| 6 | Budgets and Savings Goals | ✅ Complete (built, tested, run-verified) |
+| 7 | Bills and Subscriptions | ⏳ Next |
 | 8 | Analytics and Reports | Not started |
 | 9 | Settings and Data Protection | Partially started (language, theme, accent, About) |
 | 10 | QA and Release | Not started |
@@ -447,6 +447,55 @@ New coverage: monthly totals (window, zero months, transfers excluded, fees incl
 
 ---
 
-## Phase 6 — Budgets and Savings Goals (next)
+## Phase 6 — Budgets and Savings Goals
 
-Planned: budget management (monthly per expense category, warning threshold), budget page with usage/status, dashboard budget summary; savings goals with allocation-based contributions (never changing balances), allocation history, complete/archive; allocation integrity tests.
+### Completed tasks
+
+- **Budget service** (`IBudgetService`, `BudgetService`): create, edit, delete, list, monthly overview. One monthly budget per expense category (enforced by the service and a unique index — migration `BudgetCategoryUnique`). Validation: positive amount, expense categories only, warning threshold 1–100 %. Start date is normalised to the first of the month.
+- **Budget evaluation:** spent = sum of non-deleted **Expense** transactions in the category for the month (transfer fees count because they are expenses; income and transfers never do). Status Normal / Warning / Exceeded using the budget's own threshold or the configurable default (setting `Budgets.WarningThresholdPercent`, default 80 %).
+- **Budgets page:** month navigation (previous / next / back to this month), total spent of total budget with progress, per-budget card with limit, spent, remaining or over, percentage and status badge; add, edit, delete (confirmed) and "Show expenses" (opens Transactions filtered by category). Empty state with a create action. Live refresh when transactions change.
+- **Savings goal service** (`ISavingsGoalService`, `SavingsGoalService`): create, edit, allocate, release, history, complete / reopen, archive, per-account allocation info.
+- **Allocation integrity:** allocations are signed history entries referencing the source account; they **never change account balances**. Allocate and release are validated inside a database transaction: amount ≤ account's unallocated balance (balance − allocations to all goals), release ≤ what the goal holds from that account, no allocation from inactive accounts or to archived goals. Archiving a goal records release entries for everything it still holds, so the history stays complete.
+- **Savings Goals page:** goal cards (allocated / target, progress, remaining), details panel with allocated-by-account, contribution history, monthly pace suggestion from the target date, Allocate / Release / Edit / Mark completed / Reopen / Archive (confirmed), show-archived toggle, explainer that allocation doesn't move money, and a warning when spending pushes an account's balance below what it has allocated.
+- **Dashboard:** budget summary card now shows real budgets for the month (top 4 by urgency, "+N more", empty state, "View all").
+- **Global search:** budgets and savings goals are searchable; results open the relevant page/goal.
+- Indonesian and English strings for everything above (~77 keys).
+
+### Build status
+
+`dotnet build` — **succeeded, 0 warnings, 0 errors**.
+
+### Test status
+
+`dotnet test` — **253 passed, 0 failed** (237 previous + 16 new).
+
+New coverage: budget create/validate/duplicate/threshold, expense-only spending (income, transfers and deleted excluded; fees included), status thresholds, month boundaries, delete; goal allocation never changing balances, allocation limit across goals, release limit, inactive account and archived goal rejection, archive auto-release, over-allocation detection after spending; Budgets and Savings Goals pages, dashboard summary and search.
+
+### Manual verification (real app, 125 % DPI)
+
+- Upgrade path: the existing Phase 4 test database was migrated; a verified pre-migration safety copy was written to `Backups` first.
+- Created budgets (Food & Drinks 90 % "Nearly used", Fees & Charges 6 % "On track") and a Laptop Fund goal with a Rp4.000.000 allocation (50 %); total balance unchanged on the dashboard; dashboard budget card shows both budgets.
+- Test data was only borrowed; the real data folder is back to a clean setup state (moved to `%LOCALAPPDATA%\AstraFinance.phase4-test-data`).
+
+### Bugs found and fixed during this phase
+
+- Goal explainer banner was clipped at narrower widths (text in a horizontal StackPanel) — now a wrapping grid.
+- Contribution history showed a dangling "·" when an entry had no note.
+
+### Remaining / notes
+
+- Budget-warning notifications are deferred to Phase 7 (notifications) / Phase 9 (notification settings); the default threshold is already stored as a setting.
+- Budgets are monthly only (the specification's only required period).
+
+### Important decisions
+
+1. **One budget per category**, applying from its start month onward; editing changes it for all months (no per-month history of limits in v1).
+2. **Deleting a budget is a hard delete** — budgets are plans, not financial records; transactions are untouched.
+3. **Allocations are an append-only signed ledger** (positive = allocate, negative = release); a goal's allocated amount is the sum, so history and totals can never disagree.
+4. **Over-allocation is warned, not blocked**, when it comes from spending — expenses must never be refused because money was earmarked.
+
+---
+
+## Phase 7 — Bills and Subscriptions (next)
+
+Planned: recurring bill management (daily/weekly/monthly/yearly), payment confirmation creating a single Expense (no automatic balance changes on due dates), duplicate-payment prevention, local Windows notifications and reminder preferences.

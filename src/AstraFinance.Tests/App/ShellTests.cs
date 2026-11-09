@@ -174,9 +174,9 @@ public sealed partial class ShellTests : IAsyncLifetime, IDisposable
     [Fact]
     public async Task Navigating_to_the_current_page_is_a_no_op()
     {
-        await Navigation.NavigateAsync(AppPage.Budgets);
+        await Navigation.NavigateAsync(AppPage.Reports);
         var first = Navigation.CurrentPage;
-        await Navigation.NavigateAsync(AppPage.Budgets);
+        await Navigation.NavigateAsync(AppPage.Reports);
         Assert.Same(first, Navigation.CurrentPage);
         Assert.IsType<UpcomingModuleViewModel>(first);
     }
