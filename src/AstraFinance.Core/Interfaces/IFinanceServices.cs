@@ -80,6 +80,12 @@ public interface ITransactionService
 
     Task<IncomeExpenseTotals> GetIncomeExpenseTotalsAsync(DateRange range, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Income and expense per month for <paramref name="months"/> consecutive months ending with the month
+    /// of <paramref name="lastMonth"/>. Months without activity are included with zeros.
+    /// </summary>
+    Task<IReadOnlyList<MonthlyTotals>> GetMonthlyTotalsAsync(DateOnly lastMonth, int months, CancellationToken cancellationToken = default);
+
     /// <summary>Expense totals per category for budgets (Expense transactions only).</summary>
     Task<IReadOnlyDictionary<Guid, long>> GetExpenseTotalsByCategoryAsync(DateRange range, CancellationToken cancellationToken = default);
 }

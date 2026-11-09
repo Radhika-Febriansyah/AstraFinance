@@ -51,6 +51,39 @@ public static class MoneyFormatter
         return negative ? "-" + text : text;
     }
 
+    /// <summary>
+    /// Short label for chart axes, e.g. "Rp8jt", "Rp1,5jt", "$2.3M". <paramref name="suffixes"/> are the
+    /// localized thousand/million/billion/trillion suffixes. Display only — never used for stored values.
+    /// </summary>
+    public static string FormatCompact(long minorUnits, RegionalFormat format, IReadOnlyList<string> suffixes)
+    {
+        ArgumentNullException.ThrowIfNull(format);
+        ArgumentNullException.ThrowIfNull(suffixes);
+        if (suffixes.Count != 4)
+        {
+            throw new ArgumentException("Expected four suffixes (thousand, million, billion, trillion).", nameof(suffixes));
+        }
+
+        var negative = minorUnits < 0;
+        var major = Math.Abs((decimal)minorUnits) / format.Currency.Scale;
+        string number;
+        var tier = major >= 1_000_000_000_000m ? 3 : major >= 1_000_000_000m ? 2 : major >= 1_000_000m ? 1 : major >= 1_000m ? 0 : -1;
+        if (tier < 0)
+        {
+            number = Math.Round(major, 0, MidpointRounding.AwayFromZero).ToString("0", CultureInfo.InvariantCulture);
+        }
+        else
+        {
+            var scaled = major / (decimal)Math.Pow(1000, tier + 1);
+            number = Math.Round(scaled, 1, MidpointRounding.AwayFromZero).ToString("0.#", CultureInfo.InvariantCulture)
+                .Replace('.', format.DecimalSeparator) + suffixes[tier];
+        }
+
+        var symbol = format.Currency.SymbolBeforeAmount ? format.Currency.Symbol : string.Empty;
+        var after = format.Currency.SymbolBeforeAmount ? string.Empty : " " + format.Currency.Symbol;
+        return (negative ? "-" : string.Empty) + symbol + number + after;
+    }
+
     /// <summary>A representative amount for previews: 1,234,567 (plus .89 for currencies with minor units).</summary>
     public static long SampleAmount(CurrencyInfo currency)
     {

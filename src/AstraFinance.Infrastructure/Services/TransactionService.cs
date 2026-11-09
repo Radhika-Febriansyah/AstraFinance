@@ -271,6 +271,39 @@ public sealed class TransactionService : ITransactionService
         }
     }
 
+    public async Task<IReadOnlyList<MonthlyTotals>> GetMonthlyTotalsAsync(DateOnly lastMonth, int months, CancellationToken cancellationToken = default)
+    {
+        ArgumentOutOfRangeException.ThrowIfLessThan(months, 1);
+        ArgumentOutOfRangeException.ThrowIfGreaterThan(months, 120);
+        var end = DateRange.MonthOf(lastMonth).End;
+        var start = DateRange.MonthOf(lastMonth.AddMonths(-(months - 1))).Start;
+
+        var db = await _factory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);
+        await using (db.ConfigureAwait(false))
+        {
+            // Project only the needed columns and aggregate in memory (exact long sums, no SQL date functions).
+            var rows = await db.Transactions.AsNoTracking()
+                .Where(t => t.Date >= start && t.Date <= end
+                            && (t.Type == TransactionType.Income || t.Type == TransactionType.Expense))
+                .Select(t => new { t.Date, t.Type, t.Amount })
+                .ToListAsync(cancellationToken).ConfigureAwait(false);
+
+            var result = new List<MonthlyTotals>(months);
+            for (var i = 0; i < months; i++)
+            {
+                var month = start.AddMonths(i);
+                var inMonth = rows.Where(r => r.Date.Year == month.Year && r.Date.Month == month.Month).ToList();
+                result.Add(new MonthlyTotals(
+                    month.Year,
+                    month.Month,
+                    MoneyMath.Sum(inMonth.Where(r => r.Type == TransactionType.Income).Select(r => r.Amount)),
+                    MoneyMath.Sum(inMonth.Where(r => r.Type == TransactionType.Expense).Select(r => r.Amount))));
+            }
+
+            return result;
+        }
+    }
+
     public async Task<IReadOnlyDictionary<Guid, long>> GetExpenseTotalsByCategoryAsync(DateRange range, CancellationToken cancellationToken = default)
     {
         var db = await _factory.CreateDbContextAsync(cancellationToken).ConfigureAwait(false);

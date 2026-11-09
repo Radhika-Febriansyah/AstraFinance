@@ -11,6 +11,8 @@ Astra Finance includes or depends on the following third-party components.
 | Microsoft.EntityFrameworkCore.Sqlite (incl. Microsoft.Data.Sqlite) | MIT | https://github.com/dotnet/efcore |
 | SQLitePCLRaw (bundled with Microsoft.Data.Sqlite) | Apache-2.0 | https://github.com/ericsink/SQLitePCL.raw |
 | SQLite | Public domain | https://sqlite.org/copyright.html |
+| LiveCharts2 (LiveChartsCore.SkiaSharpView.WPF) | MIT | https://github.com/beto-rodriguez/LiveCharts2 |
+| SkiaSharp / HarfBuzzSharp (via LiveCharts2) | MIT | https://github.com/mono/SkiaSharp |
 | Lucide icons (geometry adapted as XAML paths) | ISC | https://lucide.dev |
 | xUnit (tests only, not distributed) | Apache-2.0 | https://github.com/xunit/xunit |
 

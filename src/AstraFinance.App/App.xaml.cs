@@ -69,6 +69,9 @@ public partial class App : Application
                 return;
             }
 
+            // Charts use the app font (Segoe UI) instead of Skia's default typeface.
+            LiveChartsCore.LiveCharts.Configure(config => LiveChartsCore.SkiaSharpView.LiveChartsSkiaSharp.HasTextSettings(config, new LiveChartsCore.SkiaSharpView.TextSettings { DefaultTypeface = SkiaSharp.SKTypeface.FromFamilyName("Segoe UI") }));
+
             var regional = _services.GetRequiredService<IRegionalFormatService>();
             await regional.LoadAsync().ConfigureAwait(true);
             Converters.DisplayFormat.Service = regional;

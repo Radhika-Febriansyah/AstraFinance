@@ -1014,4 +1014,61 @@
   <data name="Transactions.Details.OpenTransfer" xml:space="preserve">
     <value>Buka transfernya</value>
   </data>
+  <data name="Dashboard.Accounts" xml:space="preserve">
+    <value>{0} akun aktif</value>
+  </data>
+  <data name="Dashboard.Net" xml:space="preserve">
+    <value>Selisih bulan ini: {0}</value>
+  </data>
+  <data name="Dashboard.TotalBalance" xml:space="preserve">
+    <value>Total saldo</value>
+  </data>
+  <data name="Dashboard.TotalBalance.Tooltip" xml:space="preserve">
+    <value>Buka Akun</value>
+  </data>
+  <data name="Dashboard.MonthIncome" xml:space="preserve">
+    <value>Pemasukan bulan ini</value>
+  </data>
+  <data name="Dashboard.MonthExpense" xml:space="preserve">
+    <value>Pengeluaran bulan ini</value>
+  </data>
+  <data name="Dashboard.CashFlow" xml:space="preserve">
+    <value>Arus kas</value>
+  </data>
+  <data name="Dashboard.CashFlow.Tooltip" xml:space="preserve">
+    <value>Buka Analitik</value>
+  </data>
+  <data name="Dashboard.CashFlow.Empty" xml:space="preserve">
+    <value>Belum ada pemasukan atau pengeluaran dalam 6 bulan terakhir. Grafik muncul setelah Anda mencatat transaksi.</value>
+  </data>
+  <data name="Dashboard.Expenses" xml:space="preserve">
+    <value>Pengeluaran</value>
+  </data>
+  <data name="Dashboard.Recent" xml:space="preserve">
+    <value>Transaksi terbaru</value>
+  </data>
+  <data name="Dashboard.ViewAll" xml:space="preserve">
+    <value>Lihat semua</value>
+  </data>
+  <data name="Dashboard.AddFirst" xml:space="preserve">
+    <value>Tambah transaksi pertama</value>
+  </data>
+  <data name="Dashboard.Budgets" xml:space="preserve">
+    <value>Ringkasan anggaran</value>
+  </data>
+  <data name="Dashboard.Budgets.Pending" xml:space="preserve">
+    <value>Anggaran diatur pada fase pengembangan 6. Setelah Anda membuat anggaran, penggunaan bulan ini per kategori akan muncul di sini.</value>
+  </data>
+  <data name="Compact.Thousand" xml:space="preserve">
+    <value>rb</value>
+  </data>
+  <data name="Compact.Million" xml:space="preserve">
+    <value>jt</value>
+  </data>
+  <data name="Compact.Billion" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="Compact.Trillion" xml:space="preserve">
+    <value>T</value>
+  </data>
 </root>

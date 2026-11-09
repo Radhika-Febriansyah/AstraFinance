@@ -1014,4 +1014,61 @@
   <data name="Transactions.Details.OpenTransfer" xml:space="preserve">
     <value>Open the transfer</value>
   </data>
+  <data name="Dashboard.Accounts" xml:space="preserve">
+    <value>{0} active accounts</value>
+  </data>
+  <data name="Dashboard.Net" xml:space="preserve">
+    <value>Net this month: {0}</value>
+  </data>
+  <data name="Dashboard.TotalBalance" xml:space="preserve">
+    <value>Total balance</value>
+  </data>
+  <data name="Dashboard.TotalBalance.Tooltip" xml:space="preserve">
+    <value>Open Accounts</value>
+  </data>
+  <data name="Dashboard.MonthIncome" xml:space="preserve">
+    <value>Income this month</value>
+  </data>
+  <data name="Dashboard.MonthExpense" xml:space="preserve">
+    <value>Expenses this month</value>
+  </data>
+  <data name="Dashboard.CashFlow" xml:space="preserve">
+    <value>Cash flow</value>
+  </data>
+  <data name="Dashboard.CashFlow.Tooltip" xml:space="preserve">
+    <value>Open Analytics</value>
+  </data>
+  <data name="Dashboard.CashFlow.Empty" xml:space="preserve">
+    <value>No income or expenses in the last 6 months yet. The chart appears once you record transactions.</value>
+  </data>
+  <data name="Dashboard.Expenses" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="Dashboard.Recent" xml:space="preserve">
+    <value>Recent transactions</value>
+  </data>
+  <data name="Dashboard.ViewAll" xml:space="preserve">
+    <value>View all</value>
+  </data>
+  <data name="Dashboard.AddFirst" xml:space="preserve">
+    <value>Add your first transaction</value>
+  </data>
+  <data name="Dashboard.Budgets" xml:space="preserve">
+    <value>Budget summary</value>
+  </data>
+  <data name="Dashboard.Budgets.Pending" xml:space="preserve">
+    <value>Budgets are set up in development phase 6. Once you create budgets, this month's usage per category appears here.</value>
+  </data>
+  <data name="Compact.Thousand" xml:space="preserve">
+    <value>K</value>
+  </data>
+  <data name="Compact.Million" xml:space="preserve">
+    <value>M</value>
+  </data>
+  <data name="Compact.Billion" xml:space="preserve">
+    <value>B</value>
+  </data>
+  <data name="Compact.Trillion" xml:space="preserve">
+    <value>T</value>
+  </data>
 </root>

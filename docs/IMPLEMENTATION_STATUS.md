@@ -1,6 +1,6 @@
 # Astra Finance — Implementation Status
 
-Last updated: 2026-11-10 (Phase 4)
+Last updated: 2026-11-10 (Phase 5)
 
 | Phase | Name | Status |
 |---|---|---|
@@ -8,8 +8,8 @@ Last updated: 2026-11-10 (Phase 4)
 | 2 | Database | ✅ Complete (built, tested, run-verified) |
 | 3 | Onboarding and Accounts | ✅ Complete (built, tested, run-verified) |
 | 4 | Transactions | ✅ Complete (built, tested, run-verified) |
-| 5 | Dashboard | ⏳ Next (greeting/date done in Phase 1) |
-| 6 | Budgets and Savings Goals | Not started |
+| 5 | Dashboard | ✅ Complete (built, tested, run-verified) |
+| 6 | Budgets and Savings Goals | ⏳ Next |
 | 7 | Bills and Subscriptions | Not started |
 | 8 | Analytics and Reports | Not started |
 | 9 | Settings and Data Protection | Partially started (language, theme, accent, About) |
@@ -401,6 +401,52 @@ New coverage: summary rules (transfers excluded, fees included, account filter),
 
 ---
 
-## Phase 5 — Dashboard (next)
+## Phase 5 — Dashboard
 
-Planned: total balance, monthly income and expenses, cash-flow chart (LiveCharts2 after licence check), recent transactions (open details), budget summary (once budgets exist in Phase 6, shown with an honest empty state until then), and the navigation interactions from the specification.
+### Completed tasks
+
+- **Charting library:** LiveCharts2 (`LiveChartsCore.SkiaSharpView.WPF` 2.0.5, stable, June 2026). Licence MIT; dependencies SkiaSharp/HarfBuzzSharp (MIT); no published advisories. Added to the App project only and listed in `THIRD_PARTY_NOTICES.md` and Settings → About. Charts use Segoe UI.
+- **Dashboard** (`DashboardViewModel`, `DashboardPage`), all figures from the database:
+  - Greeting and current date (refresh every minute; data reloads when the day changes).
+  - Total balance (all accounts, red when negative) with the number of active accounts — click opens Accounts.
+  - Income and expenses this month, plus net for the month.
+  - Cash-flow chart: income vs. expenses per month for the last six months (current month last), theme-coloured, compact axis labels ("Rp8jt" / "Rp8M"), full amounts in tooltips. Click opens Analytics. When the period has no income or expenses, an empty-state message is shown instead of an empty chart.
+  - Recent transactions (5 newest) — click opens the transaction's details; "View all" opens Transactions; empty state with "Add your first transaction" (Quick Add).
+  - Budget summary card: honest note that budgets arrive in Phase 6 (no figures shown).
+  - Live refresh after changes anywhere (Quick Add, edits, deletes); chart repaints on theme change.
+  - Responsive layout: three summary cards side by side, chart and recent list side by side on wide windows; stacked below ~900 px; single-column cards below ~640 px.
+- **Services:** `ITransactionService.GetMonthlyTotalsAsync` (consecutive months, zero months included, Income/Expense only, deleted excluded, exact integer sums). `MoneyFormatter.FormatCompact` for chart axes (display only; localized suffixes rb/jt/M/T and K/M/B/T).
+
+### Build status
+
+`dotnet build` — **succeeded, 0 warnings, 0 errors**.
+
+### Test status
+
+`dotnet test` — **237 passed, 0 failed** (223 previous + 14 new).
+
+New coverage: monthly totals (window, zero months, transfers excluded, fees included, deleted excluded, year boundary), compact labels (IDR and USD, negative, rounding), dashboard figures (total balance, month income/expense/net, six-month series, recent ordering), empty dashboard (no fake data; opening balance is real), Quick Add from the dashboard with live refresh, card navigation (Accounts, Analytics, transaction details).
+
+### Manual verification (real app, 125 % DPI)
+
+- Dashboard with real data in dark and light themes (chart recoloured live), compact layout at ~880 px.
+- Total balance card → Accounts.
+- Test data was only borrowed for the run; the real data folder is back to a clean setup state (test data and the automatic backup it produced are in `%LOCALAPPDATA%\AstraFinance.phase4-test-data`).
+
+### Remaining / notes
+
+- Budget summary becomes real in Phase 6.
+- Analytics (Phase 8) is still a status page; the cash-flow card already navigates there.
+- Removed a duplicate Quick Add button from the dashboard header (Quick Add lives in the top bar per the specification).
+
+### Important decisions
+
+1. **Chart series are built in the view** from plain view-model data, so dashboard logic stays testable without the charting library.
+2. **Monthly aggregation happens in memory** over a projected (date, type, amount) list — exact `long` sums and no reliance on SQL date functions.
+3. **Compact labels are for axes only**; every amount a user reads as a value (cards, tooltips, lists) is the exact formatted amount.
+
+---
+
+## Phase 6 — Budgets and Savings Goals (next)
+
+Planned: budget management (monthly per expense category, warning threshold), budget page with usage/status, dashboard budget summary; savings goals with allocation-based contributions (never changing balances), allocation history, complete/archive; allocation integrity tests.

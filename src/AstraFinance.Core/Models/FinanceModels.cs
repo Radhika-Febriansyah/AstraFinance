@@ -116,6 +116,12 @@ public sealed record TransactionSummary(int Count, long Income, long Expense)
     public long Net => checked(Income - Expense);
 }
 
+/// <summary>Income and expense for one calendar month (transfers excluded, deleted records excluded).</summary>
+public sealed record MonthlyTotals(int Year, int Month, long Income, long Expense)
+{
+    public long Net => checked(Income - Expense);
+}
+
 /// <summary>Income and expense totals for a period. Transfers and adjustments are never included.</summary>
 public sealed record IncomeExpenseTotals(long Income, long Expense)
 {

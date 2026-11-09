@@ -77,6 +77,8 @@ public sealed partial class SettingsViewModel : PageViewModel
         new("Entity Framework Core / Microsoft.Data.Sqlite", "MIT", "https://github.com/dotnet/efcore"),
         new("SQLitePCLRaw", "Apache-2.0", "https://github.com/ericsink/SQLitePCL.raw"),
         new("SQLite", "Public domain", "https://sqlite.org"),
+        new("LiveCharts2", "MIT", "https://github.com/beto-rodriguez/LiveCharts2"),
+        new("SkiaSharp", "MIT", "https://github.com/mono/SkiaSharp"),
         new("Lucide icon geometry", "ISC", "https://lucide.dev/license"),
     ];
 
