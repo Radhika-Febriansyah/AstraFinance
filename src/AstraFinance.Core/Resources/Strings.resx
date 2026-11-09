@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App.Name" xml:space="preserve">
+    <value>Astra Finance</value>
+  </data>
+  <data name="App.Tagline" xml:space="preserve">
+    <value>Personal finance, kept on your device.</value>
+  </data>
+  <data name="Nav.Dashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="Nav.Transactions" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="Nav.Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="Nav.Budgets" xml:space="preserve">
+    <value>Budgets</value>
+  </data>
+  <data name="Nav.SavingsGoals" xml:space="preserve">
+    <value>Savings Goals</value>
+  </data>
+  <data name="Nav.Bills" xml:space="preserve">
+    <value>Bills &amp; Subscriptions</value>
+  </data>
+  <data name="Nav.Analytics" xml:space="preserve">
+    <value>Analytics</value>
+  </data>
+  <data name="Nav.Reports" xml:space="preserve">
+    <value>Reports</value>
+  </data>
+  <data name="Nav.Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Page.Dashboard.Description" xml:space="preserve">
+    <value>Your financial overview at a glance.</value>
+  </data>
+  <data name="Page.Transactions.Description" xml:space="preserve">
+    <value>Record and review income, expenses, and transfers.</value>
+  </data>
+  <data name="Page.Accounts.Description" xml:space="preserve">
+    <value>Manage cash, bank, e-wallet, and savings accounts.</value>
+  </data>
+  <data name="Page.Budgets.Description" xml:space="preserve">
+    <value>Plan monthly spending limits by category.</value>
+  </data>
+  <data name="Page.SavingsGoals.Description" xml:space="preserve">
+    <value>Allocate funds toward the things you are saving for.</value>
+  </data>
+  <data name="Page.Bills.Description" xml:space="preserve">
+    <value>Track recurring bills and subscriptions.</value>
+  </data>
+  <data name="Page.Analytics.Description" xml:space="preserve">
+    <value>Explore trends in your income and spending.</value>
+  </data>
+  <data name="Page.Reports.Description" xml:space="preserve">
+    <value>Export financial reports as PDF, Excel, or CSV.</value>
+  </data>
+  <data name="Page.Settings.Description" xml:space="preserve">
+    <value>Language, appearance, security, and data preferences.</value>
+  </data>
+  <data name="Shell.Search.Placeholder" xml:space="preserve">
+    <value>Search Astra Finance</value>
+  </data>
+  <data name="Shell.Search.Shortcut" xml:space="preserve">
+    <value>Ctrl+K</value>
+  </data>
+  <data name="Shell.Search.NoResults" xml:space="preserve">
+    <value>No results for "{0}"</value>
+  </data>
+  <data name="Shell.Search.Hint" xml:space="preserve">
+    <value>↑ ↓ to move · Enter to open · Esc to close</value>
+  </data>
+  <data name="Shell.Search.Clear" xml:space="preserve">
+    <value>Clear search</value>
+  </data>
+  <data name="SearchCategory.Pages" xml:space="preserve">
+    <value>Pages</value>
+  </data>
+  <data name="SearchCategory.Transactions" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="SearchCategory.Accounts" xml:space="preserve">
+    <value>Accounts</value>
+  </data>
+  <data name="SearchCategory.Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="SearchCategory.Budgets" xml:space="preserve">
+    <value>Budgets</value>
+  </data>
+  <data name="SearchCategory.SavingsGoals" xml:space="preserve">
+    <value>Savings Goals</value>
+  </data>
+  <data name="SearchCategory.Bills" xml:space="preserve">
+    <value>Bills &amp; Subscriptions</value>
+  </data>
+  <data name="Shell.QuickAdd" xml:space="preserve">
+    <value>Quick Add</value>
+  </data>
+  <data name="Shell.QuickAdd.Tooltip" xml:space="preserve">
+    <value>Quick Add Transaction (Ctrl+N)</value>
+  </data>
+  <data name="Shell.Notifications" xml:space="preserve">
+    <value>Notifications</value>
+  </data>
+  <data name="Shell.Notifications.Empty.Title" xml:space="preserve">
+    <value>You're all caught up</value>
+  </data>
+  <data name="Shell.Notifications.Empty.Body" xml:space="preserve">
+    <value>New alerts and reminders will appear here.</value>
+  </data>
+  <data name="Shell.Notifications.ClearAll" xml:space="preserve">
+    <value>Clear all</value>
+  </data>
+  <data name="Shell.Notifications.Dismiss" xml:space="preserve">
+    <value>Dismiss</value>
+  </data>
+  <data name="Shell.Menu" xml:space="preserve">
+    <value>Application menu</value>
+  </data>
+  <data name="Shell.Menu.Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="Shell.Menu.Language" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="Shell.Menu.Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Shell.Menu.About" xml:space="preserve">
+    <value>About Astra Finance</value>
+  </data>
+  <data name="Shell.Sidebar.Collapse" xml:space="preserve">
+    <value>Collapse sidebar (Ctrl+B)</value>
+  </data>
+  <data name="Shell.Sidebar.Expand" xml:space="preserve">
+    <value>Expand sidebar (Ctrl+B)</value>
+  </data>
+  <data name="Theme.Light" xml:space="preserve">
+    <value>Light</value>
+  </data>
+  <data name="Theme.Dark" xml:space="preserve">
+    <value>Dark</value>
+  </data>
+  <data name="Theme.System" xml:space="preserve">
+    <value>Follow System</value>
+  </data>
+  <data name="Language.English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Language.Indonesian" xml:space="preserve">
+    <value>Bahasa Indonesia</value>
+  </data>
+  <data name="Accent.Coral" xml:space="preserve">
+    <value>Coral</value>
+  </data>
+  <data name="Accent.Amber" xml:space="preserve">
+    <value>Amber</value>
+  </data>
+  <data name="Accent.Teal" xml:space="preserve">
+    <value>Teal</value>
+  </data>
+  <data name="Accent.Blue" xml:space="preserve">
+    <value>Blue</value>
+  </data>
+  <data name="Accent.Violet" xml:space="preserve">
+    <value>Violet</value>
+  </data>
+  <data name="Greeting.Morning" xml:space="preserve">
+    <value>Good morning</value>
+  </data>
+  <data name="Greeting.Midday" xml:space="preserve">
+    <value>Good afternoon</value>
+  </data>
+  <data name="Greeting.Afternoon" xml:space="preserve">
+    <value>Good afternoon</value>
+  </data>
+  <data name="Greeting.Night" xml:space="preserve">
+    <value>Good evening</value>
+  </data>
+  <data name="Dashboard.Subtitle" xml:space="preserve">
+    <value>Here is your financial overview.</value>
+  </data>
+  <data name="Module.InDevelopment.Title" xml:space="preserve">
+    <value>Not available yet</value>
+  </data>
+  <data name="Module.InDevelopment.Body" xml:space="preserve">
+    <value>{0} is scheduled for development phase {1}. No figures are shown here until this module works with your real records.</value>
+  </data>
+  <data name="Module.InDevelopment.Badge" xml:space="preserve">
+    <value>Phase {0}</value>
+  </data>
+  <data name="Settings.Section.General" xml:space="preserve">
+    <value>General</value>
+  </data>
+  <data name="Settings.Section.Appearance" xml:space="preserve">
+    <value>Appearance</value>
+  </data>
+  <data name="Settings.Section.About" xml:space="preserve">
+    <value>About</value>
+  </data>
+  <data name="Settings.Language" xml:space="preserve">
+    <value>Application language</value>
+  </data>
+  <data name="Settings.Language.Description" xml:space="preserve">
+    <value>Changes take effect immediately.</value>
+  </data>
+  <data name="Settings.Theme" xml:space="preserve">
+    <value>Theme</value>
+  </data>
+  <data name="Settings.Theme.Description" xml:space="preserve">
+    <value>Follow System uses your Windows app mode.</value>
+  </data>
+  <data name="Settings.Accent" xml:space="preserve">
+    <value>Accent color</value>
+  </data>
+  <data name="Settings.Accent.Description" xml:space="preserve">
+    <value>Used for highlights, selection, and primary actions.</value>
+  </data>
+  <data name="Settings.Upcoming" xml:space="preserve">
+    <value>Regional formats, categories, notifications, security, and data management settings are added in later development phases.</value>
+  </data>
+  <data name="About.Version" xml:space="preserve">
+    <value>Version</value>
+  </data>
+  <data name="About.Developer" xml:space="preserve">
+    <value>Developer</value>
+  </data>
+  <data name="About.DataLocation" xml:space="preserve">
+    <value>Data location</value>
+  </data>
+  <data name="About.ThirdParty" xml:space="preserve">
+    <value>Third-party components</value>
+  </data>
+  <data name="About.Privacy" xml:space="preserve">
+    <value>Astra Finance works offline and keeps your data on this device. It does not connect to your bank.</value>
+  </data>
+  <data name="About.OpenDataFolder" xml:space="preserve">
+    <value>Open data folder</value>
+  </data>
+  <data name="Dialog.OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Dialog.Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Dialog.Close" xml:space="preserve">
+    <value>Close</value>
+  </data>
+  <data name="Error.Unexpected.Title" xml:space="preserve">
+    <value>Something went wrong</value>
+  </data>
+  <data name="Error.Unexpected.Body" xml:space="preserve">
+    <value>An unexpected error occurred. Technical details were written to the diagnostic log in {0}.</value>
+  </data>
+  <data name="Error.PreferencesSave.Title" xml:space="preserve">
+    <value>Preferences not saved</value>
+  </data>
+  <data name="Error.PreferencesSave.Body" xml:space="preserve">
+    <value>Your change applies to this session but could not be saved to disk.</value>
+  </data>
+  <data name="Notification.PreferencesReset.Title" xml:space="preserve">
+    <value>Preferences reset</value>
+  </data>
+  <data name="Notification.PreferencesReset.Body" xml:space="preserve">
+    <value>Your preferences file could not be read, so default preferences were restored. The unreadable file was kept as a backup copy.</value>
+  </data>
+  <data name="About.Title" xml:space="preserve">
+    <value>About Astra Finance</value>
+  </data>
+  <data name="About.Summary" xml:space="preserve">
+    <value>Version {0} · Developed by {1}</value>
+  </data>
+  <data name="Shell.Breadcrumb.Separator" xml:space="preserve">
+    <value>›</value>
+  </data>
+  <data name="Settings.Theme.Label" xml:space="preserve">
+    <value>Theme mode</value>
+  </data>
+  <data name="EmptyState.NoResults" xml:space="preserve">
+    <value>No matches</value>
+  </data>
+  <data name="Validation.Required" xml:space="preserve">
+    <value>This field is required.</value>
+  </data>
+  <data name="Validation.TooLong" xml:space="preserve">
+    <value>This text is too long.</value>
+  </data>
+  <data name="Validation.AmountMustBePositive" xml:space="preserve">
+    <value>Enter an amount greater than zero.</value>
+  </data>
+  <data name="Validation.AmountTooLarge" xml:space="preserve">
+    <value>This amount is too large.</value>
+  </data>
+  <data name="Validation.AmountMustNotBeZero" xml:space="preserve">
+    <value>The amount cannot be zero.</value>
+  </data>
+  <data name="Validation.AccountNotFound" xml:space="preserve">
+    <value>The selected account no longer exists.</value>
+  </data>
+  <data name="Validation.AccountInactive" xml:space="preserve">
+    <value>The selected account is inactive.</value>
+  </data>
+  <data name="Validation.CategoryNotFound" xml:space="preserve">
+    <value>The selected category no longer exists.</value>
+  </data>
+  <data name="Validation.CategoryInactive" xml:space="preserve">
+    <value>The selected category is inactive.</value>
+  </data>
+  <data name="Validation.CategoryKindMismatch" xml:space="preserve">
+    <value>Choose an income category for income and an expense category for expenses.</value>
+  </data>
+  <data name="Validation.CategoryNotAllowedForTransfer" xml:space="preserve">
+    <value>Transfers do not use a category.</value>
+  </data>
+  <data name="Validation.TransferSameAccount" xml:space="preserve">
+    <value>Choose two different accounts for a transfer.</value>
+  </data>
+  <data name="Validation.TransferDestinationRequired" xml:space="preserve">
+    <value>Choose the account that receives the transfer.</value>
+  </data>
+  <data name="Validation.DestinationOnlyForTransfer" xml:space="preserve">
+    <value>Only transfers have a destination account.</value>
+  </data>
+  <data name="Validation.FeeOnlyForTransfer" xml:space="preserve">
+    <value>Only transfers can have a transfer fee.</value>
+  </data>
+  <data name="Validation.TransactionNotFound" xml:space="preserve">
+    <value>This transaction no longer exists.</value>
+  </data>
+  <data name="Validation.FeeEditedThroughTransfer" xml:space="preserve">
+    <value>Edit the fee through its transfer.</value>
+  </data>
+  <data name="Validation.BalanceUnchanged" xml:space="preserve">
+    <value>The new balance equals the current balance.</value>
+  </data>
+  <data name="Validation.DuplicateName" xml:space="preserve">
+    <value>This name is already in use.</value>
+  </data>
+  <data name="Validation.Overflow" xml:space="preserve">
+    <value>The resulting amount is out of range.</value>
+  </data>
+  <data name="Validation.AllocationExceedsAvailable" xml:space="preserve">
+    <value>The allocation exceeds the account's unallocated balance.</value>
+  </data>
+  <data name="Validation.ReleaseExceedsAllocated" xml:space="preserve">
+    <value>You cannot release more than is allocated.</value>
+  </data>
+  <data name="Category.Food" xml:space="preserve">
+    <value>Food &amp; Drinks</value>
+  </data>
+  <data name="Category.Transportation" xml:space="preserve">
+    <value>Transportation</value>
+  </data>
+  <data name="Category.Entertainment" xml:space="preserve">
+    <value>Entertainment</value>
+  </data>
+  <data name="Category.Shopping" xml:space="preserve">
+    <value>Shopping</value>
+  </data>
+  <data name="Category.BillsUtilities" xml:space="preserve">
+    <value>Bills &amp; Utilities</value>
+  </data>
+  <data name="Category.Health" xml:space="preserve">
+    <value>Health</value>
+  </data>
+  <data name="Category.Education" xml:space="preserve">
+    <value>Education</value>
+  </data>
+  <data name="Category.Housing" xml:space="preserve">
+    <value>Housing</value>
+  </data>
+  <data name="Category.Fees" xml:space="preserve">
+    <value>Fees &amp; Charges</value>
+  </data>
+  <data name="Category.OtherExpense" xml:space="preserve">
+    <value>Other Expenses</value>
+  </data>
+  <data name="Category.Salary" xml:space="preserve">
+    <value>Salary</value>
+  </data>
+  <data name="Category.Business" xml:space="preserve">
+    <value>Business</value>
+  </data>
+  <data name="Category.Investment" xml:space="preserve">
+    <value>Investment Returns</value>
+  </data>
+  <data name="Category.Gift" xml:space="preserve">
+    <value>Gifts</value>
+  </data>
+  <data name="Category.OtherIncome" xml:space="preserve">
+    <value>Other Income</value>
+  </data>
+  <data name="Error.Database.Title" xml:space="preserve">
+    <value>Your data could not be opened</value>
+  </data>
+  <data name="Error.Database.Newer" xml:space="preserve">
+    <value>This data was created by a newer version of Astra Finance. Install the latest version to open it. Your data has not been changed.</value>
+  </data>
+  <data name="Error.Database.Integrity" xml:space="preserve">
+    <value>The database failed its integrity check. It has not been modified. You can restore a backup from the Backups folder in {0}.</value>
+  </data>
+  <data name="Error.Database.Generic" xml:space="preserve">
+    <value>The database could not be opened. Technical details were written to the diagnostic log in {0}.</value>
+  </data>
+  <data name="Notification.Migrated.Title" xml:space="preserve">
+    <value>Data updated</value>
+  </data>
+  <data name="Notification.Migrated.Body" xml:space="preserve">
+    <value>Your data was upgraded for this version. A safety copy was saved first.</value>
+  </data>
+  <data name="Shell.Menu.Backup" xml:space="preserve">
+    <value>Back up now</value>
+  </data>
+  <data name="Shell.Menu.Lock" xml:space="preserve">
+    <value>Lock Astra Finance</value>
+  </data>
+  <data name="Backup.Created.Title" xml:space="preserve">
+    <value>Backup created</value>
+  </data>
+  <data name="Backup.Failed.Title" xml:space="preserve">
+    <value>Backup failed</value>
+  </data>
+  <data name="Backup.Failed.Body" xml:space="preserve">
+    <value>The backup could not be created. Check that the backup folder is available and has free space.</value>
+  </data>
+  <data name="BackupSchedule.Off" xml:space="preserve">
+    <value>Off</value>
+  </data>
+  <data name="BackupSchedule.Daily" xml:space="preserve">
+    <value>Daily</value>
+  </data>
+  <data name="BackupSchedule.Weekly" xml:space="preserve">
+    <value>Weekly</value>
+  </data>
+  <data name="BackupSchedule.Monthly" xml:space="preserve">
+    <value>Monthly</value>
+  </data>
+  <data name="Common.Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Validation.InvalidAmount" xml:space="preserve">
+    <value>Enter a valid amount.</value>
+  </data>
+  <data name="Validation.CurrencyLocked" xml:space="preserve">
+    <value>The currency can't be changed after accounts are created.</value>
+  </data>
+  <data name="Validation.PinFormat" xml:space="preserve">
+    <value>Use 4 to 8 digits.</value>
+  </data>
+  <data name="Validation.PinMismatch" xml:space="preserve">
+    <value>The PINs don't match.</value>
+  </data>
+  <data name="Validation.PinIncorrect" xml:space="preserve">
+    <value>Incorrect PIN.</value>
+  </data>
+  <data name="Validation.DirectoryNotWritable" xml:space="preserve">
+    <value>Astra Finance can't write to this folder. Choose another folder.</value>
+  </data>
+  <data name="AccountType.Cash" xml:space="preserve">
+    <value>Cash</value>
+  </data>
+  <data name="AccountType.BankAccount" xml:space="preserve">
+    <value>Bank account</value>
+  </data>
+  <data name="AccountType.EWallet" xml:space="preserve">
+    <value>E-wallet</value>
+  </data>
+  <data name="AccountType.SavingsAccount" xml:space="preserve">
+    <value>Savings account</value>
+  </data>
+  <data name="AccountType.Custom" xml:space="preserve">
+    <value>Custom</value>
+  </data>
+  <data name="TransactionType.Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="TransactionType.Expense" xml:space="preserve">
+    <value>Expense</value>
+  </data>
+  <data name="TransactionType.Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="Accounts.Add.Title" xml:space="preserve">
+    <value>Add account</value>
+  </data>
+  <data name="Accounts.Add.Primary" xml:space="preserve">
+    <value>Create account</value>
+  </data>
+  <data name="Accounts.Edit.Title" xml:space="preserve">
+    <value>Edit account</value>
+  </data>
+  <data name="Accounts.Field.Name" xml:space="preserve">
+    <value>Account name</value>
+  </data>
+  <data name="Accounts.Field.Name.Placeholder" xml:space="preserve">
+    <value>e.g. BCA, GoPay, Wallet</value>
+  </data>
+  <data name="Accounts.Field.Type" xml:space="preserve">
+    <value>Account type</value>
+  </data>
+  <data name="Accounts.Field.Opening" xml:space="preserve">
+    <value>Opening balance</value>
+  </data>
+  <data name="Accounts.Field.Opening.Hint" xml:space="preserve">
+    <value>The amount in this account today. Zero is fine; use a minus sign for an overdrawn account.</value>
+  </data>
+  <data name="Accounts.Field.Opening.Locked" xml:space="preserve">
+    <value>The opening balance can't be edited. Use Adjust balance to correct the current balance with a documented reason.</value>
+  </data>
+  <data name="Accounts.Field.Icon" xml:space="preserve">
+    <value>Icon</value>
+  </data>
+  <data name="Accounts.Field.Color" xml:space="preserve">
+    <value>Color</value>
+  </data>
+  <data name="Accounts.Adjust.Title" xml:space="preserve">
+    <value>Adjust balance</value>
+  </data>
+  <data name="Accounts.Adjust.Primary" xml:space="preserve">
+    <value>Record adjustment</value>
+  </data>
+  <data name="Accounts.Adjust.Explanation" xml:space="preserve">
+    <value>Enter the balance the account actually has. The difference is recorded as a documented adjustment; existing records are not changed.</value>
+  </data>
+  <data name="Accounts.Adjust.Current" xml:space="preserve">
+    <value>Current balance</value>
+  </data>
+  <data name="Accounts.Adjust.NewBalance" xml:space="preserve">
+    <value>Actual balance</value>
+  </data>
+  <data name="Accounts.Adjust.Difference" xml:space="preserve">
+    <value>Adjustment to record: {0}</value>
+  </data>
+  <data name="Accounts.Adjust.Reason" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="Accounts.Adjust.Reason.Placeholder" xml:space="preserve">
+    <value>e.g. Cash count, bank statement correction</value>
+  </data>
+  <data name="Accounts.Adjust.Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Accounts.Created.Title" xml:space="preserve">
+    <value>Account created</value>
+  </data>
+  <data name="Accounts.Adjusted.Title" xml:space="preserve">
+    <value>Balance adjusted</value>
+  </data>
+  <data name="Accounts.Deactivate.Title" xml:space="preserve">
+    <value>Deactivate account?</value>
+  </data>
+  <data name="Accounts.Deactivate.Body" xml:space="preserve">
+    <value>"{0}" will no longer be available for new transactions. Its history and balance are kept and still count toward your total balance. You can reactivate it at any time.</value>
+  </data>
+  <data name="Accounts.Deactivate.Confirm" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="Accounts.Reactivate" xml:space="preserve">
+    <value>Reactivate</value>
+  </data>
+  <data name="Accounts.Total" xml:space="preserve">
+    <value>Total balance</value>
+  </data>
+  <data name="Accounts.Total.Hint" xml:space="preserve">
+    <value>All accounts, including inactive ones</value>
+  </data>
+  <data name="Accounts.ShowInactive" xml:space="preserve">
+    <value>Show inactive accounts</value>
+  </data>
+  <data name="Accounts.Inactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Accounts.Empty.Title" xml:space="preserve">
+    <value>No accounts to show</value>
+  </data>
+  <data name="Accounts.Empty.Body" xml:space="preserve">
+    <value>Add an account, or turn on "Show inactive accounts" to see deactivated ones.</value>
+  </data>
+  <data name="Accounts.Back" xml:space="preserve">
+    <value>All accounts</value>
+  </data>
+  <data name="Accounts.Breakdown.Title" xml:space="preserve">
+    <value>Balance breakdown</value>
+  </data>
+  <data name="Accounts.Breakdown.Opening" xml:space="preserve">
+    <value>Opening balance</value>
+  </data>
+  <data name="Accounts.Breakdown.Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="Accounts.Breakdown.Expense" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="Accounts.Breakdown.TransfersIn" xml:space="preserve">
+    <value>Transfers in</value>
+  </data>
+  <data name="Accounts.Breakdown.TransfersOut" xml:space="preserve">
+    <value>Transfers out</value>
+  </data>
+  <data name="Accounts.Breakdown.Adjustments" xml:space="preserve">
+    <value>Adjustments</value>
+  </data>
+  <data name="Accounts.Breakdown.Balance" xml:space="preserve">
+    <value>Current balance</value>
+  </data>
+  <data name="Accounts.Adjustments.Title" xml:space="preserve">
+    <value>Balance adjustments</value>
+  </data>
+  <data name="Accounts.Adjustment.From" xml:space="preserve">
+    <value>{0} → {1}</value>
+  </data>
+  <data name="Accounts.History.Title" xml:space="preserve">
+    <value>Transaction history</value>
+  </data>
+  <data name="Accounts.History.Empty" xml:space="preserve">
+    <value>No transactions for this account yet.</value>
+  </data>
+  <data name="Accounts.History.More" xml:space="preserve">
+    <value>Load more</value>
+  </data>
+  <data name="Accounts.History.TransferTo" xml:space="preserve">
+    <value>Transfer to {0}</value>
+  </data>
+  <data name="Accounts.History.TransferFrom" xml:space="preserve">
+    <value>Transfer from {0}</value>
+  </data>
+  <data name="Lock.Prompt" xml:space="preserve">
+    <value>Enter your PIN to continue</value>
+  </data>
+  <data name="Lock.Pin" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="Lock.Unlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="Lock.Incorrect" xml:space="preserve">
+    <value>Incorrect PIN. {0} attempt(s) left before a waiting period.</value>
+  </data>
+  <data name="Lock.Cooldown" xml:space="preserve">
+    <value>Too many incorrect attempts. Try again in {0}.</value>
+  </data>
+  <data name="Lock.Note" xml:space="preserve">
+    <value>The PIN protects access to the app. It does not encrypt your data files.</value>
+  </data>
+  <data name="Onboarding.Step.Welcome" xml:space="preserve">
+    <value>Welcome</value>
+  </data>
+  <data name="Onboarding.Step.Regional" xml:space="preserve">
+    <value>Regional settings</value>
+  </data>
+  <data name="Onboarding.Step.FirstAccount" xml:space="preserve">
+    <value>First account</value>
+  </data>
+  <data name="Onboarding.Step.Pin" xml:space="preserve">
+    <value>Security PIN</value>
+  </data>
+  <data name="Onboarding.Step.Backup" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="Onboarding.Step.Completion" xml:space="preserve">
+    <value>Done</value>
+  </data>
+  <data name="Onboarding.Progress" xml:space="preserve">
+    <value>Setup progress</value>
+  </data>
+  <data name="Onboarding.Resume" xml:space="preserve">
+    <value>Your progress is saved after each step. If setup is interrupted, it continues where you left off.</value>
+  </data>
+  <data name="Onboarding.Back" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="Onboarding.Next" xml:space="preserve">
+    <value>Continue</value>
+  </data>
+  <data name="Onboarding.Finish" xml:space="preserve">
+    <value>Go to Dashboard</value>
+  </data>
+  <data name="Onboarding.Welcome.Title" xml:space="preserve">
+    <value>Welcome to Astra Finance</value>
+  </data>
+  <data name="Onboarding.Welcome.Body" xml:space="preserve">
+    <value>Let's set up your personal finance workspace. It takes about a minute.</value>
+  </data>
+  <data name="Onboarding.Welcome.Language" xml:space="preserve">
+    <value>Choose your language</value>
+  </data>
+  <data name="Onboarding.Regional.Title" xml:space="preserve">
+    <value>Regional settings</value>
+  </data>
+  <data name="Onboarding.Regional.Body" xml:space="preserve">
+    <value>Choose how amounts and dates are shown.</value>
+  </data>
+  <data name="Onboarding.Regional.Currency" xml:space="preserve">
+    <value>Primary currency</value>
+  </data>
+  <data name="Onboarding.Regional.CurrencyHint" xml:space="preserve">
+    <value>All accounts use this currency. It can't be changed once accounts exist.</value>
+  </data>
+  <data name="Onboarding.Regional.Number" xml:space="preserve">
+    <value>Number format</value>
+  </data>
+  <data name="Onboarding.Regional.Date" xml:space="preserve">
+    <value>Date format</value>
+  </data>
+  <data name="Onboarding.Regional.Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Onboarding.Account.Title" xml:space="preserve">
+    <value>Create your first account</value>
+  </data>
+  <data name="Onboarding.Account.Body" xml:space="preserve">
+    <value>An account is where your money is kept, such as cash, a bank account or an e-wallet. You can add more later.</value>
+  </data>
+  <data name="Onboarding.Pin.Title" xml:space="preserve">
+    <value>Protect access with a PIN</value>
+  </data>
+  <data name="Onboarding.Pin.Body" xml:space="preserve">
+    <value>You'll enter this PIN each time Astra Finance opens. Use 4 to 8 digits.</value>
+  </data>
+  <data name="Onboarding.Pin.New" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="Onboarding.Pin.Confirm" xml:space="preserve">
+    <value>Confirm PIN</value>
+  </data>
+  <data name="Onboarding.Pin.AlreadySet" xml:space="preserve">
+    <value>A PIN is already set. Leave the fields empty to keep it, or enter a new one.</value>
+  </data>
+  <data name="Onboarding.Pin.Note" xml:space="preserve">
+    <value>The PIN controls access to the app; it does not encrypt your data, which stays in your Windows user profile. Astra Finance can't recover a forgotten PIN, so choose one you'll remember.</value>
+  </data>
+  <data name="Onboarding.Backup.Title" xml:space="preserve">
+    <value>Back up your data</value>
+  </data>
+  <data name="Onboarding.Backup.Body" xml:space="preserve">
+    <value>Automatic backups copy your data to a folder you choose. A folder on another drive or a synced folder adds extra safety.</value>
+  </data>
+  <data name="Onboarding.Backup.Location" xml:space="preserve">
+    <value>Backup folder</value>
+  </data>
+  <data name="Onboarding.Backup.Browse" xml:space="preserve">
+    <value>Browse…</value>
+  </data>
+  <data name="Onboarding.Backup.Choose" xml:space="preserve">
+    <value>Choose a backup folder</value>
+  </data>
+  <data name="Onboarding.Backup.Schedule" xml:space="preserve">
+    <value>Automatic backup</value>
+  </data>
+  <data name="Onboarding.Backup.Manual" xml:space="preserve">
+    <value>You can also create a backup at any time with "Back up now" in the application menu (top right). Automatic backups keep the 10 most recent copies; manual backups are never deleted automatically.</value>
+  </data>
+  <data name="Onboarding.Done.Title" xml:space="preserve">
+    <value>You're all set</value>
+  </data>
+  <data name="Onboarding.Done.Body" xml:space="preserve">
+    <value>Astra Finance is ready. Here's a summary of your setup.</value>
+  </data>
+  <data name="Onboarding.Done.Account" xml:space="preserve">
+    <value>First account</value>
+  </data>
+  <data name="Onboarding.Done.Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="Onboarding.Done.SecurityValue" xml:space="preserve">
+    <value>PIN required when the app opens</value>
+  </data>
+  <data name="Onboarding.Done.Backup" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="Accounts.Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="Period.AllTime" xml:space="preserve">
+    <value>All time</value>
+  </data>
+  <data name="Period.ThisMonth" xml:space="preserve">
+    <value>This month</value>
+  </data>
+  <data name="Period.LastMonth" xml:space="preserve">
+    <value>Last month</value>
+  </data>
+  <data name="Period.Last3Months" xml:space="preserve">
+    <value>Last 3 months</value>
+  </data>
+  <data name="Period.ThisYear" xml:space="preserve">
+    <value>This year</value>
+  </data>
+  <data name="Period.Custom" xml:space="preserve">
+    <value>Custom range</value>
+  </data>
+  <data name="Transactions.Filter.AllTypes" xml:space="preserve">
+    <value>All</value>
+  </data>
+  <data name="Transactions.Filter.AllCategories" xml:space="preserve">
+    <value>All categories</value>
+  </data>
+  <data name="Transactions.Filter.AllAccounts" xml:space="preserve">
+    <value>All accounts</value>
+  </data>
+  <data name="Transactions.Filter.Search" xml:space="preserve">
+    <value>Search description, category, account, amount</value>
+  </data>
+  <data name="Transactions.Filter.Period" xml:space="preserve">
+    <value>Period</value>
+  </data>
+  <data name="Transactions.Filter.From" xml:space="preserve">
+    <value>From date</value>
+  </data>
+  <data name="Transactions.Filter.To" xml:space="preserve">
+    <value>To date</value>
+  </data>
+  <data name="Transactions.Filter.Clear" xml:space="preserve">
+    <value>Clear filters</value>
+  </data>
+  <data name="Transactions.Page" xml:space="preserve">
+    <value>Page {0} of {1}</value>
+  </data>
+  <data name="Transactions.PrevPage" xml:space="preserve">
+    <value>Previous page</value>
+  </data>
+  <data name="Transactions.NextPage" xml:space="preserve">
+    <value>Next page</value>
+  </data>
+  <data name="Transactions.Summary" xml:space="preserve">
+    <value>{0} transactions · Income {1} · Expenses {2}</value>
+  </data>
+  <data name="Transactions.Add.Title" xml:space="preserve">
+    <value>Add transaction</value>
+  </data>
+  <data name="Transactions.Edit.Title" xml:space="preserve">
+    <value>Edit transaction</value>
+  </data>
+  <data name="Transactions.Saved.Title" xml:space="preserve">
+    <value>Transaction saved</value>
+  </data>
+  <data name="Transactions.MoreDetails" xml:space="preserve">
+    <value>More details (description, notes, transfer fee)</value>
+  </data>
+  <data name="Transactions.Delete.Title" xml:space="preserve">
+    <value>Delete transaction?</value>
+  </data>
+  <data name="Transactions.Delete.Body" xml:space="preserve">
+    <value>The transaction is removed from balances, budgets and reports. You can restore it later from "Show deleted".</value>
+  </data>
+  <data name="Transactions.Delete.BodyTransfer" xml:space="preserve">
+    <value>The transfer and its fee are removed from balances, budgets and reports. You can restore them later from "Show deleted".</value>
+  </data>
+  <data name="Transactions.Delete.Confirm" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Transactions.Deleted.Title" xml:space="preserve">
+    <value>Transaction deleted</value>
+  </data>
+  <data name="Transactions.Deleted.Body" xml:space="preserve">
+    <value>You can restore it from "Show deleted".</value>
+  </data>
+  <data name="Transactions.Restored.Title" xml:space="preserve">
+    <value>Transaction restored</value>
+  </data>
+  <data name="Transactions.Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Transactions.ShowDeleted" xml:space="preserve">
+    <value>Show deleted</value>
+  </data>
+  <data name="Transactions.Export.Button" xml:space="preserve">
+    <value>Export CSV</value>
+  </data>
+  <data name="Transactions.Export.Tooltip" xml:space="preserve">
+    <value>Exports all transactions that match the current filters</value>
+  </data>
+  <data name="Transactions.Export.Title" xml:space="preserve">
+    <value>Export transactions</value>
+  </data>
+  <data name="Transactions.Export.Filter" xml:space="preserve">
+    <value>CSV file (*.csv)|*.csv</value>
+  </data>
+  <data name="Transactions.Export.Done" xml:space="preserve">
+    <value>{0} transactions exported</value>
+  </data>
+  <data name="Transactions.Export.Failed" xml:space="preserve">
+    <value>Export failed</value>
+  </data>
+  <data name="Transactions.Export.FailedBody" xml:space="preserve">
+    <value>The file could not be written. Check that it isn't open in another program and that the folder is writable.</value>
+  </data>
+  <data name="Transactions.Export.FeeMarker" xml:space="preserve">
+    <value>Transfer fee</value>
+  </data>
+  <data name="Transactions.Export.Column.Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Transactions.Export.Column.Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Transactions.Export.Column.Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Transactions.Export.Column.Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Transactions.Export.Column.Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Transactions.Export.Column.ToAccount" xml:space="preserve">
+    <value>To account</value>
+  </data>
+  <data name="Transactions.Export.Column.Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Transactions.Export.Column.Currency" xml:space="preserve">
+    <value>Currency</value>
+  </data>
+  <data name="Transactions.Export.Column.Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Transactions.Export.Column.Fee" xml:space="preserve">
+    <value>Note</value>
+  </data>
+  <data name="Transactions.Field.Type" xml:space="preserve">
+    <value>Transaction type</value>
+  </data>
+  <data name="Transactions.Field.Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Transactions.Field.Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Transactions.Field.Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Transactions.Field.FromAccount" xml:space="preserve">
+    <value>From account</value>
+  </data>
+  <data name="Transactions.Field.ToAccount" xml:space="preserve">
+    <value>To account</value>
+  </data>
+  <data name="Transactions.Field.Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Transactions.Field.Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Transactions.Field.Description.Placeholder" xml:space="preserve">
+    <value>e.g. Lunch with team</value>
+  </data>
+  <data name="Transactions.Field.Fee" xml:space="preserve">
+    <value>Transfer fee</value>
+  </data>
+  <data name="Transactions.Field.Fee.Hint" xml:space="preserve">
+    <value>Recorded as a separate expense from the source account.</value>
+  </data>
+  <data name="Transactions.Field.Notes" xml:space="preserve">
+    <value>Notes</value>
+  </data>
+  <data name="Transactions.Column.Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Transactions.Column.Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Transactions.Column.Category" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="Transactions.Column.Account" xml:space="preserve">
+    <value>Account</value>
+  </data>
+  <data name="Transactions.Column.Amount" xml:space="preserve">
+    <value>Amount</value>
+  </data>
+  <data name="Transactions.Column.Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Transactions.Empty.Title" xml:space="preserve">
+    <value>No transactions yet</value>
+  </data>
+  <data name="Transactions.Empty.Body" xml:space="preserve">
+    <value>Record your first income, expense or transfer. Quick Add (Ctrl+N) is available from any page.</value>
+  </data>
+  <data name="Transactions.NoMatch.Title" xml:space="preserve">
+    <value>No matching transactions</value>
+  </data>
+  <data name="Transactions.NoMatch.Body" xml:space="preserve">
+    <value>Try a different search or clear the filters.</value>
+  </data>
+  <data name="Transactions.Details.Title" xml:space="preserve">
+    <value>Transaction details</value>
+  </data>
+  <data name="Transactions.Details.Deleted" xml:space="preserve">
+    <value>Deleted</value>
+  </data>
+  <data name="Transactions.Details.FeeBadge" xml:space="preserve">
+    <value>Transfer fee</value>
+  </data>
+  <data name="Transactions.Details.Created" xml:space="preserve">
+    <value>Recorded</value>
+  </data>
+  <data name="Transactions.Details.OpenTransfer" xml:space="preserve">
+    <value>Open the transfer</value>
+  </data>
+</root>

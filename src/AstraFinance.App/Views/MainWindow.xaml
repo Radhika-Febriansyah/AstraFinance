@@ -1,0 +1,442 @@
+<Window x:Class="AstraFinance.App.Views.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:c="clr-namespace:AstraFinance.App.Controls"
+        xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+        xmlns:vm="clr-namespace:AstraFinance.App.ViewModels"
+        xmlns:enums="clr-namespace:AstraFinance.Core.Enums;assembly=AstraFinance.Core"
+        xmlns:nav="clr-namespace:AstraFinance.Core.Navigation;assembly=AstraFinance.Core"
+        mc:Ignorable="d"
+        d:DataContext="{d:DesignInstance Type=vm:ShellViewModel}"
+        Title="{loc:Loc App.Name}"
+        Width="1280" Height="800" MinWidth="640" MinHeight="520"
+        WindowStartupLocation="CenterScreen"
+        Background="{DynamicResource Brush.Background}"
+        Foreground="{DynamicResource Brush.Text.Primary}"
+        FontFamily="{StaticResource Font.Base}"
+        FontSize="{StaticResource FontSize.Body}"
+        UseLayoutRounding="True"
+        SnapsToDevicePixels="True">
+
+    <Window.InputBindings>
+        <KeyBinding Gesture="Ctrl+N" Command="{Binding QuickAddCommand}" />
+        <KeyBinding Gesture="Ctrl+B" Command="{Binding ToggleSidebarCommand}" />
+        <KeyBinding Gesture="Ctrl+L" Command="{Binding LockCommand}" />
+    </Window.InputBindings>
+
+    <Window.Resources>
+        <!-- Sidebar navigation item content -->
+        <DataTemplate x:Key="NavItemTemplate" DataType="{x:Type vm:NavItemViewModel}">
+            <StackPanel Orientation="Horizontal" Margin="13,0,0,0">
+                <c:AstraIcon IconKey="{Binding IconKey}" />
+                <TextBlock Text="{Binding Title}" Margin="14,0,0,0" VerticalAlignment="Center"
+                           Style="{StaticResource Text.Base}" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                           FontWeight="{Binding FontWeight, RelativeSource={RelativeSource AncestorType=ListBoxItem}}"
+                           Visibility="{Binding DataContext.IsSidebarOpen, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource BoolToVisibility}}" />
+            </StackPanel>
+        </DataTemplate>
+
+        <Style x:Key="SidebarNavItem" TargetType="ListBoxItem" BasedOn="{StaticResource NavItem}">
+            <Setter Property="ToolTip" Value="{Binding Title}" />
+            <Setter Property="ToolTipService.Placement" Value="Right" />
+            <Setter Property="ToolTipService.InitialShowDelay" Value="300" />
+            <Setter Property="ToolTipService.IsEnabled"
+                    Value="{Binding DataContext.IsSidebarOpen, RelativeSource={RelativeSource AncestorType=Window}, Converter={StaticResource InverseBool}}" />
+        </Style>
+
+        <Style x:Key="SidebarList" TargetType="ListBox" BasedOn="{StaticResource {x:Type ListBox}}">
+            <Setter Property="Padding" Value="12,0" />
+            <Setter Property="ItemTemplate" Value="{StaticResource NavItemTemplate}" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource SidebarNavItem}" />
+            <Setter Property="KeyboardNavigation.TabNavigation" Value="Once" />
+            <Setter Property="VirtualizingPanel.IsVirtualizing" Value="False" />
+        </Style>
+
+        <!-- Search result row -->
+        <Style x:Key="SearchResultButton" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" CornerRadius="{StaticResource Radius.Control}" Padding="10,8" Background="Transparent">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Hover}" />
+                            </Trigger>
+                            <DataTrigger Binding="{Binding IsHighlighted}" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Accent.Subtle}" />
+                            </DataTrigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Notification kind → icon color -->
+        <Style x:Key="NotificationIcon" TargetType="c:AstraIcon" BasedOn="{StaticResource {x:Type c:AstraIcon}}">
+            <Setter Property="Width" Value="18" />
+            <Setter Property="Height" Value="18" />
+            <Setter Property="IconKey" Value="{Binding IconKey}" />
+            <Setter Property="Foreground" Value="{DynamicResource Brush.Info}" />
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Success}">
+                    <Setter Property="Foreground" Value="{DynamicResource Brush.Success}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Warning}">
+                    <Setter Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                </DataTrigger>
+                <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Error}">
+                    <Setter Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+
+        <DataTemplate x:Key="NotificationRowTemplate" DataType="{x:Type vm:NotificationItemViewModel}">
+            <Grid Margin="4,6">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <c:AstraIcon Style="{StaticResource NotificationIcon}" VerticalAlignment="Top" Margin="0,1,12,0" />
+                <StackPanel Grid.Column="1">
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource Text.BodyStrong}" />
+                    <TextBlock Text="{Binding Message}" Style="{StaticResource Text.Paragraph}" FontSize="{StaticResource FontSize.Caption}" LineHeight="18" Margin="0,2,0,0" />
+                    <TextBlock Text="{Binding TimeText}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Text.Tertiary}" Margin="0,4,0,0" />
+                </StackPanel>
+                <Button Grid.Column="2" Style="{StaticResource Button.Icon}" Width="28" Height="28" VerticalAlignment="Top"
+                        c:Assist.Icon="Icon.X" ToolTip="{loc:Loc Shell.Notifications.Dismiss}"
+                        AutomationProperties.Name="{loc:Loc Shell.Notifications.Dismiss}"
+                        Command="{Binding DataContext.Notifications.RemoveCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}"
+                        CommandParameter="{Binding}" />
+            </Grid>
+        </DataTemplate>
+    </Window.Resources>
+
+    <Grid x:Name="Root">
+        <!-- ===================== Content area ===================== -->
+        <Grid x:Name="ContentHost" Margin="68,0,0,0"
+              Visibility="{Binding IsGated, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="{Binding Source={StaticResource Size.Topbar.Height}}" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Top bar -->
+            <Border BorderBrush="{DynamicResource Brush.Divider}" BorderThickness="0,0,0,1">
+                <Grid x:Name="Topbar" Margin="24,0,16,0">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" MinWidth="200" />
+                        <ColumnDefinition x:Name="SearchColumn" Width="2*" MaxWidth="372" />
+                        <ColumnDefinition Width="Auto" />
+                    </Grid.ColumnDefinitions>
+
+                    <!-- Breadcrumb / page title -->
+                    <DockPanel VerticalAlignment="Center" LastChildFill="True">
+                        <TextBlock DockPanel.Dock="Left" Text="{loc:Loc App.Name}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center"
+                                   Visibility="{Binding IsMedium, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
+                        <c:AstraIcon DockPanel.Dock="Left" Data="{StaticResource Icon.ChevronRight}" Width="14" Height="14" Margin="8,0"
+                                     Foreground="{DynamicResource Brush.Text.Tertiary}"
+                                     Visibility="{Binding IsMedium, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
+                        <TextBlock Text="{Binding PageTitle}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center"
+                                   ToolTip="{Binding PageTitle}" />
+                    </DockPanel>
+
+                    <!-- Global search -->
+                    <Grid Grid.Column="1" x:Name="SearchHost" Margin="16,0" VerticalAlignment="Center">
+                        <TextBox x:Name="SearchBox"
+                                 Text="{Binding Search.Query, UpdateSourceTrigger=PropertyChanged}"
+                                 c:Assist.Icon="Icon.Search"
+                                 c:Assist.Placeholder="{loc:Loc Shell.Search.Placeholder}"
+                                 AutomationProperties.Name="{loc:Loc Shell.Search.Placeholder}"
+                                 Padding="12,0,64,0"
+                                 PreviewKeyDown="SearchBox_PreviewKeyDown"
+                                 GotKeyboardFocus="SearchBox_GotKeyboardFocus" />
+                        <Border HorizontalAlignment="Right" VerticalAlignment="Center" Margin="0,0,8,0" Padding="6,1"
+                                CornerRadius="{StaticResource Radius.Small}" BorderThickness="1"
+                                BorderBrush="{DynamicResource Brush.Border}" IsHitTestVisible="False"
+                                Visibility="{Binding Search.Query, Converter={StaticResource NullToVisibility}, ConverterParameter=Invert}">
+                            <TextBlock Text="{loc:Loc Shell.Search.Shortcut}" Style="{StaticResource Text.Caption}" FontSize="11" />
+                        </Border>
+                        <Button Style="{StaticResource Button.Icon}" Width="28" Height="28" HorizontalAlignment="Right" Margin="0,0,4,0"
+                                c:Assist.Icon="Icon.X" Command="{Binding Search.ClearCommand}"
+                                ToolTip="{loc:Loc Shell.Search.Clear}" AutomationProperties.Name="{loc:Loc Shell.Search.Clear}"
+                                Visibility="{Binding Search.Query, Converter={StaticResource NullToVisibility}}" />
+
+                        <Popup x:Name="SearchPopup" PlacementTarget="{Binding ElementName=SearchBox}" Placement="Bottom"
+                               AllowsTransparency="True" StaysOpen="False" PopupAnimation="Fade"
+                               IsOpen="{Binding Search.IsOpen, Mode=TwoWay}">
+                            <Border Style="{StaticResource PopupSurface}" Margin="0,6,16,16" Padding="6,6,6,4"
+                                    Width="{Binding ActualWidth, ElementName=SearchHost}" MinWidth="300" MaxHeight="440">
+                                <DockPanel>
+                                    <TextBlock DockPanel.Dock="Bottom" Text="{loc:Loc Shell.Search.Hint}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" TextTrimming="None"
+                                               Foreground="{DynamicResource Brush.Text.Tertiary}" Margin="10,6,10,4" />
+                                    <Grid>
+                                        <TextBlock Text="{Binding Search.NoResultsText}" Style="{StaticResource Text.Secondary}" Margin="10,12"
+                                                   Visibility="{Binding Search.HasNoResults, Converter={StaticResource BoolToVisibility}}" />
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding Search.Groups}">
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="{x:Type vm:SearchGroupViewModel}">
+                                                        <StackPanel Margin="0,2,0,6">
+                                                            <TextBlock Text="{Binding Header}" Style="{StaticResource Text.Overline}" Margin="10,6,10,4" />
+                                                            <ItemsControl ItemsSource="{Binding Items}">
+                                                                <ItemsControl.ItemTemplate>
+                                                                    <DataTemplate DataType="{x:Type vm:SearchResultItemViewModel}">
+                                                                        <Button Style="{StaticResource SearchResultButton}"
+                                                                                Command="{Binding DataContext.Search.OpenCommand, RelativeSource={RelativeSource AncestorType=ItemsControl, AncestorLevel=2}}"
+                                                                                CommandParameter="{Binding}">
+                                                                            <StackPanel Orientation="Horizontal">
+                                                                                <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{DynamicResource Brush.Text.Secondary}" />
+                                                                                <StackPanel Margin="12,0,0,0">
+                                                                                    <TextBlock Text="{Binding Title}" Style="{StaticResource Text.BodyStrong}" />
+                                                                                    <TextBlock Text="{Binding Subtitle}" Style="{StaticResource Text.Caption}" />
+                                                                                </StackPanel>
+                                                                            </StackPanel>
+                                                                        </Button>
+                                                                    </DataTemplate>
+                                                                </ItemsControl.ItemTemplate>
+                                                            </ItemsControl>
+                                                        </StackPanel>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                    </Grid>
+                                </DockPanel>
+                            </Border>
+                        </Popup>
+                    </Grid>
+
+                    <!-- Actions -->
+                    <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                        <Button x:Name="QuickAddButton" Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Plus"
+                                Command="{Binding QuickAddCommand}"
+                                ToolTip="{Binding QuickAddTooltip}" ToolTipService.ShowOnDisabled="True"
+                                AutomationProperties.Name="{loc:Loc Shell.QuickAdd}"
+                                Content="{loc:Loc Shell.QuickAdd}" />
+
+                        <ToggleButton x:Name="BellButton" Style="{StaticResource Button.Icon}" Margin="8,0,0,0"
+                                      c:Assist.Icon="Icon.Bell" c:Assist.Badge="{Binding Notifications.UnreadBadge}"
+                                      IsChecked="{Binding Notifications.IsOpen, Mode=TwoWay}"
+                                      ToolTip="{loc:Loc Shell.Notifications}" AutomationProperties.Name="{loc:Loc Shell.Notifications}" />
+                        <Popup PlacementTarget="{Binding ElementName=BellButton}" Placement="Bottom" HorizontalOffset="-300"
+                               AllowsTransparency="True" StaysOpen="False" PopupAnimation="Fade"
+                               IsOpen="{Binding Notifications.IsOpen, Mode=TwoWay}">
+                            <Border Style="{StaticResource PopupSurface}" Width="360" MaxHeight="480" Padding="12">
+                                <DockPanel>
+                                    <Grid DockPanel.Dock="Top" Margin="4,0,0,8">
+                                        <TextBlock Text="{loc:Loc Shell.Notifications}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center" />
+                                        <Button Style="{StaticResource Button.Link}" HorizontalAlignment="Right" Content="{loc:Loc Shell.Notifications.ClearAll}"
+                                                Command="{Binding Notifications.ClearAllCommand}"
+                                                Visibility="{Binding Notifications.IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
+                                    </Grid>
+                                    <Grid>
+                                        <StackPanel Margin="8,24" HorizontalAlignment="Center"
+                                                    Visibility="{Binding Notifications.IsEmpty, Converter={StaticResource BoolToVisibility}}">
+                                            <c:AstraIcon Data="{StaticResource Icon.Bell}" Width="28" Height="28" Foreground="{DynamicResource Brush.Text.Tertiary}" />
+                                            <TextBlock Text="{loc:Loc Shell.Notifications.Empty.Title}" Style="{StaticResource Text.BodyStrong}" HorizontalAlignment="Center" Margin="0,12,0,4" />
+                                            <TextBlock Text="{loc:Loc Shell.Notifications.Empty.Body}" Style="{StaticResource Text.Caption}" HorizontalAlignment="Center" />
+                                        </StackPanel>
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding Notifications.Items}" ItemTemplate="{StaticResource NotificationRowTemplate}" />
+                                        </ScrollViewer>
+                                    </Grid>
+                                </DockPanel>
+                            </Border>
+                        </Popup>
+
+                        <Button x:Name="MenuButton" Style="{StaticResource Button.Icon}" Margin="4,0,0,0" c:Assist.Icon="Icon.User"
+                                ToolTip="{loc:Loc Shell.Menu}" AutomationProperties.Name="{loc:Loc Shell.Menu}"
+                                Click="MenuButton_Click">
+                            <Button.ContextMenu>
+                                <ContextMenu x:Name="AppMenu" Placement="Bottom"
+                                             DataContext="{Binding PlacementTarget.DataContext, RelativeSource={RelativeSource Self}}">
+                                    <MenuItem Header="{loc:Loc Shell.Menu.Appearance}" c:Assist.Icon="Icon.Palette">
+                                        <MenuItem Header="{loc:Loc Theme.Light}" IsChecked="{Binding IsThemeLight, Mode=OneWay}"
+                                                  Command="{Binding SetThemeCommand}" CommandParameter="{x:Static enums:AppThemeMode.Light}" />
+                                        <MenuItem Header="{loc:Loc Theme.Dark}" IsChecked="{Binding IsThemeDark, Mode=OneWay}"
+                                                  Command="{Binding SetThemeCommand}" CommandParameter="{x:Static enums:AppThemeMode.Dark}" />
+                                        <MenuItem Header="{loc:Loc Theme.System}" IsChecked="{Binding IsThemeSystem, Mode=OneWay}"
+                                                  Command="{Binding SetThemeCommand}" CommandParameter="{x:Static enums:AppThemeMode.System}" />
+                                    </MenuItem>
+                                    <MenuItem Header="{loc:Loc Shell.Menu.Language}" c:Assist.Icon="Icon.Languages">
+                                        <MenuItem Header="{loc:Loc Language.Indonesian}" IsChecked="{Binding IsLanguageIndonesian, Mode=OneWay}"
+                                                  Command="{Binding SetLanguageCommand}" CommandParameter="{x:Static enums:AppLanguage.Indonesian}" />
+                                        <MenuItem Header="{loc:Loc Language.English}" IsChecked="{Binding IsLanguageEnglish, Mode=OneWay}"
+                                                  Command="{Binding SetLanguageCommand}" CommandParameter="{x:Static enums:AppLanguage.English}" />
+                                    </MenuItem>
+                                    <Separator />
+                                    <MenuItem Header="{loc:Loc Shell.Menu.Backup}" c:Assist.Icon="Icon.HardDriveDownload" Command="{Binding BackUpNowCommand}" />
+                                    <MenuItem Header="{loc:Loc Shell.Menu.Lock}" c:Assist.Icon="Icon.Lock" InputGestureText="Ctrl+L" Command="{Binding LockCommand}" />
+                                    <Separator />
+                                    <MenuItem Header="{loc:Loc Shell.Menu.Settings}" c:Assist.Icon="Icon.Settings"
+                                              Command="{Binding NavigateCommand}" CommandParameter="{x:Static nav:AppPage.Settings}" />
+                                    <MenuItem Header="{loc:Loc Shell.Menu.About}" c:Assist.Icon="Icon.Info" Command="{Binding ShowAboutCommand}" />
+                                </ContextMenu>
+                            </Button.ContextMenu>
+                        </Button>
+                    </StackPanel>
+                </Grid>
+            </Border>
+
+            <!-- Page host -->
+            <ContentControl x:Name="PageHost" Grid.Row="1" Focusable="False"
+                            Content="{Binding CurrentPage, NotifyOnTargetUpdated=True}"
+                            TargetUpdated="PageHost_TargetUpdated">
+                <ContentControl.RenderTransform>
+                    <TranslateTransform />
+                </ContentControl.RenderTransform>
+            </ContentControl>
+        </Grid>
+
+        <!-- Scrim behind the sidebar when it overlays content on narrow windows -->
+        <Border Background="{DynamicResource Brush.Scrim}"
+                Visibility="{Binding IsSidebarOverlay, Converter={StaticResource BoolToVisibility}}">
+            <Border.InputBindings>
+                <MouseBinding Gesture="LeftClick" Command="{Binding CloseOverlayCommand}" />
+            </Border.InputBindings>
+        </Border>
+
+        <!-- ===================== Sidebar ===================== -->
+        <Border x:Name="Sidebar" HorizontalAlignment="Left" Width="68" ClipToBounds="True"
+                Visibility="{Binding IsGated, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}"
+                Background="{DynamicResource Brush.Sidebar}" BorderBrush="{DynamicResource Brush.Divider}" BorderThickness="0,0,1,0"
+                AutomationProperties.Name="{loc:Loc Shell.Menu}">
+            <DockPanel>
+                <!-- Brand -->
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="64" Margin="18,0,0,0">
+                    <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource Brush.Accent}" VerticalAlignment="Center">
+                        <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="20" Height="20"
+                                     Foreground="{DynamicResource Brush.Accent.Foreground}" />
+                    </Border>
+                    <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Subtitle}" Margin="12,0,0,0" VerticalAlignment="Center"
+                               Visibility="{Binding IsSidebarOpen, Converter={StaticResource BoolToVisibility}}" />
+                </StackPanel>
+
+                <!-- Footer: settings + collapse toggle -->
+                <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,12">
+                    <Separator Margin="16,8" />
+                    <ListBox Style="{StaticResource SidebarList}" ItemsSource="{Binding FooterItems}"
+                             SelectedItem="{Binding SelectedFooterItem, Mode=TwoWay}" />
+                    <Button Style="{StaticResource Button.Icon}" HorizontalAlignment="Left" Margin="16,4,0,0"
+                            c:Assist.Icon="Icon.PanelLeft" Command="{Binding ToggleSidebarCommand}"
+                            ToolTip="{Binding SidebarToggleTooltip}" AutomationProperties.Name="{Binding SidebarToggleTooltip}" />
+                </StackPanel>
+
+                <ListBox Style="{StaticResource SidebarList}" ItemsSource="{Binding PrimaryItems}"
+                         SelectedItem="{Binding SelectedPrimaryItem, Mode=TwoWay}"
+                         ScrollViewer.VerticalScrollBarVisibility="Auto" />
+            </DockPanel>
+        </Border>
+
+        <!-- ===================== Gate: onboarding / PIN lock (covers the whole shell) ===================== -->
+        <ContentControl x:Name="GateHost" Content="{Binding Gate}" Focusable="False"
+                        Visibility="{Binding Gate, Converter={StaticResource NullToVisibility}}" />
+
+        <!-- ===================== Toasts ===================== -->
+        <ItemsControl ItemsSource="{Binding Notifications.Toasts}" HorizontalAlignment="Right" VerticalAlignment="Bottom"
+                      Margin="0,0,20,20" Width="360" Focusable="False">
+            <ItemsControl.ItemTemplate>
+                <DataTemplate DataType="{x:Type vm:NotificationItemViewModel}">
+                    <Border Style="{StaticResource Card.Raised}" Padding="14,12" Margin="0,8,0,0" Effect="{DynamicResource Effect.Shadow.Popup}">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                            <c:AstraIcon Style="{StaticResource NotificationIcon}" VerticalAlignment="Top" Margin="0,1,12,0" />
+                            <StackPanel Grid.Column="1">
+                                <TextBlock Text="{Binding Title}" Style="{StaticResource Text.BodyStrong}" />
+                                <TextBlock Text="{Binding Message}" Style="{StaticResource Text.Paragraph}" FontSize="{StaticResource FontSize.Caption}" LineHeight="18" Margin="0,2,0,0" />
+                            </StackPanel>
+                            <Button Grid.Column="2" Style="{StaticResource Button.Icon}" Width="28" Height="28" VerticalAlignment="Top"
+                                    c:Assist.Icon="Icon.X" ToolTip="{loc:Loc Shell.Notifications.Dismiss}"
+                                    AutomationProperties.Name="{loc:Loc Shell.Notifications.Dismiss}"
+                                    Command="{Binding DataContext.Notifications.DismissToastCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                    CommandParameter="{Binding}" />
+                        </Grid>
+                    </Border>
+                </DataTemplate>
+            </ItemsControl.ItemTemplate>
+        </ItemsControl>
+
+        <!-- ===================== Dialog layer ===================== -->
+        <Grid x:Name="DialogLayer" Visibility="{Binding Dialogs.ActiveDialog, Converter={StaticResource NullToVisibility}}"
+              IsVisibleChanged="DialogLayer_IsVisibleChanged" KeyDown="DialogLayer_KeyDown">
+        <Grid DataContext="{Binding Dialogs.ActiveDialog}" KeyboardNavigation.TabNavigation="Cycle"
+              KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle"
+              AutomationProperties.Name="{Binding Title}">
+
+            <Border Background="{DynamicResource Brush.Scrim}" />
+            <Border Style="{StaticResource PopupSurface}" Margin="24" Padding="24" MaxWidth="480" MinWidth="360"
+                    HorizontalAlignment="Center" VerticalAlignment="Center">
+                <!-- Dock layout: title and buttons always visible; the form scrolls when the window is short. -->
+                <DockPanel>
+                    <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">
+                        <c:AstraIcon Width="22" Height="22" Margin="0,0,12,0" VerticalAlignment="Center"
+                                     Visibility="{Binding HasIcon, Converter={StaticResource BoolToVisibility}}">
+                            <c:AstraIcon.Style>
+                                <Style TargetType="c:AstraIcon" BasedOn="{StaticResource {x:Type c:AstraIcon}}">
+                                    <Setter Property="Width" Value="22" />
+                                    <Setter Property="Height" Value="22" />
+                                    <Setter Property="IconKey" Value="Icon.Info" />
+                                    <Setter Property="Foreground" Value="{DynamicResource Brush.Info}" />
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Success}">
+                                            <Setter Property="IconKey" Value="Icon.CircleCheck" />
+                                            <Setter Property="Foreground" Value="{DynamicResource Brush.Success}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Warning}">
+                                            <Setter Property="IconKey" Value="Icon.AlertTriangle" />
+                                            <Setter Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Error}">
+                                            <Setter Property="IconKey" Value="Icon.AlertCircle" />
+                                            <Setter Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </c:AstraIcon.Style>
+                        </c:AstraIcon>
+                        <TextBlock Text="{Binding Title}" Style="{StaticResource Text.Title}" VerticalAlignment="Center" TextWrapping="Wrap" />
+                    </StackPanel>
+                    <TextBlock DockPanel.Dock="Top" Text="{Binding Message}" Style="{StaticResource Text.Paragraph}" Margin="0,12,0,0"
+                               Visibility="{Binding IsForm, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
+                    <StackPanel DockPanel.Dock="Bottom" Orientation="Horizontal" HorizontalAlignment="Right" Margin="0,24,0,0">
+                        <Button Content="{Binding SecondaryText}" Command="{Binding CancelCommand}" Margin="0,0,8,0"
+                                Visibility="{Binding HasSecondary, Converter={StaticResource BoolToVisibility}}" />
+                        <Button x:Name="DialogPrimaryButton" Content="{Binding PrimaryText}" Command="{Binding AcceptCommand}" MinWidth="88"
+                                c:Assist.IsBusy="{Binding IsBusy}">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource Button.Primary}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsDestructive}" Value="True">
+                                            <Setter Property="Background" Value="{DynamicResource Brush.Danger}" />
+                                            <Setter Property="BorderBrush" Value="{DynamicResource Brush.Danger}" />
+                                            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.OnStrong}" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                    <ScrollViewer VerticalScrollBarVisibility="Auto" Margin="0,20,0,0" Focusable="False"
+                                  Visibility="{Binding IsForm, Converter={StaticResource BoolToVisibility}}">
+                        <ContentControl x:Name="DialogForm" Margin="0,0,14,0" AutomationProperties.Name="{Binding Title}" Content="{Binding Form}" Focusable="False" IsEnabled="{Binding IsBusy, Converter={StaticResource InverseBool}}" />
+                    </ScrollViewer>
+                </DockPanel>
+            </Border>
+        </Grid>
+        </Grid>
+    </Grid>
+</Window>

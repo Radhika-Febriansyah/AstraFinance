@@ -1,0 +1,1017 @@
+<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="App.Name" xml:space="preserve">
+    <value>Astra Finance</value>
+  </data>
+  <data name="App.Tagline" xml:space="preserve">
+    <value>Keuangan pribadi, tersimpan di perangkat Anda.</value>
+  </data>
+  <data name="Nav.Dashboard" xml:space="preserve">
+    <value>Dasbor</value>
+  </data>
+  <data name="Nav.Transactions" xml:space="preserve">
+    <value>Transaksi</value>
+  </data>
+  <data name="Nav.Accounts" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="Nav.Budgets" xml:space="preserve">
+    <value>Anggaran</value>
+  </data>
+  <data name="Nav.SavingsGoals" xml:space="preserve">
+    <value>Target Tabungan</value>
+  </data>
+  <data name="Nav.Bills" xml:space="preserve">
+    <value>Tagihan &amp; Langganan</value>
+  </data>
+  <data name="Nav.Analytics" xml:space="preserve">
+    <value>Analitik</value>
+  </data>
+  <data name="Nav.Reports" xml:space="preserve">
+    <value>Laporan</value>
+  </data>
+  <data name="Nav.Settings" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+  <data name="Page.Dashboard.Description" xml:space="preserve">
+    <value>Ringkasan keuangan Anda secara sekilas.</value>
+  </data>
+  <data name="Page.Transactions.Description" xml:space="preserve">
+    <value>Catat dan tinjau pemasukan, pengeluaran, dan transfer.</value>
+  </data>
+  <data name="Page.Accounts.Description" xml:space="preserve">
+    <value>Kelola akun tunai, bank, dompet digital, dan tabungan.</value>
+  </data>
+  <data name="Page.Budgets.Description" xml:space="preserve">
+    <value>Rencanakan batas pengeluaran bulanan per kategori.</value>
+  </data>
+  <data name="Page.SavingsGoals.Description" xml:space="preserve">
+    <value>Alokasikan dana untuk hal-hal yang sedang Anda tabung.</value>
+  </data>
+  <data name="Page.Bills.Description" xml:space="preserve">
+    <value>Pantau tagihan dan langganan berulang.</value>
+  </data>
+  <data name="Page.Analytics.Description" xml:space="preserve">
+    <value>Jelajahi tren pemasukan dan pengeluaran Anda.</value>
+  </data>
+  <data name="Page.Reports.Description" xml:space="preserve">
+    <value>Ekspor laporan keuangan sebagai PDF, Excel, atau CSV.</value>
+  </data>
+  <data name="Page.Settings.Description" xml:space="preserve">
+    <value>Preferensi bahasa, tampilan, keamanan, dan data.</value>
+  </data>
+  <data name="Shell.Search.Placeholder" xml:space="preserve">
+    <value>Cari di Astra Finance</value>
+  </data>
+  <data name="Shell.Search.Shortcut" xml:space="preserve">
+    <value>Ctrl+K</value>
+  </data>
+  <data name="Shell.Search.NoResults" xml:space="preserve">
+    <value>Tidak ada hasil untuk "{0}"</value>
+  </data>
+  <data name="Shell.Search.Hint" xml:space="preserve">
+    <value>↑ ↓ untuk berpindah · Enter untuk membuka · Esc untuk menutup</value>
+  </data>
+  <data name="Shell.Search.Clear" xml:space="preserve">
+    <value>Hapus pencarian</value>
+  </data>
+  <data name="SearchCategory.Pages" xml:space="preserve">
+    <value>Halaman</value>
+  </data>
+  <data name="SearchCategory.Transactions" xml:space="preserve">
+    <value>Transaksi</value>
+  </data>
+  <data name="SearchCategory.Accounts" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="SearchCategory.Categories" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="SearchCategory.Budgets" xml:space="preserve">
+    <value>Anggaran</value>
+  </data>
+  <data name="SearchCategory.SavingsGoals" xml:space="preserve">
+    <value>Target Tabungan</value>
+  </data>
+  <data name="SearchCategory.Bills" xml:space="preserve">
+    <value>Tagihan &amp; Langganan</value>
+  </data>
+  <data name="Shell.QuickAdd" xml:space="preserve">
+    <value>Tambah Cepat</value>
+  </data>
+  <data name="Shell.QuickAdd.Tooltip" xml:space="preserve">
+    <value>Tambah Transaksi Cepat (Ctrl+N)</value>
+  </data>
+  <data name="Shell.Notifications" xml:space="preserve">
+    <value>Notifikasi</value>
+  </data>
+  <data name="Shell.Notifications.Empty.Title" xml:space="preserve">
+    <value>Tidak ada notifikasi</value>
+  </data>
+  <data name="Shell.Notifications.Empty.Body" xml:space="preserve">
+    <value>Peringatan dan pengingat baru akan muncul di sini.</value>
+  </data>
+  <data name="Shell.Notifications.ClearAll" xml:space="preserve">
+    <value>Hapus semua</value>
+  </data>
+  <data name="Shell.Notifications.Dismiss" xml:space="preserve">
+    <value>Tutup</value>
+  </data>
+  <data name="Shell.Menu" xml:space="preserve">
+    <value>Menu aplikasi</value>
+  </data>
+  <data name="Shell.Menu.Appearance" xml:space="preserve">
+    <value>Tampilan</value>
+  </data>
+  <data name="Shell.Menu.Language" xml:space="preserve">
+    <value>Bahasa</value>
+  </data>
+  <data name="Shell.Menu.Settings" xml:space="preserve">
+    <value>Pengaturan</value>
+  </data>
+  <data name="Shell.Menu.About" xml:space="preserve">
+    <value>Tentang Astra Finance</value>
+  </data>
+  <data name="Shell.Sidebar.Collapse" xml:space="preserve">
+    <value>Ciutkan bilah samping (Ctrl+B)</value>
+  </data>
+  <data name="Shell.Sidebar.Expand" xml:space="preserve">
+    <value>Bentangkan bilah samping (Ctrl+B)</value>
+  </data>
+  <data name="Theme.Light" xml:space="preserve">
+    <value>Terang</value>
+  </data>
+  <data name="Theme.Dark" xml:space="preserve">
+    <value>Gelap</value>
+  </data>
+  <data name="Theme.System" xml:space="preserve">
+    <value>Ikuti Sistem</value>
+  </data>
+  <data name="Language.English" xml:space="preserve">
+    <value>English</value>
+  </data>
+  <data name="Language.Indonesian" xml:space="preserve">
+    <value>Bahasa Indonesia</value>
+  </data>
+  <data name="Accent.Coral" xml:space="preserve">
+    <value>Koral</value>
+  </data>
+  <data name="Accent.Amber" xml:space="preserve">
+    <value>Amber</value>
+  </data>
+  <data name="Accent.Teal" xml:space="preserve">
+    <value>Hijau Toska</value>
+  </data>
+  <data name="Accent.Blue" xml:space="preserve">
+    <value>Biru</value>
+  </data>
+  <data name="Accent.Violet" xml:space="preserve">
+    <value>Ungu</value>
+  </data>
+  <data name="Greeting.Morning" xml:space="preserve">
+    <value>Selamat pagi</value>
+  </data>
+  <data name="Greeting.Midday" xml:space="preserve">
+    <value>Selamat siang</value>
+  </data>
+  <data name="Greeting.Afternoon" xml:space="preserve">
+    <value>Selamat sore</value>
+  </data>
+  <data name="Greeting.Night" xml:space="preserve">
+    <value>Selamat malam</value>
+  </data>
+  <data name="Dashboard.Subtitle" xml:space="preserve">
+    <value>Berikut ringkasan keuangan Anda.</value>
+  </data>
+  <data name="Module.InDevelopment.Title" xml:space="preserve">
+    <value>Belum tersedia</value>
+  </data>
+  <data name="Module.InDevelopment.Body" xml:space="preserve">
+    <value>{0} dijadwalkan pada fase pengembangan {1}. Tidak ada angka yang ditampilkan di sini sampai modul ini bekerja dengan data asli Anda.</value>
+  </data>
+  <data name="Module.InDevelopment.Badge" xml:space="preserve">
+    <value>Fase {0}</value>
+  </data>
+  <data name="Settings.Section.General" xml:space="preserve">
+    <value>Umum</value>
+  </data>
+  <data name="Settings.Section.Appearance" xml:space="preserve">
+    <value>Tampilan</value>
+  </data>
+  <data name="Settings.Section.About" xml:space="preserve">
+    <value>Tentang</value>
+  </data>
+  <data name="Settings.Language" xml:space="preserve">
+    <value>Bahasa aplikasi</value>
+  </data>
+  <data name="Settings.Language.Description" xml:space="preserve">
+    <value>Perubahan langsung diterapkan.</value>
+  </data>
+  <data name="Settings.Theme" xml:space="preserve">
+    <value>Tema</value>
+  </data>
+  <data name="Settings.Theme.Description" xml:space="preserve">
+    <value>Ikuti Sistem menggunakan mode aplikasi Windows Anda.</value>
+  </data>
+  <data name="Settings.Accent" xml:space="preserve">
+    <value>Warna aksen</value>
+  </data>
+  <data name="Settings.Accent.Description" xml:space="preserve">
+    <value>Digunakan untuk sorotan, pilihan, dan tindakan utama.</value>
+  </data>
+  <data name="Settings.Upcoming" xml:space="preserve">
+    <value>Pengaturan format regional, kategori, notifikasi, keamanan, dan manajemen data ditambahkan pada fase pengembangan berikutnya.</value>
+  </data>
+  <data name="About.Version" xml:space="preserve">
+    <value>Versi</value>
+  </data>
+  <data name="About.Developer" xml:space="preserve">
+    <value>Pengembang</value>
+  </data>
+  <data name="About.DataLocation" xml:space="preserve">
+    <value>Lokasi data</value>
+  </data>
+  <data name="About.ThirdParty" xml:space="preserve">
+    <value>Komponen pihak ketiga</value>
+  </data>
+  <data name="About.Privacy" xml:space="preserve">
+    <value>Astra Finance bekerja secara offline dan menyimpan data Anda di perangkat ini. Aplikasi ini tidak terhubung ke bank Anda.</value>
+  </data>
+  <data name="About.OpenDataFolder" xml:space="preserve">
+    <value>Buka folder data</value>
+  </data>
+  <data name="Dialog.OK" xml:space="preserve">
+    <value>OK</value>
+  </data>
+  <data name="Dialog.Cancel" xml:space="preserve">
+    <value>Batal</value>
+  </data>
+  <data name="Dialog.Close" xml:space="preserve">
+    <value>Tutup</value>
+  </data>
+  <data name="Error.Unexpected.Title" xml:space="preserve">
+    <value>Terjadi kesalahan</value>
+  </data>
+  <data name="Error.Unexpected.Body" xml:space="preserve">
+    <value>Terjadi kesalahan tak terduga. Detail teknis telah dicatat di log diagnostik pada {0}.</value>
+  </data>
+  <data name="Error.PreferencesSave.Title" xml:space="preserve">
+    <value>Preferensi tidak tersimpan</value>
+  </data>
+  <data name="Error.PreferencesSave.Body" xml:space="preserve">
+    <value>Perubahan Anda berlaku untuk sesi ini tetapi tidak dapat disimpan ke disk.</value>
+  </data>
+  <data name="Notification.PreferencesReset.Title" xml:space="preserve">
+    <value>Preferensi diatur ulang</value>
+  </data>
+  <data name="Notification.PreferencesReset.Body" xml:space="preserve">
+    <value>File preferensi Anda tidak dapat dibaca, sehingga preferensi bawaan dipulihkan. File yang tidak terbaca disimpan sebagai salinan cadangan.</value>
+  </data>
+  <data name="About.Title" xml:space="preserve">
+    <value>Tentang Astra Finance</value>
+  </data>
+  <data name="About.Summary" xml:space="preserve">
+    <value>Versi {0} · Dikembangkan oleh {1}</value>
+  </data>
+  <data name="Shell.Breadcrumb.Separator" xml:space="preserve">
+    <value>›</value>
+  </data>
+  <data name="Settings.Theme.Label" xml:space="preserve">
+    <value>Mode tema</value>
+  </data>
+  <data name="EmptyState.NoResults" xml:space="preserve">
+    <value>Tidak ada yang cocok</value>
+  </data>
+  <data name="Validation.Required" xml:space="preserve">
+    <value>Kolom ini wajib diisi.</value>
+  </data>
+  <data name="Validation.TooLong" xml:space="preserve">
+    <value>Teks ini terlalu panjang.</value>
+  </data>
+  <data name="Validation.AmountMustBePositive" xml:space="preserve">
+    <value>Masukkan jumlah lebih dari nol.</value>
+  </data>
+  <data name="Validation.AmountTooLarge" xml:space="preserve">
+    <value>Jumlah ini terlalu besar.</value>
+  </data>
+  <data name="Validation.AmountMustNotBeZero" xml:space="preserve">
+    <value>Jumlah tidak boleh nol.</value>
+  </data>
+  <data name="Validation.AccountNotFound" xml:space="preserve">
+    <value>Akun yang dipilih sudah tidak ada.</value>
+  </data>
+  <data name="Validation.AccountInactive" xml:space="preserve">
+    <value>Akun yang dipilih tidak aktif.</value>
+  </data>
+  <data name="Validation.CategoryNotFound" xml:space="preserve">
+    <value>Kategori yang dipilih sudah tidak ada.</value>
+  </data>
+  <data name="Validation.CategoryInactive" xml:space="preserve">
+    <value>Kategori yang dipilih tidak aktif.</value>
+  </data>
+  <data name="Validation.CategoryKindMismatch" xml:space="preserve">
+    <value>Pilih kategori pemasukan untuk pemasukan dan kategori pengeluaran untuk pengeluaran.</value>
+  </data>
+  <data name="Validation.CategoryNotAllowedForTransfer" xml:space="preserve">
+    <value>Transfer tidak menggunakan kategori.</value>
+  </data>
+  <data name="Validation.TransferSameAccount" xml:space="preserve">
+    <value>Pilih dua akun yang berbeda untuk transfer.</value>
+  </data>
+  <data name="Validation.TransferDestinationRequired" xml:space="preserve">
+    <value>Pilih akun penerima transfer.</value>
+  </data>
+  <data name="Validation.DestinationOnlyForTransfer" xml:space="preserve">
+    <value>Hanya transfer yang memiliki akun tujuan.</value>
+  </data>
+  <data name="Validation.FeeOnlyForTransfer" xml:space="preserve">
+    <value>Hanya transfer yang dapat memiliki biaya transfer.</value>
+  </data>
+  <data name="Validation.TransactionNotFound" xml:space="preserve">
+    <value>Transaksi ini sudah tidak ada.</value>
+  </data>
+  <data name="Validation.FeeEditedThroughTransfer" xml:space="preserve">
+    <value>Ubah biaya melalui transfernya.</value>
+  </data>
+  <data name="Validation.BalanceUnchanged" xml:space="preserve">
+    <value>Saldo baru sama dengan saldo saat ini.</value>
+  </data>
+  <data name="Validation.DuplicateName" xml:space="preserve">
+    <value>Nama ini sudah digunakan.</value>
+  </data>
+  <data name="Validation.Overflow" xml:space="preserve">
+    <value>Jumlah yang dihasilkan di luar batas.</value>
+  </data>
+  <data name="Validation.AllocationExceedsAvailable" xml:space="preserve">
+    <value>Alokasi melebihi saldo akun yang belum dialokasikan.</value>
+  </data>
+  <data name="Validation.ReleaseExceedsAllocated" xml:space="preserve">
+    <value>Anda tidak dapat melepas lebih dari yang dialokasikan.</value>
+  </data>
+  <data name="Category.Food" xml:space="preserve">
+    <value>Makanan &amp; Minuman</value>
+  </data>
+  <data name="Category.Transportation" xml:space="preserve">
+    <value>Transportasi</value>
+  </data>
+  <data name="Category.Entertainment" xml:space="preserve">
+    <value>Hiburan</value>
+  </data>
+  <data name="Category.Shopping" xml:space="preserve">
+    <value>Belanja</value>
+  </data>
+  <data name="Category.BillsUtilities" xml:space="preserve">
+    <value>Tagihan &amp; Utilitas</value>
+  </data>
+  <data name="Category.Health" xml:space="preserve">
+    <value>Kesehatan</value>
+  </data>
+  <data name="Category.Education" xml:space="preserve">
+    <value>Pendidikan</value>
+  </data>
+  <data name="Category.Housing" xml:space="preserve">
+    <value>Tempat Tinggal</value>
+  </data>
+  <data name="Category.Fees" xml:space="preserve">
+    <value>Biaya &amp; Ongkos</value>
+  </data>
+  <data name="Category.OtherExpense" xml:space="preserve">
+    <value>Pengeluaran Lainnya</value>
+  </data>
+  <data name="Category.Salary" xml:space="preserve">
+    <value>Gaji</value>
+  </data>
+  <data name="Category.Business" xml:space="preserve">
+    <value>Usaha</value>
+  </data>
+  <data name="Category.Investment" xml:space="preserve">
+    <value>Hasil Investasi</value>
+  </data>
+  <data name="Category.Gift" xml:space="preserve">
+    <value>Hadiah</value>
+  </data>
+  <data name="Category.OtherIncome" xml:space="preserve">
+    <value>Pemasukan Lainnya</value>
+  </data>
+  <data name="Error.Database.Title" xml:space="preserve">
+    <value>Data Anda tidak dapat dibuka</value>
+  </data>
+  <data name="Error.Database.Newer" xml:space="preserve">
+    <value>Data ini dibuat oleh versi Astra Finance yang lebih baru. Pasang versi terbaru untuk membukanya. Data Anda tidak diubah.</value>
+  </data>
+  <data name="Error.Database.Integrity" xml:space="preserve">
+    <value>Basis data gagal dalam pemeriksaan integritas. Data tidak diubah. Anda dapat memulihkan cadangan dari folder Backups di {0}.</value>
+  </data>
+  <data name="Error.Database.Generic" xml:space="preserve">
+    <value>Basis data tidak dapat dibuka. Detail teknis telah dicatat di log diagnostik pada {0}.</value>
+  </data>
+  <data name="Notification.Migrated.Title" xml:space="preserve">
+    <value>Data diperbarui</value>
+  </data>
+  <data name="Notification.Migrated.Body" xml:space="preserve">
+    <value>Data Anda telah diperbarui untuk versi ini. Salinan pengaman disimpan terlebih dahulu.</value>
+  </data>
+  <data name="Shell.Menu.Backup" xml:space="preserve">
+    <value>Cadangkan sekarang</value>
+  </data>
+  <data name="Shell.Menu.Lock" xml:space="preserve">
+    <value>Kunci Astra Finance</value>
+  </data>
+  <data name="Backup.Created.Title" xml:space="preserve">
+    <value>Cadangan dibuat</value>
+  </data>
+  <data name="Backup.Failed.Title" xml:space="preserve">
+    <value>Pencadangan gagal</value>
+  </data>
+  <data name="Backup.Failed.Body" xml:space="preserve">
+    <value>Cadangan tidak dapat dibuat. Pastikan folder cadangan tersedia dan masih memiliki ruang kosong.</value>
+  </data>
+  <data name="BackupSchedule.Off" xml:space="preserve">
+    <value>Mati</value>
+  </data>
+  <data name="BackupSchedule.Daily" xml:space="preserve">
+    <value>Harian</value>
+  </data>
+  <data name="BackupSchedule.Weekly" xml:space="preserve">
+    <value>Mingguan</value>
+  </data>
+  <data name="BackupSchedule.Monthly" xml:space="preserve">
+    <value>Bulanan</value>
+  </data>
+  <data name="Common.Save" xml:space="preserve">
+    <value>Simpan</value>
+  </data>
+  <data name="Validation.InvalidAmount" xml:space="preserve">
+    <value>Masukkan jumlah yang valid.</value>
+  </data>
+  <data name="Validation.CurrencyLocked" xml:space="preserve">
+    <value>Mata uang tidak dapat diubah setelah akun dibuat.</value>
+  </data>
+  <data name="Validation.PinFormat" xml:space="preserve">
+    <value>Gunakan 4 sampai 8 angka.</value>
+  </data>
+  <data name="Validation.PinMismatch" xml:space="preserve">
+    <value>PIN tidak cocok.</value>
+  </data>
+  <data name="Validation.PinIncorrect" xml:space="preserve">
+    <value>PIN salah.</value>
+  </data>
+  <data name="Validation.DirectoryNotWritable" xml:space="preserve">
+    <value>Astra Finance tidak dapat menulis ke folder ini. Pilih folder lain.</value>
+  </data>
+  <data name="AccountType.Cash" xml:space="preserve">
+    <value>Tunai</value>
+  </data>
+  <data name="AccountType.BankAccount" xml:space="preserve">
+    <value>Rekening bank</value>
+  </data>
+  <data name="AccountType.EWallet" xml:space="preserve">
+    <value>Dompet digital</value>
+  </data>
+  <data name="AccountType.SavingsAccount" xml:space="preserve">
+    <value>Rekening tabungan</value>
+  </data>
+  <data name="AccountType.Custom" xml:space="preserve">
+    <value>Lainnya</value>
+  </data>
+  <data name="TransactionType.Income" xml:space="preserve">
+    <value>Pemasukan</value>
+  </data>
+  <data name="TransactionType.Expense" xml:space="preserve">
+    <value>Pengeluaran</value>
+  </data>
+  <data name="TransactionType.Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="Accounts.Add.Title" xml:space="preserve">
+    <value>Tambah akun</value>
+  </data>
+  <data name="Accounts.Add.Primary" xml:space="preserve">
+    <value>Buat akun</value>
+  </data>
+  <data name="Accounts.Edit.Title" xml:space="preserve">
+    <value>Ubah akun</value>
+  </data>
+  <data name="Accounts.Field.Name" xml:space="preserve">
+    <value>Nama akun</value>
+  </data>
+  <data name="Accounts.Field.Name.Placeholder" xml:space="preserve">
+    <value>mis. BCA, GoPay, Dompet</value>
+  </data>
+  <data name="Accounts.Field.Type" xml:space="preserve">
+    <value>Jenis akun</value>
+  </data>
+  <data name="Accounts.Field.Opening" xml:space="preserve">
+    <value>Saldo awal</value>
+  </data>
+  <data name="Accounts.Field.Opening.Hint" xml:space="preserve">
+    <value>Jumlah di akun ini hari ini. Nol juga boleh; gunakan tanda minus untuk akun yang minus.</value>
+  </data>
+  <data name="Accounts.Field.Opening.Locked" xml:space="preserve">
+    <value>Saldo awal tidak dapat diubah. Gunakan Sesuaikan saldo untuk mengoreksi saldo saat ini dengan alasan yang dicatat.</value>
+  </data>
+  <data name="Accounts.Field.Icon" xml:space="preserve">
+    <value>Ikon</value>
+  </data>
+  <data name="Accounts.Field.Color" xml:space="preserve">
+    <value>Warna</value>
+  </data>
+  <data name="Accounts.Adjust.Title" xml:space="preserve">
+    <value>Sesuaikan saldo</value>
+  </data>
+  <data name="Accounts.Adjust.Primary" xml:space="preserve">
+    <value>Catat penyesuaian</value>
+  </data>
+  <data name="Accounts.Adjust.Explanation" xml:space="preserve">
+    <value>Masukkan saldo yang sebenarnya ada di akun. Selisihnya dicatat sebagai penyesuaian terdokumentasi; catatan yang ada tidak diubah.</value>
+  </data>
+  <data name="Accounts.Adjust.Current" xml:space="preserve">
+    <value>Saldo saat ini</value>
+  </data>
+  <data name="Accounts.Adjust.NewBalance" xml:space="preserve">
+    <value>Saldo sebenarnya</value>
+  </data>
+  <data name="Accounts.Adjust.Difference" xml:space="preserve">
+    <value>Penyesuaian yang dicatat: {0}</value>
+  </data>
+  <data name="Accounts.Adjust.Reason" xml:space="preserve">
+    <value>Alasan</value>
+  </data>
+  <data name="Accounts.Adjust.Reason.Placeholder" xml:space="preserve">
+    <value>mis. Hitung uang tunai, koreksi mutasi bank</value>
+  </data>
+  <data name="Accounts.Adjust.Date" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="Accounts.Created.Title" xml:space="preserve">
+    <value>Akun dibuat</value>
+  </data>
+  <data name="Accounts.Adjusted.Title" xml:space="preserve">
+    <value>Saldo disesuaikan</value>
+  </data>
+  <data name="Accounts.Deactivate.Title" xml:space="preserve">
+    <value>Nonaktifkan akun?</value>
+  </data>
+  <data name="Accounts.Deactivate.Body" xml:space="preserve">
+    <value>"{0}" tidak akan tersedia lagi untuk transaksi baru. Riwayat dan saldonya tetap disimpan dan tetap dihitung dalam total saldo Anda. Anda dapat mengaktifkannya kembali kapan saja.</value>
+  </data>
+  <data name="Accounts.Deactivate.Confirm" xml:space="preserve">
+    <value>Nonaktifkan</value>
+  </data>
+  <data name="Accounts.Reactivate" xml:space="preserve">
+    <value>Aktifkan kembali</value>
+  </data>
+  <data name="Accounts.Total" xml:space="preserve">
+    <value>Total saldo</value>
+  </data>
+  <data name="Accounts.Total.Hint" xml:space="preserve">
+    <value>Semua akun, termasuk yang tidak aktif</value>
+  </data>
+  <data name="Accounts.ShowInactive" xml:space="preserve">
+    <value>Tampilkan akun tidak aktif</value>
+  </data>
+  <data name="Accounts.Inactive" xml:space="preserve">
+    <value>Tidak aktif</value>
+  </data>
+  <data name="Accounts.Empty.Title" xml:space="preserve">
+    <value>Tidak ada akun untuk ditampilkan</value>
+  </data>
+  <data name="Accounts.Empty.Body" xml:space="preserve">
+    <value>Tambahkan akun, atau aktifkan "Tampilkan akun tidak aktif" untuk melihat akun yang dinonaktifkan.</value>
+  </data>
+  <data name="Accounts.Back" xml:space="preserve">
+    <value>Semua akun</value>
+  </data>
+  <data name="Accounts.Breakdown.Title" xml:space="preserve">
+    <value>Rincian saldo</value>
+  </data>
+  <data name="Accounts.Breakdown.Opening" xml:space="preserve">
+    <value>Saldo awal</value>
+  </data>
+  <data name="Accounts.Breakdown.Income" xml:space="preserve">
+    <value>Pemasukan</value>
+  </data>
+  <data name="Accounts.Breakdown.Expense" xml:space="preserve">
+    <value>Pengeluaran</value>
+  </data>
+  <data name="Accounts.Breakdown.TransfersIn" xml:space="preserve">
+    <value>Transfer masuk</value>
+  </data>
+  <data name="Accounts.Breakdown.TransfersOut" xml:space="preserve">
+    <value>Transfer keluar</value>
+  </data>
+  <data name="Accounts.Breakdown.Adjustments" xml:space="preserve">
+    <value>Penyesuaian</value>
+  </data>
+  <data name="Accounts.Breakdown.Balance" xml:space="preserve">
+    <value>Saldo saat ini</value>
+  </data>
+  <data name="Accounts.Adjustments.Title" xml:space="preserve">
+    <value>Penyesuaian saldo</value>
+  </data>
+  <data name="Accounts.Adjustment.From" xml:space="preserve">
+    <value>{0} → {1}</value>
+  </data>
+  <data name="Accounts.History.Title" xml:space="preserve">
+    <value>Riwayat transaksi</value>
+  </data>
+  <data name="Accounts.History.Empty" xml:space="preserve">
+    <value>Belum ada transaksi untuk akun ini.</value>
+  </data>
+  <data name="Accounts.History.More" xml:space="preserve">
+    <value>Muat lebih banyak</value>
+  </data>
+  <data name="Accounts.History.TransferTo" xml:space="preserve">
+    <value>Transfer ke {0}</value>
+  </data>
+  <data name="Accounts.History.TransferFrom" xml:space="preserve">
+    <value>Transfer dari {0}</value>
+  </data>
+  <data name="Lock.Prompt" xml:space="preserve">
+    <value>Masukkan PIN Anda untuk melanjutkan</value>
+  </data>
+  <data name="Lock.Pin" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="Lock.Unlock" xml:space="preserve">
+    <value>Buka kunci</value>
+  </data>
+  <data name="Lock.Incorrect" xml:space="preserve">
+    <value>PIN salah. Tersisa {0} percobaan sebelum masa tunggu.</value>
+  </data>
+  <data name="Lock.Cooldown" xml:space="preserve">
+    <value>Terlalu banyak percobaan yang salah. Coba lagi dalam {0}.</value>
+  </data>
+  <data name="Lock.Note" xml:space="preserve">
+    <value>PIN melindungi akses ke aplikasi. PIN tidak mengenkripsi file data Anda.</value>
+  </data>
+  <data name="Onboarding.Step.Welcome" xml:space="preserve">
+    <value>Selamat datang</value>
+  </data>
+  <data name="Onboarding.Step.Regional" xml:space="preserve">
+    <value>Pengaturan regional</value>
+  </data>
+  <data name="Onboarding.Step.FirstAccount" xml:space="preserve">
+    <value>Akun pertama</value>
+  </data>
+  <data name="Onboarding.Step.Pin" xml:space="preserve">
+    <value>PIN keamanan</value>
+  </data>
+  <data name="Onboarding.Step.Backup" xml:space="preserve">
+    <value>Pencadangan</value>
+  </data>
+  <data name="Onboarding.Step.Completion" xml:space="preserve">
+    <value>Selesai</value>
+  </data>
+  <data name="Onboarding.Progress" xml:space="preserve">
+    <value>Progres pengaturan</value>
+  </data>
+  <data name="Onboarding.Resume" xml:space="preserve">
+    <value>Progres Anda disimpan di setiap langkah. Jika pengaturan terhenti, Anda dapat melanjutkan dari langkah terakhir.</value>
+  </data>
+  <data name="Onboarding.Back" xml:space="preserve">
+    <value>Kembali</value>
+  </data>
+  <data name="Onboarding.Next" xml:space="preserve">
+    <value>Lanjut</value>
+  </data>
+  <data name="Onboarding.Finish" xml:space="preserve">
+    <value>Buka Dasbor</value>
+  </data>
+  <data name="Onboarding.Welcome.Title" xml:space="preserve">
+    <value>Selamat datang di Astra Finance</value>
+  </data>
+  <data name="Onboarding.Welcome.Body" xml:space="preserve">
+    <value>Mari siapkan ruang keuangan pribadi Anda. Hanya butuh sekitar satu menit.</value>
+  </data>
+  <data name="Onboarding.Welcome.Language" xml:space="preserve">
+    <value>Pilih bahasa Anda</value>
+  </data>
+  <data name="Onboarding.Regional.Title" xml:space="preserve">
+    <value>Pengaturan regional</value>
+  </data>
+  <data name="Onboarding.Regional.Body" xml:space="preserve">
+    <value>Pilih cara jumlah dan tanggal ditampilkan.</value>
+  </data>
+  <data name="Onboarding.Regional.Currency" xml:space="preserve">
+    <value>Mata uang utama</value>
+  </data>
+  <data name="Onboarding.Regional.CurrencyHint" xml:space="preserve">
+    <value>Semua akun menggunakan mata uang ini. Mata uang tidak dapat diubah setelah akun dibuat.</value>
+  </data>
+  <data name="Onboarding.Regional.Number" xml:space="preserve">
+    <value>Format angka</value>
+  </data>
+  <data name="Onboarding.Regional.Date" xml:space="preserve">
+    <value>Format tanggal</value>
+  </data>
+  <data name="Onboarding.Regional.Preview" xml:space="preserve">
+    <value>Pratinjau</value>
+  </data>
+  <data name="Onboarding.Account.Title" xml:space="preserve">
+    <value>Buat akun pertama Anda</value>
+  </data>
+  <data name="Onboarding.Account.Body" xml:space="preserve">
+    <value>Akun adalah tempat uang Anda disimpan, seperti uang tunai, rekening bank, atau dompet digital. Anda dapat menambahkan akun lain nanti.</value>
+  </data>
+  <data name="Onboarding.Pin.Title" xml:space="preserve">
+    <value>Lindungi akses dengan PIN</value>
+  </data>
+  <data name="Onboarding.Pin.Body" xml:space="preserve">
+    <value>Anda akan memasukkan PIN ini setiap kali Astra Finance dibuka. Gunakan 4 sampai 8 angka.</value>
+  </data>
+  <data name="Onboarding.Pin.New" xml:space="preserve">
+    <value>PIN</value>
+  </data>
+  <data name="Onboarding.Pin.Confirm" xml:space="preserve">
+    <value>Konfirmasi PIN</value>
+  </data>
+  <data name="Onboarding.Pin.AlreadySet" xml:space="preserve">
+    <value>PIN sudah diatur. Kosongkan kolom untuk mempertahankannya, atau masukkan PIN baru.</value>
+  </data>
+  <data name="Onboarding.Pin.Note" xml:space="preserve">
+    <value>PIN mengontrol akses ke aplikasi; PIN tidak mengenkripsi data Anda, yang tetap berada di profil pengguna Windows Anda. Astra Finance tidak dapat memulihkan PIN yang terlupa, jadi pilih PIN yang mudah Anda ingat.</value>
+  </data>
+  <data name="Onboarding.Backup.Title" xml:space="preserve">
+    <value>Cadangkan data Anda</value>
+  </data>
+  <data name="Onboarding.Backup.Body" xml:space="preserve">
+    <value>Pencadangan otomatis menyalin data Anda ke folder pilihan Anda. Folder di drive lain atau folder yang disinkronkan memberi keamanan tambahan.</value>
+  </data>
+  <data name="Onboarding.Backup.Location" xml:space="preserve">
+    <value>Folder cadangan</value>
+  </data>
+  <data name="Onboarding.Backup.Browse" xml:space="preserve">
+    <value>Telusuri…</value>
+  </data>
+  <data name="Onboarding.Backup.Choose" xml:space="preserve">
+    <value>Pilih folder cadangan</value>
+  </data>
+  <data name="Onboarding.Backup.Schedule" xml:space="preserve">
+    <value>Pencadangan otomatis</value>
+  </data>
+  <data name="Onboarding.Backup.Manual" xml:space="preserve">
+    <value>Anda juga dapat membuat cadangan kapan saja melalui "Cadangkan sekarang" di menu aplikasi (kanan atas). Pencadangan otomatis menyimpan 10 salinan terbaru; cadangan manual tidak pernah dihapus otomatis.</value>
+  </data>
+  <data name="Onboarding.Done.Title" xml:space="preserve">
+    <value>Semuanya siap</value>
+  </data>
+  <data name="Onboarding.Done.Body" xml:space="preserve">
+    <value>Astra Finance siap digunakan. Berikut ringkasan pengaturan Anda.</value>
+  </data>
+  <data name="Onboarding.Done.Account" xml:space="preserve">
+    <value>Akun pertama</value>
+  </data>
+  <data name="Onboarding.Done.Security" xml:space="preserve">
+    <value>Keamanan</value>
+  </data>
+  <data name="Onboarding.Done.SecurityValue" xml:space="preserve">
+    <value>PIN diperlukan saat aplikasi dibuka</value>
+  </data>
+  <data name="Onboarding.Done.Backup" xml:space="preserve">
+    <value>Pencadangan</value>
+  </data>
+  <data name="Accounts.Transfer" xml:space="preserve">
+    <value>Transfer</value>
+  </data>
+  <data name="Period.AllTime" xml:space="preserve">
+    <value>Semua waktu</value>
+  </data>
+  <data name="Period.ThisMonth" xml:space="preserve">
+    <value>Bulan ini</value>
+  </data>
+  <data name="Period.LastMonth" xml:space="preserve">
+    <value>Bulan lalu</value>
+  </data>
+  <data name="Period.Last3Months" xml:space="preserve">
+    <value>3 bulan terakhir</value>
+  </data>
+  <data name="Period.ThisYear" xml:space="preserve">
+    <value>Tahun ini</value>
+  </data>
+  <data name="Period.Custom" xml:space="preserve">
+    <value>Rentang khusus</value>
+  </data>
+  <data name="Transactions.Filter.AllTypes" xml:space="preserve">
+    <value>Semua</value>
+  </data>
+  <data name="Transactions.Filter.AllCategories" xml:space="preserve">
+    <value>Semua kategori</value>
+  </data>
+  <data name="Transactions.Filter.AllAccounts" xml:space="preserve">
+    <value>Semua akun</value>
+  </data>
+  <data name="Transactions.Filter.Search" xml:space="preserve">
+    <value>Cari deskripsi, kategori, akun, jumlah</value>
+  </data>
+  <data name="Transactions.Filter.Period" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="Transactions.Filter.From" xml:space="preserve">
+    <value>Dari tanggal</value>
+  </data>
+  <data name="Transactions.Filter.To" xml:space="preserve">
+    <value>Sampai tanggal</value>
+  </data>
+  <data name="Transactions.Filter.Clear" xml:space="preserve">
+    <value>Hapus filter</value>
+  </data>
+  <data name="Transactions.Page" xml:space="preserve">
+    <value>Halaman {0} dari {1}</value>
+  </data>
+  <data name="Transactions.PrevPage" xml:space="preserve">
+    <value>Halaman sebelumnya</value>
+  </data>
+  <data name="Transactions.NextPage" xml:space="preserve">
+    <value>Halaman berikutnya</value>
+  </data>
+  <data name="Transactions.Summary" xml:space="preserve">
+    <value>{0} transaksi · Pemasukan {1} · Pengeluaran {2}</value>
+  </data>
+  <data name="Transactions.Add.Title" xml:space="preserve">
+    <value>Tambah transaksi</value>
+  </data>
+  <data name="Transactions.Edit.Title" xml:space="preserve">
+    <value>Ubah transaksi</value>
+  </data>
+  <data name="Transactions.Saved.Title" xml:space="preserve">
+    <value>Transaksi disimpan</value>
+  </data>
+  <data name="Transactions.MoreDetails" xml:space="preserve">
+    <value>Detail lainnya (deskripsi, catatan, biaya transfer)</value>
+  </data>
+  <data name="Transactions.Delete.Title" xml:space="preserve">
+    <value>Hapus transaksi?</value>
+  </data>
+  <data name="Transactions.Delete.Body" xml:space="preserve">
+    <value>Transaksi dihapus dari saldo, anggaran, dan laporan. Anda dapat memulihkannya nanti melalui "Tampilkan yang dihapus".</value>
+  </data>
+  <data name="Transactions.Delete.BodyTransfer" xml:space="preserve">
+    <value>Transfer beserta biayanya dihapus dari saldo, anggaran, dan laporan. Anda dapat memulihkannya nanti melalui "Tampilkan yang dihapus".</value>
+  </data>
+  <data name="Transactions.Delete.Confirm" xml:space="preserve">
+    <value>Hapus</value>
+  </data>
+  <data name="Transactions.Deleted.Title" xml:space="preserve">
+    <value>Transaksi dihapus</value>
+  </data>
+  <data name="Transactions.Deleted.Body" xml:space="preserve">
+    <value>Anda dapat memulihkannya melalui "Tampilkan yang dihapus".</value>
+  </data>
+  <data name="Transactions.Restored.Title" xml:space="preserve">
+    <value>Transaksi dipulihkan</value>
+  </data>
+  <data name="Transactions.Restore" xml:space="preserve">
+    <value>Pulihkan</value>
+  </data>
+  <data name="Transactions.ShowDeleted" xml:space="preserve">
+    <value>Tampilkan yang dihapus</value>
+  </data>
+  <data name="Transactions.Export.Button" xml:space="preserve">
+    <value>Ekspor CSV</value>
+  </data>
+  <data name="Transactions.Export.Tooltip" xml:space="preserve">
+    <value>Mengekspor semua transaksi yang sesuai dengan filter saat ini</value>
+  </data>
+  <data name="Transactions.Export.Title" xml:space="preserve">
+    <value>Ekspor transaksi</value>
+  </data>
+  <data name="Transactions.Export.Filter" xml:space="preserve">
+    <value>File CSV (*.csv)|*.csv</value>
+  </data>
+  <data name="Transactions.Export.Done" xml:space="preserve">
+    <value>{0} transaksi diekspor</value>
+  </data>
+  <data name="Transactions.Export.Failed" xml:space="preserve">
+    <value>Ekspor gagal</value>
+  </data>
+  <data name="Transactions.Export.FailedBody" xml:space="preserve">
+    <value>File tidak dapat ditulis. Pastikan file tidak sedang dibuka di program lain dan folder dapat ditulisi.</value>
+  </data>
+  <data name="Transactions.Export.FeeMarker" xml:space="preserve">
+    <value>Biaya transfer</value>
+  </data>
+  <data name="Transactions.Export.Column.Date" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="Transactions.Export.Column.Type" xml:space="preserve">
+    <value>Jenis</value>
+  </data>
+  <data name="Transactions.Export.Column.Description" xml:space="preserve">
+    <value>Deskripsi</value>
+  </data>
+  <data name="Transactions.Export.Column.Category" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="Transactions.Export.Column.Account" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="Transactions.Export.Column.ToAccount" xml:space="preserve">
+    <value>Ke akun</value>
+  </data>
+  <data name="Transactions.Export.Column.Amount" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="Transactions.Export.Column.Currency" xml:space="preserve">
+    <value>Mata uang</value>
+  </data>
+  <data name="Transactions.Export.Column.Notes" xml:space="preserve">
+    <value>Catatan</value>
+  </data>
+  <data name="Transactions.Export.Column.Fee" xml:space="preserve">
+    <value>Keterangan</value>
+  </data>
+  <data name="Transactions.Field.Type" xml:space="preserve">
+    <value>Jenis transaksi</value>
+  </data>
+  <data name="Transactions.Field.Amount" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="Transactions.Field.Category" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="Transactions.Field.Account" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="Transactions.Field.FromAccount" xml:space="preserve">
+    <value>Dari akun</value>
+  </data>
+  <data name="Transactions.Field.ToAccount" xml:space="preserve">
+    <value>Ke akun</value>
+  </data>
+  <data name="Transactions.Field.Date" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="Transactions.Field.Description" xml:space="preserve">
+    <value>Deskripsi</value>
+  </data>
+  <data name="Transactions.Field.Description.Placeholder" xml:space="preserve">
+    <value>mis. Makan siang bersama tim</value>
+  </data>
+  <data name="Transactions.Field.Fee" xml:space="preserve">
+    <value>Biaya transfer</value>
+  </data>
+  <data name="Transactions.Field.Fee.Hint" xml:space="preserve">
+    <value>Dicatat sebagai pengeluaran terpisah dari akun asal.</value>
+  </data>
+  <data name="Transactions.Field.Notes" xml:space="preserve">
+    <value>Catatan</value>
+  </data>
+  <data name="Transactions.Column.Date" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="Transactions.Column.Description" xml:space="preserve">
+    <value>Deskripsi</value>
+  </data>
+  <data name="Transactions.Column.Category" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="Transactions.Column.Account" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="Transactions.Column.Amount" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="Transactions.Column.Type" xml:space="preserve">
+    <value>Jenis</value>
+  </data>
+  <data name="Transactions.Empty.Title" xml:space="preserve">
+    <value>Belum ada transaksi</value>
+  </data>
+  <data name="Transactions.Empty.Body" xml:space="preserve">
+    <value>Catat pemasukan, pengeluaran, atau transfer pertama Anda. Tambah Cepat (Ctrl+N) tersedia di setiap halaman.</value>
+  </data>
+  <data name="Transactions.NoMatch.Title" xml:space="preserve">
+    <value>Tidak ada transaksi yang cocok</value>
+  </data>
+  <data name="Transactions.NoMatch.Body" xml:space="preserve">
+    <value>Coba pencarian lain atau hapus filter.</value>
+  </data>
+  <data name="Transactions.Details.Title" xml:space="preserve">
+    <value>Detail transaksi</value>
+  </data>
+  <data name="Transactions.Details.Deleted" xml:space="preserve">
+    <value>Dihapus</value>
+  </data>
+  <data name="Transactions.Details.FeeBadge" xml:space="preserve">
+    <value>Biaya transfer</value>
+  </data>
+  <data name="Transactions.Details.Created" xml:space="preserve">
+    <value>Dicatat</value>
+  </data>
+  <data name="Transactions.Details.OpenTransfer" xml:space="preserve">
+    <value>Buka transfernya</value>
+  </data>
+</root>

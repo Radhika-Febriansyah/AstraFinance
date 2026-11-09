@@ -1,0 +1,126 @@
+<UserControl x:Class="AstraFinance.App.Views.Forms.TransactionForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:AstraFinance.App.Controls"
+             xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:conv="clr-namespace:AstraFinance.App.Converters"
+             xmlns:dlg="clr-namespace:AstraFinance.App.ViewModels.Dialogs"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=dlg:TransactionFormViewModel}">
+    <UserControl.Resources>
+        <conv:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTime" />
+        <DataTemplate x:Key="CategoryItem" DataType="{x:Type dlg:CategoryOption}">
+            <StackPanel Orientation="Horizontal">
+                <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,10,0" />
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="AccountItem" DataType="{x:Type dlg:AccountOption}">
+            <StackPanel Orientation="Horizontal">
+                <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{DynamicResource Brush.Text.Secondary}" Margin="0,0,10,0" />
+                <TextBlock Text="{Binding Name}" VerticalAlignment="Center" />
+            </StackPanel>
+        </DataTemplate>
+    </UserControl.Resources>
+
+    <StackPanel>
+        <!-- Type -->
+        <c:ChoiceGroup ItemsSource="{Binding TypeOptions}" Focusable="False" Margin="0,0,0,12"
+                      AutomationProperties.Name="{loc:Loc Transactions.Field.Type}">
+            <c:ChoiceGroup.ItemsPanel>
+                <ItemsPanelTemplate>
+                    <UniformGrid Rows="1" />
+                </ItemsPanelTemplate>
+            </c:ChoiceGroup.ItemsPanel>
+            <c:ChoiceGroup.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton Style="{StaticResource RadioButton.Choice}" GroupName="TransactionType" Margin="0,0,6,0"
+                                 HorizontalContentAlignment="Center" c:Assist.Icon="{Binding IconKey}"
+                                 Content="{Binding Label}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                </DataTemplate>
+            </c:ChoiceGroup.ItemTemplate>
+        </c:ChoiceGroup>
+
+        <!-- Amount -->
+        <TextBlock Text="{loc:Loc Transactions.Field.Amount}" Style="{StaticResource FieldLabel}" />
+        <Grid Margin="0,0,0,22">
+            <TextBox x:Name="AmountBox" Text="{Binding AmountText, UpdateSourceTrigger=PropertyChanged}" FontSize="22" MinHeight="48"
+                     Padding="44,0,12,0" InputScope="Number" AutomationProperties.Name="{loc:Loc Transactions.Field.Amount}"
+                     c:Assist.Placeholder="0" />
+            <TextBlock Text="{Binding CurrencySymbol}" Style="{StaticResource Text.Secondary}" FontSize="16" VerticalAlignment="Top"
+                       Margin="14,13,0,0" IsHitTestVisible="False" />
+        </Grid>
+
+        <!-- Category (income / expense) -->
+        <StackPanel Visibility="{Binding IsTransfer, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+            <TextBlock Text="{loc:Loc Transactions.Field.Category}" Style="{StaticResource FieldLabel}" />
+            <ComboBox ItemsSource="{Binding Categories}" SelectedItem="{Binding SelectedCategory}" ItemTemplate="{StaticResource CategoryItem}"
+                      IsTextSearchEnabled="True" AutomationProperties.Name="{loc:Loc Transactions.Field.Category}" Margin="0,0,0,22" />
+        </StackPanel>
+
+        <!-- Account(s) -->
+        <Grid Margin="0,0,0,22">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="Auto" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+            <StackPanel>
+                <TextBlock>
+                    <TextBlock.Style>
+                        <Style TargetType="TextBlock" BasedOn="{StaticResource FieldLabel}">
+                            <Setter Property="Text" Value="{loc:Loc Transactions.Field.Account}" />
+                            <Style.Triggers>
+                                <DataTrigger Binding="{Binding IsTransfer}" Value="True">
+                                    <Setter Property="Text" Value="{loc:Loc Transactions.Field.FromAccount}" />
+                                </DataTrigger>
+                            </Style.Triggers>
+                        </Style>
+                    </TextBlock.Style>
+                </TextBlock>
+                <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedAccount}" ItemTemplate="{StaticResource AccountItem}"
+                          IsTextSearchEnabled="True" AutomationProperties.Name="{loc:Loc Transactions.Field.Account}" />
+            </StackPanel>
+            <c:AstraIcon Grid.Column="1" Data="{StaticResource Icon.ArrowRight}" Width="16" Height="16" Margin="10,26,10,0" VerticalAlignment="Top"
+                         Foreground="{DynamicResource Brush.Text.Tertiary}"
+                         Visibility="{Binding IsTransfer, Converter={StaticResource BoolToVisibility}}" />
+            <StackPanel Grid.Column="2" Visibility="{Binding IsTransfer, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock Text="{loc:Loc Transactions.Field.ToAccount}" Style="{StaticResource FieldLabel}" />
+                <ComboBox ItemsSource="{Binding Accounts}" SelectedItem="{Binding SelectedDestination}" ItemTemplate="{StaticResource AccountItem}"
+                          IsTextSearchEnabled="True" AutomationProperties.Name="{loc:Loc Transactions.Field.ToAccount}" />
+            </StackPanel>
+        </Grid>
+
+        <!-- Date -->
+        <TextBlock Text="{loc:Loc Transactions.Field.Date}" Style="{StaticResource FieldLabel}" />
+        <DatePicker SelectedDate="{Binding Date, Converter={StaticResource DateOnlyToDateTime}}" Width="220" HorizontalAlignment="Left" Margin="0,0,0,22"
+                    AutomationProperties.HelpText="{loc:Loc Transactions.Field.Date}" />
+
+        <!-- Full form only -->
+        <StackPanel Visibility="{Binding IsFull, Converter={StaticResource BoolToVisibility}}">
+            <TextBlock Text="{loc:Loc Transactions.Field.Description}" Style="{StaticResource FieldLabel}" />
+            <TextBox Text="{Binding Description, UpdateSourceTrigger=PropertyChanged}" MaxLength="200"
+                     c:Assist.Placeholder="{loc:Loc Transactions.Field.Description.Placeholder}"
+                     AutomationProperties.Name="{loc:Loc Transactions.Field.Description}" Margin="0,0,0,22" />
+
+            <StackPanel Visibility="{Binding IsTransfer, Converter={StaticResource BoolToVisibility}}">
+                <TextBlock Text="{loc:Loc Transactions.Field.Fee}" Style="{StaticResource FieldLabel}" />
+                <TextBox Text="{Binding FeeText, UpdateSourceTrigger=PropertyChanged}" InputScope="Number" c:Assist.Placeholder="0"
+                         AutomationProperties.Name="{loc:Loc Transactions.Field.Fee}" Width="220" HorizontalAlignment="Left" Margin="0,0,0,4" />
+                <TextBlock Text="{loc:Loc Transactions.Field.Fee.Hint}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" TextTrimming="None" Margin="0,18,0,22" />
+            </StackPanel>
+
+            <TextBlock Text="{loc:Loc Transactions.Field.Notes}" Style="{StaticResource FieldLabel}" />
+            <TextBox Text="{Binding Notes, UpdateSourceTrigger=PropertyChanged}" MaxLength="2000" AcceptsReturn="True" TextWrapping="Wrap"
+                     MinHeight="72" VerticalContentAlignment="Top" Padding="12,8" AutomationProperties.Name="{loc:Loc Transactions.Field.Notes}" />
+        </StackPanel>
+
+        <Button Style="{StaticResource Button.Link}" HorizontalAlignment="Left" Content="{loc:Loc Transactions.MoreDetails}"
+                Command="{Binding ShowMoreCommand}" Visibility="{Binding IsQuick, Converter={StaticResource BoolToVisibility}}" />
+
+        <TextBlock Text="{Binding GeneralError}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
+                   TextWrapping="Wrap" Margin="0,12,0,0" Visibility="{Binding GeneralError, Converter={StaticResource NullToVisibility}}" />
+    </StackPanel>
+</UserControl>

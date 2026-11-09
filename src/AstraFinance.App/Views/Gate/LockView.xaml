@@ -1,0 +1,40 @@
+<UserControl x:Class="AstraFinance.App.Views.Gate.LockView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:AstraFinance.App.Controls"
+             xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:gate="clr-namespace:AstraFinance.App.ViewModels.Gate"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=gate:LockViewModel}"
+             Background="{DynamicResource Brush.Background}">
+    <Grid>
+        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Margin="24">
+            <Border Width="64" Height="64" CornerRadius="16" Background="{DynamicResource Brush.Accent}" HorizontalAlignment="Center">
+                <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="36" Height="36" Foreground="{DynamicResource Brush.Accent.Foreground}" />
+            </Border>
+            <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Title}" HorizontalAlignment="Center" Margin="0,20,0,4" />
+            <TextBlock Text="{loc:Loc Lock.Prompt}" Style="{StaticResource Text.Secondary}" HorizontalAlignment="Center" Margin="0,0,0,24" />
+
+            <PasswordBox x:Name="PinInput" Style="{StaticResource PinBox}"
+                         c:PinBoxAssist.Pin="{Binding Pin, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding IsCoolingDown, Converter={StaticResource InverseBool}}"
+                         AutomationProperties.Name="{loc:Loc Lock.Pin}">
+                <PasswordBox.InputBindings>
+                    <KeyBinding Key="Return" Command="{Binding UnlockCommand}" />
+                </PasswordBox.InputBindings>
+            </PasswordBox>
+
+            <TextBlock Text="{Binding ErrorMessage}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
+                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,10,0,0" MinHeight="16"
+                       AutomationProperties.LiveSetting="Assertive" />
+
+            <Button Content="{loc:Loc Lock.Unlock}" Command="{Binding UnlockCommand}" Style="{StaticResource Button.Primary}"
+                    c:Assist.Icon="Icon.Lock" c:Assist.IsBusy="{Binding IsBusy}" HorizontalAlignment="Stretch" Margin="0,14,0,0" MinHeight="44" />
+
+            <TextBlock Text="{loc:Loc Lock.Note}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Text.Tertiary}"
+                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="None" Margin="0,28,0,0" />
+        </StackPanel>
+    </Grid>
+</UserControl>

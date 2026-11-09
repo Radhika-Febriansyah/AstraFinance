@@ -1,0 +1,40 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net10.0-windows10.0.19041.0</TargetFramework>
+    <SupportedOSPlatformVersion>10.0.19041.0</SupportedOSPlatformVersion>
+    <UseWPF>true</UseWPF>
+    <RootNamespace>AstraFinance.App</RootNamespace>
+    <AssemblyName>AstraFinance</AssemblyName>
+    <ApplicationManifest>app.manifest</ApplicationManifest>
+    <ApplicationIcon>Resources\astra.ico</ApplicationIcon>
+    <!-- Required by the LibraryImport source generator (DWM title-bar interop). -->
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\AstraFinance.Core\AstraFinance.Core.csproj" />
+    <ProjectReference Include="..\AstraFinance.Infrastructure\AstraFinance.Infrastructure.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="CommunityToolkit.Mvvm" />
+    <PackageReference Include="Microsoft.Extensions.DependencyInjection" />
+    <PackageReference Include="Microsoft.Extensions.Logging" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\astra.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!-- WPF projects don't get System.IO as an implicit using. -->
+    <Using Include="System.IO" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="AstraFinance.Tests" />
+  </ItemGroup>
+
+</Project>

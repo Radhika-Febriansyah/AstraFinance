@@ -1,0 +1,51 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+    <!--
+        Astra Finance — Light theme palette.
+        White background, soft gray surfaces, dark charcoal text, muted gray secondary text.
+        Keys must match Colors.Dark.xaml exactly (verified by unit test).
+    -->
+    <Color x:Key="Color.Background">#FFFFFFFF</Color>
+    <Color x:Key="Color.Sidebar">#FFF6F7F9</Color>
+
+    <SolidColorBrush x:Key="Brush.Background" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Brush.Sidebar" Color="#FFF6F7F9" />
+    <SolidColorBrush x:Key="Brush.Surface" Color="#FFF6F7F9" />
+    <SolidColorBrush x:Key="Brush.Surface.Raised" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Brush.Surface.Sunken" Color="#FFF0F2F5" />
+    <SolidColorBrush x:Key="Brush.Popup" Color="#FFFFFFFF" />
+
+    <SolidColorBrush x:Key="Brush.Border" Color="#FFE3E6EB" />
+    <SolidColorBrush x:Key="Brush.Border.Strong" Color="#FFCBD0D8" />
+    <SolidColorBrush x:Key="Brush.Divider" Color="#FFECEEF2" />
+
+    <SolidColorBrush x:Key="Brush.Text.Primary" Color="#FF1F2329" />
+    <SolidColorBrush x:Key="Brush.Text.Secondary" Color="#FF5F6672" />
+    <SolidColorBrush x:Key="Brush.Text.Tertiary" Color="#FF858C98" />
+    <SolidColorBrush x:Key="Brush.Text.Disabled" Color="#FFB1B6BF" />
+    <SolidColorBrush x:Key="Brush.Text.OnStrong" Color="#FFFFFFFF" />
+
+    <SolidColorBrush x:Key="Brush.Hover" Color="#0D1F2329" />
+    <SolidColorBrush x:Key="Brush.Pressed" Color="#081F2329" />
+    <SolidColorBrush x:Key="Brush.Selected" Color="#141F2329" />
+    <SolidColorBrush x:Key="Brush.Scrim" Color="#661F2329" />
+    <SolidColorBrush x:Key="Brush.ScrollThumb" Color="#FFCBD0D8" />
+    <SolidColorBrush x:Key="Brush.ScrollThumb.Hover" Color="#FFA9B0BB" />
+
+    <SolidColorBrush x:Key="Brush.Tooltip.Background" Color="#FF1F2329" />
+    <SolidColorBrush x:Key="Brush.Tooltip.Text" Color="#FFF6F7F9" />
+
+    <SolidColorBrush x:Key="Brush.Success" Color="#FF1B8A5A" />
+    <SolidColorBrush x:Key="Brush.Success.Subtle" Color="#1F1B8A5A" />
+    <SolidColorBrush x:Key="Brush.Warning" Color="#FFB4740F" />
+    <SolidColorBrush x:Key="Brush.Warning.Subtle" Color="#24E0A030" />
+    <SolidColorBrush x:Key="Brush.Danger" Color="#FFCF3E3E" />
+    <SolidColorBrush x:Key="Brush.Danger.Subtle" Color="#1FCF3E3E" />
+    <SolidColorBrush x:Key="Brush.Danger.Hover" Color="#FFB93333" />
+    <SolidColorBrush x:Key="Brush.Info" Color="#FF2F6FD0" />
+    <SolidColorBrush x:Key="Brush.Info.Subtle" Color="#1F2F6FD0" />
+
+    <!-- Restrained elevation: popups/dialogs only. -->
+    <DropShadowEffect x:Key="Effect.Shadow.Popup" Color="#1F2329" Opacity="0.14" BlurRadius="24" ShadowDepth="6" Direction="270" />
+    <DropShadowEffect x:Key="Effect.Shadow.Card" Color="#1F2329" Opacity="0.06" BlurRadius="12" ShadowDepth="1" Direction="270" />
+</ResourceDictionary>

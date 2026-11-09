@@ -1,0 +1,35 @@
+<UserControl x:Class="AstraFinance.App.Views.Pages.UpcomingModulePage"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:AstraFinance.App.Controls"
+             xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:pages="clr-namespace:AstraFinance.App.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=pages:UpcomingModuleViewModel}">
+    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
+        <Grid Margin="{DynamicResource Padding.Page.Current}">
+            <!-- Honest module status: no figures, no placeholder actions. -->
+            <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" MaxWidth="480" Margin="0,48">
+                <Border Width="64" Height="64" CornerRadius="16" Background="{DynamicResource Brush.Accent.Subtle}" HorizontalAlignment="Center">
+                    <c:AstraIcon IconKey="{Binding IconKey}" Width="28" Height="28" Foreground="{DynamicResource Brush.Accent.Text}" />
+                </Border>
+                <TextBlock Text="{Binding Title}" Style="{StaticResource Text.Title}" HorizontalAlignment="Center" Margin="0,20,0,0" />
+                <TextBlock Text="{Binding Description}" Style="{StaticResource Text.Secondary}" HorizontalAlignment="Center"
+                           TextAlignment="Center" TextWrapping="Wrap" Margin="0,6,0,0" />
+                <Border Style="{StaticResource Card}" Margin="0,24,0,0" Padding="16">
+                    <StackPanel>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="{loc:Loc Module.InDevelopment.Title}" Style="{StaticResource Text.BodyStrong}" VerticalAlignment="Center" />
+                            <Border Style="{StaticResource Badge}" Margin="10,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{Binding PhaseBadge}" Style="{StaticResource Badge.Text}" />
+                            </Border>
+                        </StackPanel>
+                        <TextBlock Text="{Binding Notice}" Style="{StaticResource Text.Paragraph}" Margin="0,6,0,0" />
+                    </StackPanel>
+                </Border>
+            </StackPanel>
+        </Grid>
+    </ScrollViewer>
+</UserControl>
