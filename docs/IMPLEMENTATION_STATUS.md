@@ -1,6 +1,6 @@
 # Astra Finance — Implementation Status
 
-Last updated: 2026-11-11 (Phase 9)
+Last updated: 2026-11-11 (Phase 10 — release 1.0.0)
 
 | Phase | Name | Status |
 |---|---|---|
@@ -13,7 +13,7 @@ Last updated: 2026-11-11 (Phase 9)
 | 7 | Bills and Subscriptions | ✅ Complete (built, tested, run-verified) |
 | 8 | Analytics and Reports | ✅ Complete (built, tested, run-verified) |
 | 9 | Settings and Data Protection | ✅ Complete (built, tested, run-verified) |
-| 10 | QA and Release | ⏳ Next |
+| 10 | QA and Release | ✅ Complete (1.0.0 built, installed and uninstalled on this PC) |
 
 ## Environment
 
@@ -667,6 +667,60 @@ New coverage: configurable PIN cooldown (applied on wrong PINs, invalid values r
 
 ---
 
-## Phase 10 — QA and Release (next)
+## Phase 10 — QA and Release
 
-Planned: full test run, integration tests, clean installation, upgrade from earlier databases, backup/restore, offline operation, light and dark themes, smaller window sizes, fix critical issues, release installer (MSIX or another reliable installer; AUMID for notifications), README and release notes.
+### Completed tasks
+
+- **Version 1.0.0** (`Directory.Build.props`), release notes in [docs/RELEASE_NOTES.md](RELEASE_NOTES.md), README install/build sections.
+- **Installer (Inno Setup 6.7.3, the user's choice; installed per-user with permission on 2026-11-11)** — `installer/AstraFinance.iss`:
+  - Per-user, **no administrator rights** (`PrivilegesRequired=lowest`), installs to `%LOCALAPPDATA%\Programs\Astra Finance`; 64-bit, Windows 10 2004+.
+  - Start Menu shortcut, **optional Desktop shortcut** (unchecked by default); both carry the app's AppUserModelID so Windows notifications are attributed to Astra Finance; the notification display name is registered for the user and removed on uninstall.
+  - Proper Windows uninstaller (Settings → Apps). Closes a running Astra Finance first (single-instance mutex).
+  - **Data is preserved by default**: after removing the program the uninstaller asks whether to delete `%LOCALAPPDATA%\AstraFinance` — default **No**, deleting requires a second confirmation (default No again). Silent uninstalls never delete data unless `/DELETEUSERDATA` is given. Backups in other folders are never touched.
+- **One-command release build** — `installer/build-release.ps1`: tests (Release) → self-contained `win-x64` publish → installer, printing the SHA-256.
+- **New tests**: upgrade of a database created with the **first release schema** (real records in every table) to the current schema — safety copy taken, every balance, bill payment, budget and allocation intact; **offline guarantee** (none of the app's assemblies references HTTP/socket/web libraries); **end-to-end reconciliation** across balances, analytics, all report types and budgets with transfers, fees, adjustments, delete/restore, bill payment, goal allocation and CSV import.
+- **Fix**: Transactions table on small windows — Type and Account columns hide below 820 px and Category below 640 px, so Date, Description and **Amount** always stay visible (all fields remain in the details panel).
+
+### Build status
+
+`dotnet build` / `dotnet publish -c Release -r win-x64 --self-contained` — **succeeded, 0 warnings, 0 errors**. Installer: `artifacts/installer/AstraFinance-Setup-1.0.0.exe`, 56.8 MB.
+
+### Test status
+
+`dotnet test` — **321 passed, 0 failed** (316 previous + 5 new), in Debug and in Release (release script).
+
+### QA performed (real app, Windows 11, 125 % DPI)
+
+| Area | Result |
+|---|---|
+| Unit + integration tests | 321/321 (Debug and Release) |
+| Clean installation | Silent per-user install; no admin prompt; Start Menu + Desktop shortcuts; Apps entry "Astra Finance 1.0.0 — Aprotoos"; first launch from the Start Menu shows onboarding on an empty data folder; onboarding completed (account, PIN, backups) → Dashboard |
+| Single instance | Second launch (Desktop shortcut) focuses the running window — one process |
+| Restart | PIN required; unlock → Dashboard |
+| Uninstall (silent) | Program, shortcuts, Apps entry and notification key removed; **data kept** |
+| Reinstall | Existing data picked up (lock screen with the existing PIN) |
+| Uninstall (interactive, default answers) | Program removed; **data kept** (log: "User chose No") |
+| Uninstall `/DELETEUSERDATA` | Program and data removed |
+| Upgrades | Automated test from the first schema; earlier phases upgraded the real Phase 4 database twice with safety copies |
+| Backup & restore | Automated (service + UI) and in the real app (Phase 9) |
+| Offline | Automated reference check; the app never needs a network connection |
+| Light / Dark themes | All 9 pages captured in Light at 1600×1000 and Dark at the minimum window size — no unreadable or unstyled elements |
+| Smaller windows | All 9 pages at ≈800×600 and at the 640×520 minimum: sidebar collapses, Quick Add becomes an icon, cards stack; Transactions fixed (see above) |
+
+The user's own data folder was set aside during the clean-install test and restored unchanged afterwards (preferences: English, Follow System, Blue).
+
+### Notes from QA
+
+- During one interactive uninstall run, both "delete data?" prompts were answered **Yes** by someone at the desktop (logged "User chose Yes" twice; the automation could not see those buttons). Only QA test data was present; this confirms deleting requires two explicit answers. The default-answer path was then verified separately (data kept).
+
+### Known limitations (also in the release notes)
+
+- The installer is not code-signed (SmartScreen may warn); signing needs a code-signing certificate.
+- Installer screens are English only (Inno Setup ships no Indonesian translation); the app itself is Indonesian/English.
+- PIN = access control, not encryption; one base currency; Windows notification clicks only dismiss; reports use current budget limits for past months; CSV imports over 20 MB are refused.
+
+### Important decisions
+
+1. **Inno Setup, per-user** (user's choice): no admin rights, data outside the install folder, uninstall keeps data by default.
+2. **Self-contained publish** (no separate .NET runtime install needed), folder-based (not single-file) so native SQLite/Skia libraries load reliably.
+3. Inno Setup 6.7.3 was installed for the current user only via winget (official jrsoftware release, SHA-256 verified) after the user's approval.

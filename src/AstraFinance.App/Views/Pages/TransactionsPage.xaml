@@ -131,14 +131,14 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{loc:Loc Transactions.Column.Category}" CanUserSort="False" Width="*" MinWidth="120">
+                        <DataGridTemplateColumn x:Name="CategoryColumn" Header="{loc:Loc Transactions.Column.Category}" CanUserSort="False" Width="*" MinWidth="120">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type svc:TransactionRowViewModel}">
                                     <TextBlock Text="{Binding CategoryText}" Style="{StaticResource Text.Secondary}" />
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{loc:Loc Transactions.Column.Account}" CanUserSort="False" Width="*" MinWidth="120">
+                        <DataGridTemplateColumn x:Name="AccountColumn" Header="{loc:Loc Transactions.Column.Account}" CanUserSort="False" Width="*" MinWidth="120">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type svc:TransactionRowViewModel}">
                                     <TextBlock Text="{Binding AccountText}" Style="{StaticResource Text.Secondary}" />
@@ -157,7 +157,7 @@
                                 </DataTemplate>
                             </DataGridTemplateColumn.CellTemplate>
                         </DataGridTemplateColumn>
-                        <DataGridTemplateColumn Header="{loc:Loc Transactions.Column.Type}" CanUserSort="False" Width="SizeToCells" MinWidth="110">
+                        <DataGridTemplateColumn x:Name="TypeColumn" Header="{loc:Loc Transactions.Column.Type}" CanUserSort="False" Width="SizeToCells" MinWidth="110">
                             <DataGridTemplateColumn.CellTemplate>
                                 <DataTemplate DataType="{x:Type svc:TransactionRowViewModel}">
                                     <Border Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}">
