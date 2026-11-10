@@ -5,10 +5,12 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:c="clr-namespace:AstraFinance.App.Controls"
              xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:conv="clr-namespace:AstraFinance.App.Converters"
              xmlns:pages="clr-namespace:AstraFinance.App.ViewModels.Pages"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=pages:SettingsViewModel}">
     <UserControl.Resources>
+        <conv:EqualsToVisibilityConverter x:Key="SectionVisible" />
         <Style x:Key="SectionHeader" TargetType="TextBlock" BasedOn="{StaticResource Text.Subtitle}">
             <Setter Property="Margin" Value="0,0,0,4" />
         </Style>
@@ -17,6 +19,9 @@
             <Setter Property="TextWrapping" Value="Wrap" />
             <Setter Property="TextTrimming" Value="None" />
             <Setter Property="Margin" Value="0,2,0,10" />
+        </Style>
+        <Style x:Key="SectionCard" TargetType="Border" BasedOn="{StaticResource Card}">
+            <Setter Property="Margin" Value="0,0,0,16" />
         </Style>
 
         <!-- Color swatch choice -->
@@ -48,164 +53,415 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <!-- Category list -->
+        <DataTemplate x:Key="CategoryRowTemplate" DataType="{x:Type pages:CategoryRow}">
+            <Grid Margin="0,2">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+                <Grid Width="32" Height="32">
+                    <Ellipse Fill="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.18" />
+                    <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
+                </Grid>
+                <StackPanel x:Name="Labels" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource Text.Body}" />
+                    <Border Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}" Margin="8,0,0,0"
+                            Visibility="{Binding IsActive, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+                        <TextBlock Text="{loc:Loc Settings.Categories.Inactive}" Style="{StaticResource Text.Caption}" FontSize="11" />
+                    </Border>
+                </StackPanel>
+                <StackPanel Grid.Column="2" Orientation="Horizontal">
+                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.Pencil" ToolTip="{loc:Loc Settings.Categories.Edit}"
+                            AutomationProperties.Name="{Binding Name, StringFormat='{}{0}'}"
+                            Command="{Binding DataContext.Categories.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.Power" ToolTip="{loc:Loc Settings.Categories.Deactivate}"
+                            Command="{Binding DataContext.Categories.ToggleActiveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
+                            Visibility="{Binding CanDeactivate, Converter={StaticResource BoolToVisibility}}" />
+                </StackPanel>
+            </Grid>
+            <DataTemplate.Triggers>
+                <DataTrigger Binding="{Binding IsActive}" Value="False">
+                    <Setter TargetName="Labels" Property="Opacity" Value="0.6" />
+                </DataTrigger>
+            </DataTemplate.Triggers>
+        </DataTemplate>
     </UserControl.Resources>
 
-    <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
-        <StackPanel Margin="{DynamicResource Padding.Page.Current}" MaxWidth="760" HorizontalAlignment="Left">
+    <Grid Margin="{DynamicResource Padding.Page.Current}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition x:Name="NavColumn" Width="220" />
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
+
+        <StackPanel Grid.ColumnSpan="2" Margin="0,0,0,20">
             <TextBlock Text="{Binding Title}" Style="{StaticResource Text.PageTitle}" />
-            <TextBlock Text="{Binding Description}" Style="{StaticResource Text.Secondary}" Margin="0,4,0,24" TextWrapping="Wrap" />
-
-            <!-- General -->
-            <Border Style="{StaticResource Card}">
-                <StackPanel>
-                    <TextBlock Text="{loc:Loc Settings.Section.General}" Style="{StaticResource SectionHeader}" />
-                    <Separator Margin="0,8,0,16" />
-                    <TextBlock Text="{loc:Loc Settings.Language}" Style="{StaticResource SettingLabel}" />
-                    <TextBlock Text="{loc:Loc Settings.Language.Description}" Style="{StaticResource SettingHint}" />
-                    <ComboBox ItemsSource="{Binding LanguageOptions}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
-                              DisplayMemberPath="Label" Width="260" HorizontalAlignment="Left"
-                              AutomationProperties.Name="{loc:Loc Settings.Language}" />
-                </StackPanel>
-            </Border>
-
-            <!-- Appearance -->
-            <Border Style="{StaticResource Card}" Margin="0,16,0,0">
-                <StackPanel>
-                    <TextBlock Text="{loc:Loc Settings.Section.Appearance}" Style="{StaticResource SectionHeader}" />
-                    <Separator Margin="0,8,0,16" />
-
-                    <TextBlock Text="{loc:Loc Settings.Theme}" Style="{StaticResource SettingLabel}" />
-                    <TextBlock Text="{loc:Loc Settings.Theme.Description}" Style="{StaticResource SettingHint}" />
-                    <c:ChoiceGroup ItemsSource="{Binding ThemeOptions}" AutomationProperties.Name="{loc:Loc Settings.Theme}">
-                        <c:ChoiceGroup.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </c:ChoiceGroup.ItemsPanel>
-                        <c:ChoiceGroup.ItemTemplate>
-                            <DataTemplate>
-                                <RadioButton Style="{StaticResource RadioButton.Choice}" GroupName="ThemeMode"
-                                             c:Assist.Icon="{Binding IconKey}" Content="{Binding Label}"
-                                             IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-                            </DataTemplate>
-                        </c:ChoiceGroup.ItemTemplate>
-                    </c:ChoiceGroup>
-
-                    <TextBlock Text="{loc:Loc Settings.Accent}" Style="{StaticResource SettingLabel}" Margin="0,12,0,0" />
-                    <TextBlock Text="{loc:Loc Settings.Accent.Description}" Style="{StaticResource SettingHint}" />
-                    <c:ChoiceGroup ItemsSource="{Binding AccentOptions}" AutomationProperties.Name="{loc:Loc Settings.Accent}">
-                        <c:ChoiceGroup.ItemsPanel>
-                            <ItemsPanelTemplate>
-                                <WrapPanel />
-                            </ItemsPanelTemplate>
-                        </c:ChoiceGroup.ItemsPanel>
-                        <c:ChoiceGroup.ItemTemplate>
-                            <DataTemplate>
-                                <RadioButton Style="{StaticResource SwatchChoice}" GroupName="Accent" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
-                            </DataTemplate>
-                        </c:ChoiceGroup.ItemTemplate>
-                    </c:ChoiceGroup>
-                </StackPanel>
-            </Border>
-
-            <!-- Notifications -->
-            <Border Style="{StaticResource Card}" Margin="0,16,0,0">
-                <StackPanel>
-                    <TextBlock Text="{loc:Loc Settings.Section.Notifications}" Style="{StaticResource SectionHeader}" />
-                    <Separator Margin="0,8,0,16" />
-
-                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding NotificationsEnabled}" Content="{loc:Loc Settings.Notifications.Enabled}" />
-                    <TextBlock Text="{loc:Loc Settings.Notifications.Enabled.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,14" />
-
-                    <StackPanel IsEnabled="{Binding NotificationsEnabled}">
-                        <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BillReminders}" Content="{loc:Loc Settings.Notifications.Bills}" />
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0" IsEnabled="{Binding BillReminders}">
-                            <TextBlock Text="{loc:Loc Settings.Notifications.Bills.When}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
-                            <ComboBox ItemsSource="{Binding ReminderDayOptions}" SelectedItem="{Binding SelectedReminderDays}" DisplayMemberPath="Label" Width="200"
-                                      AutomationProperties.Name="{loc:Loc Settings.Notifications.Bills.When}" />
-                        </StackPanel>
-                        <TextBlock Text="{loc:Loc Settings.Notifications.Bills.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
-
-                        <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BudgetWarnings}" Content="{loc:Loc Settings.Notifications.Budgets}" />
-                        <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
-                            <TextBlock Text="{loc:Loc Settings.Notifications.Budgets.Threshold}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
-                            <TextBox Text="{Binding BudgetThresholdText, UpdateSourceTrigger=PropertyChanged}" Width="80" MaxLength="3" InputScope="Number"
-                                     AutomationProperties.Name="{loc:Loc Settings.Notifications.Budgets.Threshold}" />
-                            <TextBlock Text="%" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="8,0,0,0" />
-                        </StackPanel>
-                        <TextBlock Text="{Binding BudgetThresholdError}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}" Margin="0,4,0,0"
-                                   Visibility="{Binding BudgetThresholdError, Converter={StaticResource NullToVisibility}}" />
-                        <TextBlock Text="{loc:Loc Settings.Notifications.Budgets.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
-
-                        <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding WindowsNotifications}" Content="{loc:Loc Settings.Notifications.Windows}" />
-                        <TextBlock Text="{loc:Loc Settings.Notifications.Windows.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,0" />
-                    </StackPanel>
-
-                    <TextBlock Text="{loc:Loc Settings.Notifications.SaveFailed}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
-                               TextWrapping="Wrap" Margin="0,8,0,0" Visibility="{Binding IsNotificationSaveFailed, Converter={StaticResource BoolToVisibility}}" />
-                </StackPanel>
-            </Border>
-
-            <!-- Upcoming settings sections -->
-            <Border Style="{StaticResource Card}" Margin="0,16,0,0" Padding="16">
-                <StackPanel Orientation="Horizontal">
-                    <c:AstraIcon Data="{StaticResource Icon.Info}" Foreground="{DynamicResource Brush.Text.Secondary}" VerticalAlignment="Top" Margin="0,1,10,0" />
-                    <TextBlock Text="{loc:Loc Settings.Upcoming}" Style="{StaticResource Text.Paragraph}" MaxWidth="640" />
-                </StackPanel>
-            </Border>
-
-            <!-- About -->
-            <Border Style="{StaticResource Card}" Margin="0,16,0,0">
-                <StackPanel>
-                    <TextBlock Text="{loc:Loc Settings.Section.About}" Style="{StaticResource SectionHeader}" />
-                    <Separator Margin="0,8,0,16" />
-                    <StackPanel Orientation="Horizontal">
-                        <Border Width="44" Height="44" CornerRadius="10" Background="{DynamicResource Brush.Accent}">
-                            <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="26" Height="26"
-                                         Foreground="{DynamicResource Brush.Accent.Foreground}" />
-                        </Border>
-                        <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
-                            <TextBlock Text="{Binding AppName}" Style="{StaticResource Text.Subtitle}" />
-                            <TextBlock Style="{StaticResource Text.Caption}">
-                                <Run Text="{loc:Loc About.Version}" /> <Run Text="{Binding Version, Mode=OneWay}" />
-                                <Run Text=" · " /><Run Text="{loc:Loc About.Developer}" /><Run Text=": " /><Run Text="{Binding Developer, Mode=OneWay}" />
-                            </TextBlock>
-                        </StackPanel>
-                    </StackPanel>
-
-                    <TextBlock Text="{loc:Loc About.Privacy}" Style="{StaticResource Text.Paragraph}" Margin="0,16,0,0" />
-
-                    <TextBlock Text="{loc:Loc About.DataLocation}" Style="{StaticResource SettingLabel}" Margin="0,16,0,4" />
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="Auto" />
-                        </Grid.ColumnDefinitions>
-                        <TextBlock Text="{Binding DataDirectory}" Style="{StaticResource Text.Secondary}" FontFamily="{StaticResource Font.Mono}"
-                                   FontSize="{StaticResource FontSize.Caption}" VerticalAlignment="Center" ToolTip="{Binding DataDirectory}" />
-                        <Button Grid.Column="1" Margin="12,0,0,0" c:Assist.Icon="Icon.Folder" Content="{loc:Loc About.OpenDataFolder}"
-                                Command="{Binding OpenDataFolderCommand}" />
-                    </Grid>
-
-                    <TextBlock Text="{loc:Loc About.ThirdParty}" Style="{StaticResource SettingLabel}" Margin="0,16,0,6" />
-                    <ItemsControl ItemsSource="{Binding ThirdPartyComponents}" Focusable="False">
-                        <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="{x:Type pages:ThirdPartyComponent}">
-                                <Grid Margin="0,3">
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*" />
-                                        <ColumnDefinition Width="Auto" />
-                                    </Grid.ColumnDefinitions>
-                                    <TextBlock Text="{Binding Name}" Style="{StaticResource Text.Body}" />
-                                    <Border Grid.Column="1" Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}">
-                                        <TextBlock Text="{Binding License}" Style="{StaticResource Text.Caption}" FontWeight="SemiBold" />
-                                    </Border>
-                                </Grid>
-                            </DataTemplate>
-                        </ItemsControl.ItemTemplate>
-                    </ItemsControl>
-                </StackPanel>
-            </Border>
+            <TextBlock Text="{Binding Description}" Style="{StaticResource Text.Secondary}" Margin="0,4,0,0" TextWrapping="Wrap" />
         </StackPanel>
-    </ScrollViewer>
+
+        <!-- Section navigation -->
+        <c:ChoiceGroup x:Name="SectionNav" Grid.Row="1" Grid.RowSpan="2" ItemsSource="{Binding SectionOptions}" Focusable="False" Margin="0,0,20,0" VerticalAlignment="Top"
+                       AutomationProperties.Name="{loc:Loc Settings.Sections}">
+            <c:ChoiceGroup.ItemTemplate>
+                <DataTemplate>
+                    <RadioButton Style="{StaticResource RadioButton.Choice}" GroupName="SettingsSection" Margin="0,0,0,6"
+                                 HorizontalAlignment="Stretch" HorizontalContentAlignment="Left"
+                                 c:Assist.Icon="{Binding IconKey}" Content="{Binding Label}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                </DataTemplate>
+            </c:ChoiceGroup.ItemTemplate>
+        </c:ChoiceGroup>
+
+        <ScrollViewer x:Name="ContentScroller" Grid.Row="1" Grid.RowSpan="2" Grid.Column="1" VerticalScrollBarVisibility="Auto" Focusable="False">
+            <StackPanel MaxWidth="760" HorizontalAlignment="Left">
+
+                <!-- ============ General ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=General}">
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Section.General}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,16" />
+                            <TextBlock Text="{loc:Loc Settings.Language}" Style="{StaticResource SettingLabel}" />
+                            <TextBlock Text="{loc:Loc Settings.Language.Description}" Style="{StaticResource SettingHint}" />
+                            <ComboBox ItemsSource="{Binding LanguageOptions}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
+                                      DisplayMemberPath="Label" Width="260" HorizontalAlignment="Left" AutomationProperties.Name="{loc:Loc Settings.Language}" />
+
+                            <TextBlock Text="{loc:Loc Settings.Regional.Number}" Style="{StaticResource SettingLabel}" Margin="0,20,0,0" />
+                            <TextBlock Text="{loc:Loc Settings.Regional.Number.Hint}" Style="{StaticResource SettingHint}" />
+                            <ComboBox ItemsSource="{Binding NumberFormatOptions}" SelectedItem="{Binding SelectedNumberFormat, Mode=TwoWay}"
+                                      DisplayMemberPath="Label" Width="260" HorizontalAlignment="Left" AutomationProperties.Name="{loc:Loc Settings.Regional.Number}" />
+
+                            <TextBlock Text="{loc:Loc Settings.Regional.Date}" Style="{StaticResource SettingLabel}" Margin="0,20,0,0" />
+                            <ComboBox ItemsSource="{Binding DateFormatOptions}" SelectedItem="{Binding SelectedDateFormat, Mode=TwoWay}"
+                                      DisplayMemberPath="Label" Width="260" HorizontalAlignment="Left" Margin="0,6,0,0" AutomationProperties.Name="{loc:Loc Settings.Regional.Date}" />
+
+                            <TextBlock Text="{loc:Loc Settings.Regional.Preview}" Style="{StaticResource Text.Caption}" Margin="0,14,0,2" />
+                            <TextBlock Text="{Binding RegionalPreview}" Style="{StaticResource Text.BodyStrong}" />
+
+                            <TextBlock Text="{loc:Loc Settings.Regional.Currency}" Style="{StaticResource SettingLabel}" Margin="0,20,0,0" />
+                            <TextBlock Text="{Binding CurrencyText}" Style="{StaticResource Text.Body}" Margin="0,4,0,0" />
+                            <TextBlock Text="{loc:Loc Settings.Regional.Currency.Locked}" Style="{StaticResource SettingHint}" Margin="0,4,0,0" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- ============ Appearance ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Appearance}">
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Section.Appearance}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,16" />
+                            <TextBlock Text="{loc:Loc Settings.Theme}" Style="{StaticResource SettingLabel}" />
+                            <TextBlock Text="{loc:Loc Settings.Theme.Description}" Style="{StaticResource SettingHint}" />
+                            <c:ChoiceGroup ItemsSource="{Binding ThemeOptions}" AutomationProperties.Name="{loc:Loc Settings.Theme}">
+                                <c:ChoiceGroup.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </c:ChoiceGroup.ItemsPanel>
+                                <c:ChoiceGroup.ItemTemplate>
+                                    <DataTemplate>
+                                        <RadioButton Style="{StaticResource RadioButton.Choice}" GroupName="ThemeMode"
+                                                     c:Assist.Icon="{Binding IconKey}" Content="{Binding Label}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </c:ChoiceGroup.ItemTemplate>
+                            </c:ChoiceGroup>
+
+                            <TextBlock Text="{loc:Loc Settings.Accent}" Style="{StaticResource SettingLabel}" Margin="0,12,0,0" />
+                            <TextBlock Text="{loc:Loc Settings.Accent.Description}" Style="{StaticResource SettingHint}" />
+                            <c:ChoiceGroup ItemsSource="{Binding AccentOptions}" AutomationProperties.Name="{loc:Loc Settings.Accent}">
+                                <c:ChoiceGroup.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </c:ChoiceGroup.ItemsPanel>
+                                <c:ChoiceGroup.ItemTemplate>
+                                    <DataTemplate>
+                                        <RadioButton Style="{StaticResource SwatchChoice}" GroupName="Accent" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </c:ChoiceGroup.ItemTemplate>
+                            </c:ChoiceGroup>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- ============ Categories ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Categories}">
+                    <TextBlock Text="{loc:Loc Settings.Categories.Intro}" Style="{StaticResource Text.Secondary}" TextWrapping="Wrap" Margin="0,0,0,12" />
+                    <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding Categories.ShowInactive}" Content="{loc:Loc Settings.Categories.ShowInactive}" Margin="0,0,0,14" />
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="{loc:Loc Settings.Categories.Expense}" Style="{StaticResource SectionHeader}" VerticalAlignment="Center" />
+                                <Button HorizontalAlignment="Right" c:Assist.Icon="Icon.Plus" Content="{loc:Loc Settings.Categories.AddExpense}" Command="{Binding Categories.AddExpenseCommand}" />
+                            </Grid>
+                            <Separator Margin="0,10,0,10" />
+                            <ItemsControl ItemsSource="{Binding Categories.Expense}" ItemTemplate="{StaticResource CategoryRowTemplate}" Focusable="False" />
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="{loc:Loc Settings.Categories.Income}" Style="{StaticResource SectionHeader}" VerticalAlignment="Center" />
+                                <Button HorizontalAlignment="Right" c:Assist.Icon="Icon.Plus" Content="{loc:Loc Settings.Categories.AddIncome}" Command="{Binding Categories.AddIncomeCommand}" />
+                            </Grid>
+                            <Separator Margin="0,10,0,10" />
+                            <ItemsControl ItemsSource="{Binding Categories.Income}" ItemTemplate="{StaticResource CategoryRowTemplate}" Focusable="False" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- ============ Notifications ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Notifications}">
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Section.Notifications}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,16" />
+
+                            <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding NotificationsEnabled}" Content="{loc:Loc Settings.Notifications.Enabled}" />
+                            <TextBlock Text="{loc:Loc Settings.Notifications.Enabled.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,14" />
+
+                            <StackPanel IsEnabled="{Binding NotificationsEnabled}">
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BillReminders}" Content="{loc:Loc Settings.Notifications.Bills}" />
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0" IsEnabled="{Binding BillReminders}">
+                                    <TextBlock Text="{loc:Loc Settings.Notifications.Bills.When}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                    <ComboBox ItemsSource="{Binding ReminderDayOptions}" SelectedItem="{Binding SelectedReminderDays}" DisplayMemberPath="Label" Width="200"
+                                              AutomationProperties.Name="{loc:Loc Settings.Notifications.Bills.When}" />
+                                </StackPanel>
+                                <TextBlock Text="{loc:Loc Settings.Notifications.Bills.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
+
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BudgetWarnings}" Content="{loc:Loc Settings.Notifications.Budgets}" />
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0">
+                                    <TextBlock Text="{loc:Loc Settings.Notifications.Budgets.Threshold}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                    <TextBox Text="{Binding BudgetThresholdText, UpdateSourceTrigger=PropertyChanged}" Width="80" MaxLength="3" InputScope="Number"
+                                             AutomationProperties.Name="{loc:Loc Settings.Notifications.Budgets.Threshold}" />
+                                    <TextBlock Text="%" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="8,0,0,0" />
+                                </StackPanel>
+                                <TextBlock Text="{Binding BudgetThresholdError}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}" Margin="0,4,0,0"
+                                           Visibility="{Binding BudgetThresholdError, Converter={StaticResource NullToVisibility}}" />
+                                <TextBlock Text="{loc:Loc Settings.Notifications.Budgets.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
+
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding BackupReminders}" Content="{loc:Loc Settings.Notifications.Backup}" />
+                                <StackPanel Orientation="Horizontal" Margin="0,8,0,0" IsEnabled="{Binding BackupReminders}">
+                                    <TextBlock Text="{loc:Loc Settings.Notifications.Backup.When}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                    <ComboBox ItemsSource="{Binding BackupReminderOptions}" SelectedItem="{Binding SelectedBackupReminderDays}" DisplayMemberPath="Label" Width="200"
+                                              AutomationProperties.Name="{loc:Loc Settings.Notifications.Backup.When}" />
+                                </StackPanel>
+                                <TextBlock Text="{loc:Loc Settings.Notifications.Backup.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,14" />
+
+                                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding WindowsNotifications}" Content="{loc:Loc Settings.Notifications.Windows}" />
+                                <TextBlock Text="{loc:Loc Settings.Notifications.Windows.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,0" />
+                            </StackPanel>
+
+                            <TextBlock Text="{loc:Loc Settings.Notifications.SaveFailed}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
+                                       TextWrapping="Wrap" Margin="0,8,0,0" Visibility="{Binding IsNotificationSaveFailed, Converter={StaticResource BoolToVisibility}}" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- ============ Security ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Security}">
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Section.Security}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,16" />
+                            <TextBlock Text="{loc:Loc Settings.Security.Pin}" Style="{StaticResource SettingLabel}" />
+                            <TextBlock Text="{loc:Loc Settings.Security.Pin.Hint}" Style="{StaticResource SettingHint}" />
+                            <WrapPanel>
+                                <Button c:Assist.Icon="Icon.KeyRound" Content="{loc:Loc Settings.Security.ChangePin}" Command="{Binding Security.ChangePinCommand}" Margin="0,0,8,8" />
+                                <Button c:Assist.Icon="Icon.Lock" Content="{loc:Loc Settings.Security.LockNow}" Command="{Binding Security.LockNowCommand}" Margin="0,0,8,8" />
+                            </WrapPanel>
+
+                            <TextBlock Text="{loc:Loc Settings.Security.Cooldown}" Style="{StaticResource SettingLabel}" Margin="0,16,0,0" />
+                            <TextBlock Text="{Binding Security.CooldownSummary}" Style="{StaticResource SettingHint}" />
+                            <WrapPanel>
+                                <StackPanel Margin="0,0,16,8">
+                                    <TextBlock Text="{loc:Loc Settings.Security.Attempts}" Style="{StaticResource Text.Caption}" Margin="0,0,0,4" />
+                                    <ComboBox ItemsSource="{Binding Security.AttemptOptions}" SelectedItem="{Binding Security.SelectedAttempts}" DisplayMemberPath="Label" Width="200"
+                                              AutomationProperties.Name="{loc:Loc Settings.Security.Attempts}" />
+                                </StackPanel>
+                                <StackPanel Margin="0,0,0,8">
+                                    <TextBlock Text="{loc:Loc Settings.Security.FirstCooldown}" Style="{StaticResource Text.Caption}" Margin="0,0,0,4" />
+                                    <ComboBox ItemsSource="{Binding Security.CooldownOptions}" SelectedItem="{Binding Security.SelectedCooldown}" DisplayMemberPath="Label" Width="200"
+                                              AutomationProperties.Name="{loc:Loc Settings.Security.FirstCooldown}" />
+                                </StackPanel>
+                            </WrapPanel>
+                        </StackPanel>
+                    </Border>
+                    <Border Style="{StaticResource SectionCard}" Background="{DynamicResource Brush.Warning.Subtle}" BorderBrush="{DynamicResource Brush.Warning}" Padding="16">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <c:AstraIcon Data="{StaticResource Icon.Shield}" Foreground="{DynamicResource Brush.Warning}" VerticalAlignment="Top" Margin="0,1,12,0" />
+                            <TextBlock Grid.Column="1" Text="{loc:Loc Settings.Security.Limitation}" Style="{StaticResource Text.Paragraph}" Foreground="{DynamicResource Brush.Text.Primary}" TextWrapping="Wrap" />
+                        </Grid>
+                    </Border>
+                </StackPanel>
+
+                <!-- ============ Data management ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Data}">
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <Grid>
+                                <StackPanel Margin="0,0,16,0">
+                                    <TextBlock Text="{loc:Loc Settings.Data.Backups}" Style="{StaticResource SectionHeader}" />
+                                    <TextBlock Text="{Binding Data.LastBackupText}" Style="{StaticResource Text.Caption}" />
+                                </StackPanel>
+                                <Button HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.HardDriveDownload"
+                                        Content="{loc:Loc Settings.Data.BackUpNow}" Command="{Binding Data.BackUpNowCommand}" c:Assist.IsBusy="{Binding Data.IsBusy}" />
+                            </Grid>
+                            <Separator Margin="0,12,0,16" />
+
+                            <TextBlock Text="{loc:Loc Settings.Data.Folder}" Style="{StaticResource SettingLabel}" />
+                            <Grid Margin="0,6,0,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding Data.BackupDirectory}" Style="{StaticResource Text.Secondary}" FontFamily="{StaticResource Font.Mono}"
+                                           FontSize="{StaticResource FontSize.Caption}" VerticalAlignment="Center" TextTrimming="CharacterEllipsis" ToolTip="{Binding Data.BackupDirectory}" />
+                                <Button Grid.Column="1" Margin="12,0,0,0" c:Assist.Icon="Icon.Folder" Content="{loc:Loc Settings.Data.ChangeFolder}" Command="{Binding Data.ChangeFolderCommand}" />
+                                <Button Grid.Column="2" Margin="8,0,0,0" Style="{StaticResource Button.Ghost}" Content="{loc:Loc Settings.Data.OpenFolder}" Command="{Binding Data.OpenFolderCommand}" />
+                            </Grid>
+
+                            <TextBlock Text="{loc:Loc Settings.Data.Schedule}" Style="{StaticResource SettingLabel}" Margin="0,18,0,8" />
+                            <c:ChoiceGroup ItemsSource="{Binding Data.ScheduleOptions}" AutomationProperties.Name="{loc:Loc Settings.Data.Schedule}">
+                                <c:ChoiceGroup.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </c:ChoiceGroup.ItemsPanel>
+                                <c:ChoiceGroup.ItemTemplate>
+                                    <DataTemplate>
+                                        <RadioButton Style="{StaticResource RadioButton.Choice}" GroupName="BackupSchedule" Margin="0,0,6,6"
+                                                     Content="{Binding Label}" IsChecked="{Binding IsSelected, Mode=TwoWay}" />
+                                    </DataTemplate>
+                                </c:ChoiceGroup.ItemTemplate>
+                            </c:ChoiceGroup>
+
+                            <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
+                                <TextBlock Text="{loc:Loc Settings.Data.Retention}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center" Margin="0,0,12,0" />
+                                <ComboBox ItemsSource="{Binding Data.RetentionOptions}" SelectedItem="{Binding Data.SelectedRetention}" DisplayMemberPath="Label" Width="100"
+                                          AutomationProperties.Name="{loc:Loc Settings.Data.Retention}" />
+                            </StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Data.Retention.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,0" />
+                        </StackPanel>
+                    </Border>
+
+                    <!-- History & restore -->
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <Grid>
+                                <TextBlock Text="{loc:Loc Settings.Data.History}" Style="{StaticResource SectionHeader}" VerticalAlignment="Center" />
+                                <Button HorizontalAlignment="Right" c:Assist.Icon="Icon.Folder" Content="{loc:Loc Settings.Data.RestoreFromFile}" Command="{Binding Data.RestoreFromFileCommand}" />
+                            </Grid>
+                            <TextBlock Text="{loc:Loc Settings.Data.Restore.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,10" />
+                            <TextBlock Text="{loc:Loc Settings.Data.History.Empty}" Style="{StaticResource Text.Caption}"
+                                       Visibility="{Binding Data.HasNoHistory, Converter={StaticResource BoolToVisibility}}" />
+                            <ItemsControl ItemsSource="{Binding Data.History}" Focusable="False">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type pages:BackupRow}">
+                                        <Grid Margin="0,4">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <StackPanel>
+                                                <TextBlock Style="{StaticResource Text.Body}">
+                                                    <Run Text="{Binding DateText, Mode=OneWay}" /><Run Text="  ·  " Foreground="{DynamicResource Brush.Text.Tertiary}" /><Run Text="{Binding KindText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Secondary}" />
+                                                </TextBlock>
+                                                <TextBlock Style="{StaticResource Text.Caption}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Path}">
+                                                    <Run Text="{Binding FileName, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding SizeText, Mode=OneWay}" />
+                                                </TextBlock>
+                                            </StackPanel>
+                                            <Button Grid.Column="1" Content="{loc:Loc Settings.Data.Restore}" c:Assist.Icon="Icon.Undo" VerticalAlignment="Center"
+                                                    AutomationProperties.Name="{Binding FileName}"
+                                                    Command="{Binding DataContext.Data.RestoreCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+
+                    <!-- Import / export -->
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Data.ImportExport}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,16" />
+                            <TextBlock Text="{loc:Loc Settings.Data.Export}" Style="{StaticResource SettingLabel}" />
+                            <TextBlock Text="{loc:Loc Settings.Data.Export.Hint}" Style="{StaticResource SettingHint}" />
+                            <Button HorizontalAlignment="Left" c:Assist.Icon="Icon.HardDriveDownload" Content="{loc:Loc Settings.Data.Export.Button}" Command="{Binding Data.ExportJsonCommand}" />
+
+                            <TextBlock Text="{loc:Loc Settings.Data.Import}" Style="{StaticResource SettingLabel}" Margin="0,20,0,0" />
+                            <TextBlock Text="{loc:Loc Settings.Data.Import.Hint}" Style="{StaticResource SettingHint}" />
+                            <Button HorizontalAlignment="Left" c:Assist.Icon="Icon.Receipt" Content="{loc:Loc Settings.Data.Import.Button}" Command="{Binding Data.ImportCsvCommand}" />
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+
+                <!-- ============ About ============ -->
+                <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=About}">
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Section.About}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,16" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Width="44" Height="44" CornerRadius="10" Background="{DynamicResource Brush.Accent}">
+                                    <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="26" Height="26" Foreground="{DynamicResource Brush.Accent.Foreground}" />
+                                </Border>
+                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding AppName}" Style="{StaticResource Text.Subtitle}" />
+                                    <TextBlock Style="{StaticResource Text.Caption}">
+                                        <Run Text="{loc:Loc About.Version}" /> <Run Text="{Binding Version, Mode=OneWay}" />
+                                        <Run Text=" · " /><Run Text="{loc:Loc About.Developer}" /><Run Text=": " /><Run Text="{Binding Developer, Mode=OneWay}" />
+                                    </TextBlock>
+                                </StackPanel>
+                            </StackPanel>
+
+                            <TextBlock Text="{loc:Loc About.Privacy}" Style="{StaticResource Text.Paragraph}" Margin="0,16,0,0" />
+
+                            <TextBlock Text="{loc:Loc About.DataLocation}" Style="{StaticResource SettingLabel}" Margin="0,16,0,4" />
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{Binding DataDirectory}" Style="{StaticResource Text.Secondary}" FontFamily="{StaticResource Font.Mono}"
+                                           FontSize="{StaticResource FontSize.Caption}" VerticalAlignment="Center" ToolTip="{Binding DataDirectory}" />
+                                <Button Grid.Column="1" Margin="12,0,0,0" c:Assist.Icon="Icon.Folder" Content="{loc:Loc About.OpenDataFolder}" Command="{Binding OpenDataFolderCommand}" />
+                            </Grid>
+
+                            <TextBlock Text="{loc:Loc About.ThirdParty}" Style="{StaticResource SettingLabel}" Margin="0,16,0,6" />
+                            <ItemsControl ItemsSource="{Binding ThirdPartyComponents}" Focusable="False">
+                                <ItemsControl.ItemTemplate>
+                                    <DataTemplate DataType="{x:Type pages:ThirdPartyComponent}">
+                                        <Grid Margin="0,3">
+                                            <Grid.ColumnDefinitions>
+                                                <ColumnDefinition Width="*" />
+                                                <ColumnDefinition Width="Auto" />
+                                            </Grid.ColumnDefinitions>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Text.Body}" />
+                                            <Border Grid.Column="1" Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}">
+                                                <TextBlock Text="{Binding License}" Style="{StaticResource Text.Caption}" FontWeight="SemiBold" />
+                                            </Border>
+                                        </Grid>
+                                    </DataTemplate>
+                                </ItemsControl.ItemTemplate>
+                            </ItemsControl>
+                        </StackPanel>
+                    </Border>
+                </StackPanel>
+            </StackPanel>
+        </ScrollViewer>
+    </Grid>
 </UserControl>

@@ -46,6 +46,15 @@
     <DataTemplate DataType="{x:Type pages:PayBillFormViewModel}">
         <forms:PayBillForm />
     </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:CategoryFormViewModel}">
+        <forms:CategoryForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:ChangePinFormViewModel}">
+        <forms:ChangePinForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:ImportFormViewModel}">
+        <forms:ImportForm />
+    </DataTemplate>
     <DataTemplate DataType="{x:Type pages:AccountsViewModel}">
         <views:AccountsPage />
     </DataTemplate>
@@ -56,6 +65,17 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type gate:LockViewModel}">
         <gateViews:LockView />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type gate:BusyGateViewModel}">
+        <Grid Background="{DynamicResource Brush.Background}">
+            <Border Style="{StaticResource Card}" HorizontalAlignment="Center" VerticalAlignment="Center" Padding="32" MaxWidth="460">
+                <StackPanel>
+                    <TextBlock Text="{Binding Title}" Style="{StaticResource Text.Title}" HorizontalAlignment="Center" />
+                    <TextBlock Text="{Binding Message}" Style="{StaticResource Text.Paragraph}" TextAlignment="Center" Margin="0,8,0,18" />
+                    <ProgressBar IsIndeterminate="True" Height="4" Width="260" />
+                </StackPanel>
+            </Border>
+        </Grid>
     </DataTemplate>
 
     <!-- Dialog forms -->

@@ -100,6 +100,12 @@ public sealed class CategoryService : ICategoryService
         await using var db = await _factory.CreateDbContextAsync(cancellationToken);
         var category = await db.Categories.FirstOrDefaultAsync(c => c.Id == id, cancellationToken)
                        ?? throw new FinanceValidationException(nameof(id), ValidationCodes.CategoryNotFound);
+        if (!isActive && category.SystemKey == DefaultCategories.FeesKey)
+        {
+            // Transfer fees are recorded in this category; deactivating it would make transfers with fees fail.
+            throw new FinanceValidationException(nameof(id), ValidationCodes.FeeCategoryRequired);
+        }
+
         category.IsActive = isActive;
         category.UpdatedAtUtc = _clock.UtcNow.UtcDateTime;
         await db.SaveChangesAsync(cancellationToken);

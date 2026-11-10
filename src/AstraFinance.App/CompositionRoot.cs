@@ -65,7 +65,9 @@ public static class CompositionRoot
         // Onboarding, security, regional format and backups.
         services.AddSingleton(new PinHasher());
         services.AddSingleton(PinAttemptPolicy.Default);
-        services.AddSingleton<IPinService, PinService>();
+        services.AddSingleton<PinService>();
+        services.AddSingleton<IPinService>(sp => sp.GetRequiredService<PinService>());
+        services.AddSingleton<IPinSecuritySettings>(sp => sp.GetRequiredService<PinService>());
         services.AddSingleton<IOnboardingService, OnboardingService>();
         services.AddSingleton<IRegionalFormatService, RegionalFormatService>();
         services.AddSingleton<IBackupService, BackupService>();
@@ -77,6 +79,9 @@ public static class CompositionRoot
         services.AddSingleton<IAnalyticsService, AnalyticsService>();
         services.AddSingleton<IReportService, ReportService>();
         services.AddSingleton<IReportExporter, AstraFinance.Infrastructure.Export.ReportExporter>();
+        services.AddSingleton<IRestoreService, AstraFinance.Infrastructure.Backup.RestoreService>();
+        services.AddSingleton<IDataExportService, AstraFinance.Infrastructure.Export.DataExportService>();
+        services.AddSingleton<ITransactionImportService, AstraFinance.Infrastructure.Export.TransactionImportService>();
         services.AddSingleton<IWindowsNotifier, WindowsToastNotifier>();
         services.AddSingleton<ReminderScheduler>();
 
@@ -97,6 +102,8 @@ public static class CompositionRoot
         services.AddSingleton(CreatePageRegistry());
         services.AddSingleton<IFolderPicker, WindowsFolderPicker>();
         services.AddSingleton<IFileSavePicker, WindowsFileSavePicker>();
+        services.AddSingleton<IFileOpenPicker, WindowsFileOpenPicker>();
+        services.AddSingleton<AppSession>();
         services.AddSingleton<DataChangeNotifier>();
 
         // Forms and gates are created per use.
@@ -108,6 +115,12 @@ public static class CompositionRoot
         AddFactory<AllocationFormViewModel>(services);
         AddFactory<BillFormViewModel>(services);
         AddFactory<PayBillFormViewModel>(services);
+        AddFactory<CategoryFormViewModel>(services);
+        AddFactory<ChangePinFormViewModel>(services);
+        AddFactory<ImportFormViewModel>(services);
+        services.AddTransient<CategoriesSettingsViewModel>();
+        services.AddTransient<SecuritySettingsViewModel>();
+        services.AddTransient<DataSettingsViewModel>();
         AddFactory<OnboardingViewModel>(services);
         AddFactory<LockViewModel>(services);
 

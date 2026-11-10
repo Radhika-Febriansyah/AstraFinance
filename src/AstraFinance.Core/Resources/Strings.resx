@@ -222,9 +222,6 @@
   <data name="Settings.Accent.Description" xml:space="preserve">
     <value>Used for highlights, selection, and primary actions.</value>
   </data>
-  <data name="Settings.Upcoming" xml:space="preserve">
-    <value>Regional formats, categories, security, and data management settings are added in later development phases.</value>
-  </data>
   <data name="About.Version" xml:space="preserve">
     <value>Version</value>
   </data>
@@ -2057,5 +2054,407 @@
   </data>
   <data name="Reports.ShowInFolder" xml:space="preserve">
     <value>Show in folder</value>
+  </data>
+  <data name="Settings.Sections" xml:space="preserve">
+    <value>Settings sections</value>
+  </data>
+  <data name="Settings.Section.Categories" xml:space="preserve">
+    <value>Categories</value>
+  </data>
+  <data name="Settings.Section.Security" xml:space="preserve">
+    <value>Security</value>
+  </data>
+  <data name="Settings.Section.Data" xml:space="preserve">
+    <value>Data management</value>
+  </data>
+  <data name="Settings.Regional.Number" xml:space="preserve">
+    <value>Number format</value>
+  </data>
+  <data name="Settings.Regional.Number.Hint" xml:space="preserve">
+    <value>How amounts are grouped and which decimal separator is used.</value>
+  </data>
+  <data name="Settings.Regional.Date" xml:space="preserve">
+    <value>Date format</value>
+  </data>
+  <data name="Settings.Regional.Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
+  <data name="Settings.Regional.Currency" xml:space="preserve">
+    <value>Base currency</value>
+  </data>
+  <data name="Settings.Regional.Currency.Locked" xml:space="preserve">
+    <value>The base currency is fixed once accounts exist, because every amount is stored in it. Version 1 uses one currency for the whole app.</value>
+  </data>
+  <data name="Settings.Categories.Intro" xml:space="preserve">
+    <value>Categories organise income and expenses. Deactivated categories stay on past transactions but can no longer be chosen.</value>
+  </data>
+  <data name="Settings.Categories.ShowInactive" xml:space="preserve">
+    <value>Show deactivated categories</value>
+  </data>
+  <data name="Settings.Categories.Expense" xml:space="preserve">
+    <value>Expense categories</value>
+  </data>
+  <data name="Settings.Categories.Income" xml:space="preserve">
+    <value>Income categories</value>
+  </data>
+  <data name="Settings.Categories.AddExpense" xml:space="preserve">
+    <value>Add expense category</value>
+  </data>
+  <data name="Settings.Categories.AddIncome" xml:space="preserve">
+    <value>Add income category</value>
+  </data>
+  <data name="Settings.Categories.Edit" xml:space="preserve">
+    <value>Edit category</value>
+  </data>
+  <data name="Settings.Categories.Deactivate" xml:space="preserve">
+    <value>Deactivate / reactivate</value>
+  </data>
+  <data name="Settings.Categories.Deactivate.Title" xml:space="preserve">
+    <value>Deactivate category?</value>
+  </data>
+  <data name="Settings.Categories.Deactivate.Body" xml:space="preserve">
+    <value>"{0}" will no longer be offered for new transactions, budgets or bills. Existing records keep it, and you can reactivate it at any time.</value>
+  </data>
+  <data name="Settings.Categories.Inactive" xml:space="preserve">
+    <value>Deactivated</value>
+  </data>
+  <data name="Settings.Categories.Saved" xml:space="preserve">
+    <value>Category saved</value>
+  </data>
+  <data name="Settings.Categories.Name" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="Settings.Categories.BuiltInHint" xml:space="preserve">
+    <value>Built-in category: keep the name to have it translated automatically, or type your own name.</value>
+  </data>
+  <data name="Validation.FeeCategoryRequired" xml:space="preserve">
+    <value>Transfer fees are recorded in this category, so it must stay active.</value>
+  </data>
+  <data name="Settings.Notifications.Backup" xml:space="preserve">
+    <value>Backup reminders</value>
+  </data>
+  <data name="Settings.Notifications.Backup.When" xml:space="preserve">
+    <value>Remind me after</value>
+  </data>
+  <data name="Settings.Notifications.Backup.Days" xml:space="preserve">
+    <value>{0} days without a backup</value>
+  </data>
+  <data name="Settings.Notifications.Backup.Hint" xml:space="preserve">
+    <value>Automatic backups count too, so with a backup schedule you will rarely see this reminder.</value>
+  </data>
+  <data name="Reminder.Backup.Title" xml:space="preserve">
+    <value>Time for a backup</value>
+  </data>
+  <data name="Reminder.Backup.Never" xml:space="preserve">
+    <value>You have not backed up your data yet. Go to Settings → Data management.</value>
+  </data>
+  <data name="Reminder.Backup.Days" xml:space="preserve">
+    <value>Your last backup was {0} days ago. Go to Settings → Data management.</value>
+  </data>
+  <data name="Settings.Security.Pin" xml:space="preserve">
+    <value>Application PIN</value>
+  </data>
+  <data name="Settings.Security.Pin.Hint" xml:space="preserve">
+    <value>Astra Finance asks for the PIN every time it starts and when you lock it.</value>
+  </data>
+  <data name="Settings.Security.ChangePin" xml:space="preserve">
+    <value>Change PIN</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Confirm" xml:space="preserve">
+    <value>Change PIN</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Body" xml:space="preserve">
+    <value>Enter your current PIN, then the new one (4 to 8 digits) twice. A wrong current PIN counts as a failed attempt.</value>
+  </data>
+  <data name="Settings.Security.CurrentPin" xml:space="preserve">
+    <value>Current PIN</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Wrong" xml:space="preserve">
+    <value>Incorrect PIN. {0} attempt(s) left before a cooldown.</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Cooldown" xml:space="preserve">
+    <value>Too many wrong PINs. Try again after {0}.</value>
+  </data>
+  <data name="Settings.Security.PinChanged" xml:space="preserve">
+    <value>PIN changed</value>
+  </data>
+  <data name="Settings.Security.LockNow" xml:space="preserve">
+    <value>Lock now</value>
+  </data>
+  <data name="Settings.Security.Cooldown" xml:space="preserve">
+    <value>Wrong PIN cooldown</value>
+  </data>
+  <data name="Settings.Security.Cooldown.Summary" xml:space="preserve">
+    <value>After {0} wrong PINs, entry pauses for {1}; each further wrong PIN doubles the pause, up to {2}.</value>
+  </data>
+  <data name="Settings.Security.Attempts" xml:space="preserve">
+    <value>Wrong PINs allowed</value>
+  </data>
+  <data name="Settings.Security.Attempts.Option" xml:space="preserve">
+    <value>{0} attempts</value>
+  </data>
+  <data name="Settings.Security.FirstCooldown" xml:space="preserve">
+    <value>First pause</value>
+  </data>
+  <data name="Settings.Security.Minutes" xml:space="preserve">
+    <value>{0} min</value>
+  </data>
+  <data name="Settings.Security.Seconds" xml:space="preserve">
+    <value>{0} s</value>
+  </data>
+  <data name="Settings.Security.Limitation" xml:space="preserve">
+    <value>The PIN controls access to the app; it does not encrypt your data. Your data file is protected by your Windows account, so keep your Windows sign-in secure and store backups in a safe place.</value>
+  </data>
+  <data name="Validation.AttemptSettingsOutOfRange" xml:space="preserve">
+    <value>Choose 3 to 10 attempts and a pause of 30 seconds to 15 minutes.</value>
+  </data>
+  <data name="Settings.Data.Backups" xml:space="preserve">
+    <value>Backups</value>
+  </data>
+  <data name="Settings.Data.LastBackup" xml:space="preserve">
+    <value>Last backup: {0}</value>
+  </data>
+  <data name="Settings.Data.NoBackupYet" xml:space="preserve">
+    <value>No backup yet</value>
+  </data>
+  <data name="Settings.Data.BackUpNow" xml:space="preserve">
+    <value>Back up now</value>
+  </data>
+  <data name="Settings.Data.Folder" xml:space="preserve">
+    <value>Backup folder</value>
+  </data>
+  <data name="Settings.Data.ChangeFolder" xml:space="preserve">
+    <value>Change…</value>
+  </data>
+  <data name="Settings.Data.OpenFolder" xml:space="preserve">
+    <value>Open</value>
+  </data>
+  <data name="Settings.Data.ChooseFolder" xml:space="preserve">
+    <value>Choose a backup folder</value>
+  </data>
+  <data name="Settings.Data.Schedule" xml:space="preserve">
+    <value>Automatic backup</value>
+  </data>
+  <data name="Settings.Data.Retention" xml:space="preserve">
+    <value>Automatic backups to keep</value>
+  </data>
+  <data name="Settings.Data.Retention.Hint" xml:space="preserve">
+    <value>Older automatic backups are removed. Manual backups and safety copies are never removed automatically.</value>
+  </data>
+  <data name="Settings.Data.History" xml:space="preserve">
+    <value>Backup history</value>
+  </data>
+  <data name="Settings.Data.History.Empty" xml:space="preserve">
+    <value>No backups found in the backup folder.</value>
+  </data>
+  <data name="Settings.Data.RestoreFromFile" xml:space="preserve">
+    <value>Restore from file…</value>
+  </data>
+  <data name="Settings.Data.Restore" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Settings.Data.Restore.Hint" xml:space="preserve">
+    <value>Restoring replaces all current data with the backup. A safety copy of the current data is always made first.</value>
+  </data>
+  <data name="Settings.Data.Restore.Pick" xml:space="preserve">
+    <value>Choose a backup to restore</value>
+  </data>
+  <data name="Settings.Data.Restore.Filter" xml:space="preserve">
+    <value>Astra Finance backup (*.db)|*.db</value>
+  </data>
+  <data name="Settings.Data.Restore.Title" xml:space="preserve">
+    <value>Restore backup?</value>
+  </data>
+  <data name="Settings.Data.Restore.Body" xml:space="preserve">
+    <value>Restore "{0}" ({1} accounts, {2} transactions, last transaction {3})? All current data will be replaced. A safety copy of the current data is saved first. After restoring, the app locks and the PIN stored in the backup applies.</value>
+  </data>
+  <data name="Settings.Data.Restore.Confirm" xml:space="preserve">
+    <value>Restore</value>
+  </data>
+  <data name="Settings.Data.ImportExport" xml:space="preserve">
+    <value>Import and export</value>
+  </data>
+  <data name="Settings.Data.Export" xml:space="preserve">
+    <value>Export all data</value>
+  </data>
+  <data name="Settings.Data.Export.Hint" xml:space="preserve">
+    <value>One readable JSON file with all accounts, categories, transactions (including deleted ones), budgets, goals and bills. Your PIN is never included.</value>
+  </data>
+  <data name="Settings.Data.Export.Button" xml:space="preserve">
+    <value>Export to JSON…</value>
+  </data>
+  <data name="Settings.Data.Export.Title" xml:space="preserve">
+    <value>Export all data</value>
+  </data>
+  <data name="Settings.Data.Export.Filter" xml:space="preserve">
+    <value>JSON file (*.json)|*.json</value>
+  </data>
+  <data name="Settings.Data.Export.Done" xml:space="preserve">
+    <value>{0} records exported</value>
+  </data>
+  <data name="Settings.Data.Import" xml:space="preserve">
+    <value>Import transactions</value>
+  </data>
+  <data name="Settings.Data.Import.Hint" xml:space="preserve">
+    <value>Add income and expenses from a CSV file, such as a bank statement or Astra's own transaction export. You review everything before it is saved.</value>
+  </data>
+  <data name="Settings.Data.Import.Button" xml:space="preserve">
+    <value>Import from CSV…</value>
+  </data>
+  <data name="Settings.Data.Import.Pick" xml:space="preserve">
+    <value>Choose a CSV file</value>
+  </data>
+  <data name="Settings.Data.Import.Title" xml:space="preserve">
+    <value>Import transactions</value>
+  </data>
+  <data name="Settings.Data.Import.ReadFailed" xml:space="preserve">
+    <value>The file could not be read. Check that it is a CSV file and not open in another program.</value>
+  </data>
+  <data name="Settings.Data.Import.Empty" xml:space="preserve">
+    <value>The file has no data rows, or no header row.</value>
+  </data>
+  <data name="Settings.Data.Import.Done" xml:space="preserve">
+    <value>{0} transactions imported</value>
+  </data>
+  <data name="Settings.Data.Import.Intro" xml:space="preserve">
+    <value>Check how the columns are read, then review the rows. File:</value>
+  </data>
+  <data name="Settings.Data.Import.Account" xml:space="preserve">
+    <value>Import into account</value>
+  </data>
+  <data name="Settings.Data.Import.Columns" xml:space="preserve">
+    <value>Columns</value>
+  </data>
+  <data name="Settings.Data.Import.DateFormat" xml:space="preserve">
+    <value>Dates in the file</value>
+  </data>
+  <data name="Settings.Data.Import.NumberFormat" xml:space="preserve">
+    <value>Amounts in the file</value>
+  </data>
+  <data name="Settings.Data.Import.SignHint" xml:space="preserve">
+    <value>Without a type column, negative amounts are expenses and positive amounts are income. Transfers are never imported.</value>
+  </data>
+  <data name="Settings.Data.Import.IncludeDuplicates" xml:space="preserve">
+    <value>Also import possible duplicates</value>
+  </data>
+  <data name="Settings.Data.Import.Number.Plain" xml:space="preserve">
+    <value>Plain numbers (1500000 or 12.34)</value>
+  </data>
+  <data name="Settings.Data.Import.Number.Regional" xml:space="preserve">
+    <value>App number format ({0})</value>
+  </data>
+  <data name="Settings.Data.Import.NoColumn" xml:space="preserve">
+    <value>(none)</value>
+  </data>
+  <data name="Settings.Data.Import.Column" xml:space="preserve">
+    <value>Column {0}</value>
+  </data>
+  <data name="Settings.Data.Import.Confirm" xml:space="preserve">
+    <value>Import {0}</value>
+  </data>
+  <data name="Settings.Data.Import.Summary" xml:space="preserve">
+    <value>{0} ready · {1} possible duplicates · {2} skipped · {3} with errors</value>
+  </data>
+  <data name="Settings.Data.Import.More" xml:space="preserve">
+    <value>…and {0} more rows (all are imported, only the first rows are shown).</value>
+  </data>
+  <data name="Settings.Data.Import.Nothing" xml:space="preserve">
+    <value>There is nothing to import.</value>
+  </data>
+  <data name="Settings.Data.Import.Failed" xml:space="preserve">
+    <value>Nothing was imported: line {0} could not be saved ({1}).</value>
+  </data>
+  <data name="ImportStatus.Ready" xml:space="preserve">
+    <value>Ready</value>
+  </data>
+  <data name="ImportStatus.Duplicate" xml:space="preserve">
+    <value>Duplicate?</value>
+  </data>
+  <data name="ImportStatus.Skipped" xml:space="preserve">
+    <value>Skipped</value>
+  </data>
+  <data name="ImportStatus.Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ImportMessage.BadDate" xml:space="preserve">
+    <value>The date could not be read; check the date format.</value>
+  </data>
+  <data name="ImportMessage.BadAmount" xml:space="preserve">
+    <value>The amount could not be read; check the number format.</value>
+  </data>
+  <data name="ImportMessage.ZeroAmount" xml:space="preserve">
+    <value>The amount is zero.</value>
+  </data>
+  <data name="ImportMessage.Transfer" xml:space="preserve">
+    <value>Transfers are not imported.</value>
+  </data>
+  <data name="ImportMessage.OtherAccount" xml:space="preserve">
+    <value>Belongs to another account.</value>
+  </data>
+  <data name="ImportMessage.EmptyRow" xml:space="preserve">
+    <value>Empty row.</value>
+  </data>
+  <data name="ImportMessage.ExistsInAccount" xml:space="preserve">
+    <value>Already in this account (same date, amount and description).</value>
+  </data>
+  <data name="ImportMessage.RepeatedInFile" xml:space="preserve">
+    <value>Same as an earlier row in this file.</value>
+  </data>
+  <data name="ImportMessage.CategoryFallback" xml:space="preserve">
+    <value>Category not found; "Other" is used.</value>
+  </data>
+  <data name="ImportMessage.TooLong" xml:space="preserve">
+    <value>The description or note is too long.</value>
+  </data>
+  <data name="BackupKind.Manual" xml:space="preserve">
+    <value>Manual backup</value>
+  </data>
+  <data name="BackupKind.Automatic" xml:space="preserve">
+    <value>Automatic backup</value>
+  </data>
+  <data name="BackupKind.PreMigration" xml:space="preserve">
+    <value>Safety copy before an update</value>
+  </data>
+  <data name="BackupKind.PreRestore" xml:space="preserve">
+    <value>Safety copy before a restore</value>
+  </data>
+  <data name="BackupKind.External" xml:space="preserve">
+    <value>Backup file</value>
+  </data>
+  <data name="Restore.Problem.NotFound" xml:space="preserve">
+    <value>The file no longer exists.</value>
+  </data>
+  <data name="Restore.Problem.NotADatabase" xml:space="preserve">
+    <value>This file is not an Astra Finance backup.</value>
+  </data>
+  <data name="Restore.Problem.Damaged" xml:space="preserve">
+    <value>This backup is damaged and cannot be restored. Your current data has not been changed.</value>
+  </data>
+  <data name="Restore.Problem.NotAstra" xml:space="preserve">
+    <value>This database was not created by Astra Finance.</value>
+  </data>
+  <data name="Restore.Problem.NewerVersion" xml:space="preserve">
+    <value>This backup was made by a newer version of Astra Finance. Update the app first.</value>
+  </data>
+  <data name="Restore.Problem.SameFile" xml:space="preserve">
+    <value>This is the data file currently in use, not a backup.</value>
+  </data>
+  <data name="Restore.Problem.Failed" xml:space="preserve">
+    <value>The backup could not be restored. Your current data has not been changed.</value>
+  </data>
+  <data name="Restore.Busy.Title" xml:space="preserve">
+    <value>Restoring backup…</value>
+  </data>
+  <data name="Restore.Busy.Body" xml:space="preserve">
+    <value>Please wait. Your current data is saved first, then replaced with the backup.</value>
+  </data>
+  <data name="Restore.Done.Title" xml:space="preserve">
+    <value>Backup restored</value>
+  </data>
+  <data name="Restore.Done.Body" xml:space="preserve">
+    <value>A safety copy of your previous data was saved: {0}</value>
+  </data>
+  <data name="Restore.Failed.Title" xml:space="preserve">
+    <value>Restore failed</value>
   </data>
 </root>

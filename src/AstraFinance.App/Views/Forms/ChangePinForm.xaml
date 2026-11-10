@@ -1,0 +1,26 @@
+<UserControl x:Class="AstraFinance.App.Views.Forms.ChangePinForm"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:c="clr-namespace:AstraFinance.App.Controls"
+             xmlns:loc="clr-namespace:AstraFinance.App.Localization"
+             xmlns:pages="clr-namespace:AstraFinance.App.ViewModels.Pages"
+             mc:Ignorable="d"
+             d:DataContext="{d:DesignInstance Type=pages:ChangePinFormViewModel}">
+    <StackPanel>
+        <TextBlock Text="{loc:Loc Settings.Security.ChangePin.Body}" Style="{StaticResource Text.Paragraph}" Margin="0,0,0,18" />
+
+        <TextBlock Text="{loc:Loc Settings.Security.CurrentPin}" Style="{StaticResource FieldLabel}" />
+        <PasswordBox x:Name="CurrentBox" Style="{StaticResource PinBox}" c:PinBoxAssist.Pin="{Binding CurrentPin, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                     Width="240" HorizontalAlignment="Left" AutomationProperties.Name="{loc:Loc Settings.Security.CurrentPin}" Margin="0,0,0,24" />
+
+        <TextBlock Text="{loc:Loc Onboarding.Pin.New}" Style="{StaticResource FieldLabel}" />
+        <PasswordBox Style="{StaticResource PinBox}" c:PinBoxAssist.Pin="{Binding NewPin, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                     Width="240" HorizontalAlignment="Left" AutomationProperties.Name="{loc:Loc Onboarding.Pin.New}" Margin="0,0,0,24" />
+
+        <TextBlock Text="{loc:Loc Onboarding.Pin.Confirm}" Style="{StaticResource FieldLabel}" />
+        <PasswordBox Style="{StaticResource PinBox}" c:PinBoxAssist.Pin="{Binding ConfirmPin, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                     Width="240" HorizontalAlignment="Left" AutomationProperties.Name="{loc:Loc Onboarding.Pin.Confirm}" />
+    </StackPanel>
+</UserControl>

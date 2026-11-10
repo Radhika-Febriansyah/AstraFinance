@@ -285,6 +285,7 @@ public class BillsTests
     {
         var (ctx, bank, _) = await SetupAsync();
         await using var _ = ctx;
+        await ctx.NotificationSettings.SaveAsync(NotificationSettings.Default with { BackupReminders = false });
         var food = await ctx.CategoryAsync("Food");
         await ctx.Budgets.CreateAsync(new BudgetDraft(food.Id, 100_000, Today, null, null));
 

@@ -114,6 +114,11 @@ public static class SettingKeys
     public const string BillReminderDays = "Notifications.BillReminderDays";
     public const string BudgetWarningsEnabled = "Notifications.BudgetWarnings";
     public const string WindowsNotificationsEnabled = "Notifications.Windows";
+    public const string BackupRemindersEnabled = "Notifications.BackupReminders";
+    public const string BackupReminderDays = "Notifications.BackupReminderDays";
+    public const string BackupReminderSent = "Reminders.Backup";
+    public const string SecurityFreeAttempts = "Security.FreeAttempts";
+    public const string SecurityBaseCooldownSeconds = "Security.BaseCooldownSeconds";
 
     /// <summary>Prefix of per-bill reminder bookkeeping ("{prefix}{billId}" holds "yyyy-MM-dd:stage").</summary>
     public const string BillReminderSentPrefix = "Reminders.Bill.";

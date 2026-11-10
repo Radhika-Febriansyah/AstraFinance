@@ -83,4 +83,6 @@ public static class ValidationCodes
     public const string BillAlreadyHandled = "BillAlreadyHandled";
     public const string BillHasHistory = "BillHasHistory";
     public const string ReminderDaysOutOfRange = "ReminderDaysOutOfRange";
+    public const string FeeCategoryRequired = "FeeCategoryRequired";
+    public const string AttemptSettingsOutOfRange = "AttemptSettingsOutOfRange";
 }

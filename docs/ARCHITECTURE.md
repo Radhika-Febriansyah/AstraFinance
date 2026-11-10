@@ -81,6 +81,8 @@ UI-only preferences (language, theme, accent, sidebar) live in `preferences.json
 - Data lives under the user profile (`%LOCALAPPDATA%`), outside the install directory.
 - Logs contain technical events only — never PINs, amounts, descriptions or balances.
 - The PIN (Phase 3) is an access control, not database encryption; this limitation will be documented in the app and README.
+- Restore (Phase 9): validate → safety copy → stage a verified copy → copy over the live database with SQLite's backup API (one transaction) → initializer (upgrade + `quick_check`), with automatic roll-back to the safety copy if the restored data can't be opened. The shell blocks the UI and stops background work during the replacement, then locks the app (the backup's PIN applies).
+- The JSON data export never contains the PIN hash or other settings.
 - Reminders (Phase 7) are checked only while the app is unlocked. Windows notifications never include amounts. The first Windows notification registers the app's notification identity for the current user (`HKCU\Software\Classes\AppUserModelId\Aprotoos.AstraFinance`).
 
 ## Adding a module (pattern for later phases)

@@ -33,11 +33,14 @@ internal sealed class FinanceTestContext : IAsyncDisposable
         Goals = new SavingsGoalService(Factory, Clock);
         NotificationSettings = new NotificationSettingsService(Settings);
         Bills = new BillService(Factory, NotificationSettings, Clock);
-        Reminders = new ReminderService(NotificationSettings, Bills, Budgets, Settings);
+        Reminders = new ReminderService(NotificationSettings, Bills, Budgets, Settings, Backup);
         Analytics = new AnalyticsService(Factory);
         Localization = new AstraFinance.Core.Localization.LocalizationService(AppLanguage.English);
         Reports = new ReportService(Factory, Budgets, Localization, Regional, Clock);
+        DataExport = new AstraFinance.Infrastructure.Export.DataExportService(Factory, Regional, Clock);
+        Import = new AstraFinance.Infrastructure.Export.TransactionImportService(Factory, Regional, Clock);
         Initializer = new DatabaseInitializer(Factory, Paths, Categories, Clock, NullLogger<DatabaseInitializer>.Instance);
+        Restore = new AstraFinance.Infrastructure.Backup.RestoreService(Factory, Paths, Backup, Initializer, Clock, NullLogger<AstraFinance.Infrastructure.Backup.RestoreService>.Instance);
     }
 
     public FakeClock Clock { get; } = new();
@@ -77,6 +80,12 @@ internal sealed class FinanceTestContext : IAsyncDisposable
     public AstraFinance.Core.Localization.LocalizationService Localization { get; }
 
     public ReportService Reports { get; }
+
+    public AstraFinance.Infrastructure.Backup.RestoreService Restore { get; }
+
+    public AstraFinance.Infrastructure.Export.DataExportService DataExport { get; }
+
+    public AstraFinance.Infrastructure.Export.TransactionImportService Import { get; }
 
     public AstraFinance.Infrastructure.Export.ReportExporter Exporter { get; } = new();
 

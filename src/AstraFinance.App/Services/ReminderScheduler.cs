@@ -164,6 +164,11 @@ public sealed partial class ReminderScheduler : IDisposable
                 var used = _localization.Format("Reminder.Budget.Body", r.Percent, amount);
                 var usedPrivate = _localization.Format("Reminder.Budget.BodyPrivate", r.Percent);
                 return (exceeded ? NotificationKind.Warning : NotificationKind.Info, title, used, usedPrivate);
+            case ReminderKind.BackupOverdue:
+                var body = r.Percent < 0
+                    ? _localization.GetString("Reminder.Backup.Never")
+                    : _localization.Format("Reminder.Backup.Days", r.Percent);
+                return (NotificationKind.Warning, _localization.GetString("Reminder.Backup.Title"), body, body);
             default:
                 return (NotificationKind.Info, r.Name, date, date);
         }

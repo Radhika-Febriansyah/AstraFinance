@@ -1,6 +1,6 @@
 # Astra Finance — Implementation Status
 
-Last updated: 2026-11-10 (Phase 8)
+Last updated: 2026-11-11 (Phase 9)
 
 | Phase | Name | Status |
 |---|---|---|
@@ -12,8 +12,8 @@ Last updated: 2026-11-10 (Phase 8)
 | 6 | Budgets and Savings Goals | ✅ Complete (built, tested, run-verified) |
 | 7 | Bills and Subscriptions | ✅ Complete (built, tested, run-verified) |
 | 8 | Analytics and Reports | ✅ Complete (built, tested, run-verified) |
-| 9 | Settings and Data Protection | ⏳ Next (language, theme, accent, notifications and About already done) |
-| 10 | QA and Release | Not started |
+| 9 | Settings and Data Protection | ✅ Complete (built, tested, run-verified) |
+| 10 | QA and Release | ⏳ Next |
 
 ## Environment
 
@@ -615,6 +615,58 @@ New coverage: period resolution (Monday weeks, month-end shifts, bucket choice);
 
 ---
 
-## Phase 9 — Settings and Data Protection (next)
+## Phase 9 — Settings and Data Protection
 
-Planned: regional settings after onboarding, category management, security settings (change PIN, lock, cooldown), backup scheduling/history/restore UI with the safe restore procedure, data import/export, backup reminders.
+### Completed tasks
+
+- **Settings reorganised into sections** with a section list (beside the content on wide windows, a wrapping row above it on narrow ones): General, Appearance, Categories, Notifications, Security, Data management, About.
+- **General**: application language; number format and date format (applied app-wide immediately, with a live preview); base currency shown read-only with the reason (it is fixed once accounts exist — v1 uses one currency).
+- **Categories**: income and expense lists; add custom categories (name, icon, colour); edit name/icon/colour (keeping a built-in name keeps it translated); deactivate/reactivate with confirmation; show deactivated. The transfer-fee category cannot be deactivated (service rule), because transfers with fees are recorded in it.
+- **Notifications**: adds **backup reminders** — after 7, 14 or 30 days without a backup (counted from the first check for a new user, repeated at most once per period; automatic backups count).
+- **Security**: change PIN (current PIN verified and counted as an attempt; new PIN twice), lock now, and a configurable **wrong-PIN cooldown** (3/5/10 allowed attempts; first pause 30 s/1/5/15 min, doubling to at least 15 min). The page states plainly that the PIN is access control and does not encrypt the data file.
+- **Data management**:
+  - Backup folder (change/open), automatic schedule (off/daily/weekly/monthly), number of automatic backups to keep, last backup, **Back up now**.
+  - **Backup history** (manual, automatic, safety copies before updates and restores) with **Restore** per entry and **Restore from file…**.
+  - **Safe restore** (`RestoreService`): (1) validate — SQLite header, `integrity_check`, Astra tables, no migrations from a newer version, not the live file; (2) safety copy of the current data (`pre-restore-*.db`) via the online backup API; (3) the UI is blocked by a full-window "Restoring…" gate and reminders are stopped, so nothing else writes; (4) the backup is staged into a verified temporary copy and copied over the live database with SQLite's backup API (one transaction — a failure leaves the data unchanged); (5) the database initializer upgrades an older backup and runs `quick_check`; if the restored data can't be opened, the safety copy is put back automatically; (6) the regional format and all pages reload; (7) success or the exact problem is reported. The app then locks: the restored data's own PIN applies (stated in the confirmation).
+  - **Export all data** as one readable JSON file (`DataExportService`): accounts, categories, all transactions including deleted ones (flagged), balance adjustments, budgets, goals and allocations, bills and payments; amounts as integer minor units with the currency stated. The PIN hash and other settings are never exported.
+  - **Import transactions from CSV** (`TransactionImportService` + import dialog): comma/semicolon/tab detection, quotes and multi-line fields, UTF-8 BOM; column mapping guessed from English/Indonesian headers and Astra's own export (adjustable), date format and number format (plain or the app's regional format), target account; a **preview** marks every row Ready / Possible duplicate / Skipped / Error with the reason; duplicates (same account, date, type, amount, description — or repeated in the file) are excluded unless chosen; transfers and rows of other accounts are never imported; unknown categories use "Other income/expenses". All selected rows are saved **in one database transaction through the normal transaction validation** — all or nothing.
+
+### Build status
+
+`dotnet build` — **succeeded, 0 warnings, 0 errors**.
+
+### Test status
+
+`dotnet test` — **316 passed, 0 failed** (301 previous + 15 new); three consecutive full runs green.
+
+New coverage: configurable PIN cooldown (applied on wrong PINs, invalid values refused, max cooldown); fee category protected; restore (data replaced, safety copy holds the previous data, history lists kinds, database usable afterwards); invalid backups refused (text file, non-Astra database, newer version, live file, missing file) with the current data unchanged; JSON export (all records incl. deleted and transfer links, no security data); CSV parsing (quotes, semicolons, multi-line, BOM); Astra-export import (mapping, types, transfer/other-account skipping, category fallback, formula-protection removal, bad dates/amounts, duplicates on re-import); bank-style import (signs, regional numbers, date variants, in-file duplicates, all-or-nothing rollback); backup reminders; Settings sections, categories, regional formats, change PIN/cooldown/lock, backup + restore through the shell (lock afterwards), JSON export and CSV import through the UI.
+
+### Manual verification (real app, 125 % DPI)
+
+- All sections; Back up now; CSV import of a bank-style file (2 ready, 1 error shown with its reason); JSON export (checked: 6 transactions including the 2 imported, no PIN data); **Restore from file** of the earlier backup: confirmation with backup details → "Restoring…" → lock screen → unlock → dashboard back at Rp14.948.500 (the import undone), safety copy `pre-restore-*.db` written.
+- Test data was only borrowed; the real data folder is back to a clean setup state.
+
+### Bugs found and fixed during this phase
+
+- Change-PIN form lost its "incorrect PIN" message (clearing the field cleared the error) — order fixed, covered by a test.
+- Import preview showed internal category keys ("OtherIncome") and the dialog content was wider than the dialog — now translated names and a two-column layout with the reason on its own line.
+- An older budget-reminder test now had to opt out of the new backup reminders.
+
+### Important decisions
+
+1. **Import/export (user's choice, 2026-11-11):** JSON for the full export; CSV import of income/expenses into one account with preview, validation and duplicate detection. Full-data *import* is covered by backup/restore.
+2. **Restore keeps the backup's PIN** and locks the app afterwards — a backup is a complete snapshot, including its access settings.
+3. **Transfers are never imported from CSV**: a statement shows only one side, and guessing the other account could create money that doesn't exist.
+4. **Duplicate rule** for imports: same account, date, type, amount and description (case-insensitive). Possible duplicates can still be imported deliberately.
+5. **Cooldown settings live in the database** (backed up with the data); the original policy remains the default.
+
+### Remaining / notes
+
+- Clicking a backup reminder doesn't open Settings directly (notifications have no actions in v1); the text says where to go.
+- Restoring a backup made by an older app version upgrades it (with the usual pre-migration copy); a backup from a newer version is refused.
+
+---
+
+## Phase 10 — QA and Release (next)
+
+Planned: full test run, integration tests, clean installation, upgrade from earlier databases, backup/restore, offline operation, light and dark themes, smaller window sizes, fix critical issues, release installer (MSIX or another reliable installer; AUMID for notifications), README and release notes.

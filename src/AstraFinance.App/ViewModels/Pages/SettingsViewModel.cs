@@ -1,6 +1,8 @@
 using System.Diagnostics;
 using System.Globalization;
 using AstraFinance.App.Services;
+using AstraFinance.App.ViewModels.Dialogs;
+using AstraFinance.Core.Money;
 using AstraFinance.Core.Enums;
 using AstraFinance.Core.Interfaces;
 using AstraFinance.Core.Models;
@@ -13,6 +15,18 @@ namespace AstraFinance.App.ViewModels.Pages;
 
 public sealed record ThirdPartyComponent(string Name, string License, string Url);
 
+/// <summary>Sections of the Settings page.</summary>
+public enum SettingsSection
+{
+    General = 0,
+    Appearance = 1,
+    Categories = 2,
+    Notifications = 3,
+    Security = 4,
+    Data = 5,
+    About = 6,
+}
+
 /// <summary>A choice of how many days before a due date bill reminders start.</summary>
 public sealed record ReminderDaysOption(int Days, string Label)
 {
@@ -20,8 +34,8 @@ public sealed record ReminderDaysOption(int Days, string Label)
 }
 
 /// <summary>
-/// Settings: General (language), Appearance (theme + accent), Notifications (Phase 7) and About.
-/// Remaining sections are added in their roadmap phases.
+/// Settings, organised in sections: General (language and regional formats), Appearance, Categories,
+/// Notifications, Security, Data management and About. Categories, Security and Data have their own view models.
 /// </summary>
 public sealed partial class SettingsViewModel : PageViewModel
 {
@@ -31,7 +45,10 @@ public sealed partial class SettingsViewModel : PageViewModel
     private readonly INotificationSettingsService _notificationSettings;
     private readonly IBudgetService _budgets;
     private readonly ReminderScheduler _reminders;
+    private readonly IRegionalFormatService _regional;
+    private readonly DataChangeNotifier _changes;
     private bool _loadingNotifications;
+    private bool _loadingRegional;
 
     public SettingsViewModel(
         ILocalizationService localization,
@@ -40,9 +57,31 @@ public sealed partial class SettingsViewModel : PageViewModel
         IAppPaths paths,
         INotificationSettingsService notificationSettings,
         IBudgetService budgets,
-        ReminderScheduler reminders)
+        ReminderScheduler reminders,
+        IRegionalFormatService regional,
+        DataChangeNotifier changes,
+        CategoriesSettingsViewModel categories,
+        SecuritySettingsViewModel security,
+        DataSettingsViewModel data,
+        IClock clock)
         : base(AppPage.Settings, localization)
     {
+        _regional = regional;
+        _changes = changes;
+        Categories = categories;
+        Security = security;
+        Data = data;
+        SectionOptions = Enum.GetValues<SettingsSection>()
+            .Select(s => new ChoiceOption<SettingsSection>(s, () => Localization.GetString($"Settings.Section.{s}"), SectionIcon(s), v => Section = v))
+            .ToList();
+        SectionOptions[0].SetSelectedSilently(true);
+        var today = clock.Today;
+        NumberFormatOptions = Enum.GetValues<NumberFormatStyle>()
+            .Select(s => new SelectOption<NumberFormatStyle>(s, MoneyFormatter.Format(123_456_789, new RegionalFormat(CurrencyInfo.Usd, s, DateFormatStyle.DayMonthYear), includeSymbol: false)))
+            .ToList();
+        DateFormatOptions = Enum.GetValues<DateFormatStyle>()
+            .Select(s => new SelectOption<DateFormatStyle>(s, new RegionalFormat(CurrencyInfo.Idr, NumberFormatStyle.DotGroupCommaDecimal, s).FormatDate(today)))
+            .ToList();
         _preferences = preferences;
         _theme = theme;
         _paths = paths;
@@ -81,6 +120,48 @@ public sealed partial class SettingsViewModel : PageViewModel
 
     public IReadOnlyList<ChoiceOption<AccentColor>> AccentOptions { get; }
 
+    // ---------------- Sections ----------------
+
+    public IReadOnlyList<ChoiceOption<SettingsSection>> SectionOptions { get; }
+
+    [ObservableProperty]
+    public partial SettingsSection Section { get; set; }
+
+    public CategoriesSettingsViewModel Categories { get; }
+
+    public SecuritySettingsViewModel Security { get; }
+
+    public DataSettingsViewModel Data { get; }
+
+    // ---------------- Regional formats ----------------
+
+    public IReadOnlyList<SelectOption<NumberFormatStyle>> NumberFormatOptions { get; }
+
+    public IReadOnlyList<SelectOption<DateFormatStyle>> DateFormatOptions { get; }
+
+    [ObservableProperty]
+    public partial SelectOption<NumberFormatStyle>? SelectedNumberFormat { get; set; }
+
+    [ObservableProperty]
+    public partial SelectOption<DateFormatStyle>? SelectedDateFormat { get; set; }
+
+    [ObservableProperty]
+    public partial string CurrencyText { get; private set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string RegionalPreview { get; private set; } = string.Empty;
+
+    // ---------------- Backup reminders ----------------
+
+    [ObservableProperty]
+    public partial bool BackupReminders { get; set; }
+
+    [ObservableProperty]
+    public partial IReadOnlyList<ReminderDaysOption> BackupReminderOptions { get; private set; } = [];
+
+    [ObservableProperty]
+    public partial ReminderDaysOption? SelectedBackupReminderDays { get; set; }
+
     // ---------------- Notifications ----------------
 
     public static IReadOnlyList<int> ReminderDayChoices { get; } = [0, 1, 2, 3, 5, 7, 14];
@@ -118,10 +199,55 @@ public sealed partial class SettingsViewModel : PageViewModel
 
     public override async Task OnNavigatedToAsync(NavigationTarget target)
     {
+        LoadRegional();
+        await LoadNotificationsAsync().ConfigureAwait(true);
+        await Categories.LoadAsync().ConfigureAwait(true);
+        await Security.LoadAsync().ConfigureAwait(true);
+        await Data.LoadAsync().ConfigureAwait(true);
+    }
+
+    private void LoadRegional()
+    {
+        _loadingRegional = true;
+        var format = _regional.Current;
+        SelectedNumberFormat = NumberFormatOptions.First(o => o.Value == format.NumberStyle);
+        SelectedDateFormat = DateFormatOptions.First(o => o.Value == format.DateStyle);
+        CurrencyText = $"{format.Currency.Code} ({format.Currency.Symbol})";
+        RegionalPreview = $"{MoneyFormatter.Format(MoneyFormatter.SampleAmount(format.Currency), format)}  ·  {format.FormatDate(new DateOnly(2026, 12, 31))}";
+        _loadingRegional = false;
+    }
+
+    partial void OnSelectedNumberFormatChanged(SelectOption<NumberFormatStyle>? value) => SaveRegional();
+
+    partial void OnSelectedDateFormatChanged(SelectOption<DateFormatStyle>? value) => SaveRegional();
+
+    /// <summary>Number and date formats can change at any time; the base currency is fixed once accounts exist.</summary>
+    private void SaveRegional()
+    {
+        if (_loadingRegional || SelectedNumberFormat is null || SelectedDateFormat is null)
+        {
+            return;
+        }
+
+        var updated = _regional.Current with { NumberStyle = SelectedNumberFormat.Value, DateStyle = SelectedDateFormat.Value };
+        LastSave = SaveRegionalAsync(updated);
+    }
+
+    private async Task SaveRegionalAsync(RegionalFormat format)
+    {
+        await _regional.UpdateAsync(format).ConfigureAwait(true);
+        LoadRegional();
+        _changes.Notify(DataChangeKind.Accounts); // every page re-formats its amounts and dates
+    }
+
+    private async Task LoadNotificationsAsync()
+    {
         _loadingNotifications = true;
         try
         {
             var s = await _notificationSettings.GetAsync().ConfigureAwait(true);
+            BackupReminders = s.BackupReminders;
+            SelectedBackupReminderDays = BackupReminderOptions.FirstOrDefault(o => o.Days == s.BackupReminderDays) ?? BackupReminderOptions[1];
             NotificationsEnabled = s.Enabled;
             BillReminders = s.BillReminders;
             BudgetWarnings = s.BudgetWarnings;
@@ -187,11 +313,21 @@ public sealed partial class SettingsViewModel : PageViewModel
             option.RefreshText();
         }
 
+        foreach (var option in SectionOptions)
+        {
+            option.RefreshText();
+        }
+
         var days = SelectedReminderDays?.Days;
+        var backupDays = SelectedBackupReminderDays?.Days;
         BuildReminderDayOptions();
         _loadingNotifications = true;
         SelectedReminderDays = ReminderDayOptions.FirstOrDefault(o => o.Days == days);
+        SelectedBackupReminderDays = BackupReminderOptions.FirstOrDefault(o => o.Days == backupDays);
         _loadingNotifications = false;
+        Security.RefreshLanguage();
+        Data.RefreshLanguage();
+        _ = Categories.LoadAsync();
         OnPropertyChanged(nameof(AppName));
     }
 
@@ -224,6 +360,10 @@ public sealed partial class SettingsViewModel : PageViewModel
 
     partial void OnWindowsNotificationsChanged(bool value) => SaveNotifications();
 
+    partial void OnBackupRemindersChanged(bool value) => SaveNotifications();
+
+    partial void OnSelectedBackupReminderDaysChanged(ReminderDaysOption? value) => SaveNotifications();
+
     partial void OnBudgetThresholdTextChanged(string value)
     {
         if (_loadingNotifications)
@@ -244,13 +384,13 @@ public sealed partial class SettingsViewModel : PageViewModel
 
     private void SaveNotifications()
     {
-        if (_loadingNotifications || SelectedReminderDays is null)
+        if (_loadingNotifications || SelectedReminderDays is null || SelectedBackupReminderDays is null)
         {
             return;
         }
 
         LastSave = SaveNotificationsAsync(new NotificationSettings(
-            NotificationsEnabled, BillReminders, SelectedReminderDays.Days, BudgetWarnings, WindowsNotifications));
+            NotificationsEnabled, BillReminders, SelectedReminderDays.Days, BudgetWarnings, WindowsNotifications, BackupReminders, SelectedBackupReminderDays.Days));
     }
 
     private async Task SaveNotificationsAsync(NotificationSettings settings)
@@ -280,8 +420,27 @@ public sealed partial class SettingsViewModel : PageViewModel
         }
     }
 
-    private void BuildReminderDayOptions() =>
-        ReminderDayOptions = ReminderDayChoices
+    private static string SectionIcon(SettingsSection section) => section switch
+    {
+        SettingsSection.General => "Icon.Globe",
+        SettingsSection.Appearance => "Icon.Palette",
+        SettingsSection.Categories => "Icon.Layers",
+        SettingsSection.Notifications => "Icon.Bell",
+        SettingsSection.Security => "Icon.Shield",
+        SettingsSection.Data => "Icon.HardDriveDownload",
+        _ => "Icon.Info",
+    };
+
+    private void BuildReminderDayOptions()
+    {
+        BackupReminderOptions = NotificationSettings.BackupReminderChoices
+            .Select(d => new ReminderDaysOption(d, Localization.Format("Settings.Notifications.Backup.Days", d)))
+            .ToList();
+        ReminderDayOptions = BuildBillReminderOptions();
+    }
+
+    private List<ReminderDaysOption> BuildBillReminderOptions() =>
+        ReminderDayChoices
             .Select(d => new ReminderDaysOption(d, d switch
             {
                 0 => Localization.GetString("Settings.Reminders.OnDueDate"),

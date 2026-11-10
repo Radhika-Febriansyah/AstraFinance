@@ -113,3 +113,10 @@ internal sealed class FakeWindowsNotifier : AstraFinance.App.Services.IWindowsNo
 
     public void Show(string title, string body) => Shown.Add((title, body));
 }
+
+internal sealed class FakeFileOpenPicker : AstraFinance.App.Services.IFileOpenPicker
+{
+    public string? NextResult { get; set; }
+
+    public string? PickOpenFile(string title, string filter, string? initialDirectory) => NextResult;
+}

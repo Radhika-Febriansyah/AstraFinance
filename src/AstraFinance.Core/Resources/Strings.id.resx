@@ -222,9 +222,6 @@
   <data name="Settings.Accent.Description" xml:space="preserve">
     <value>Digunakan untuk sorotan, pilihan, dan tindakan utama.</value>
   </data>
-  <data name="Settings.Upcoming" xml:space="preserve">
-    <value>Pengaturan format regional, kategori, keamanan, dan pengelolaan data ditambahkan pada fase pengembangan berikutnya.</value>
-  </data>
   <data name="About.Version" xml:space="preserve">
     <value>Versi</value>
   </data>
@@ -2057,5 +2054,407 @@
   </data>
   <data name="Reports.ShowInFolder" xml:space="preserve">
     <value>Tampilkan di folder</value>
+  </data>
+  <data name="Settings.Sections" xml:space="preserve">
+    <value>Bagian pengaturan</value>
+  </data>
+  <data name="Settings.Section.Categories" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="Settings.Section.Security" xml:space="preserve">
+    <value>Keamanan</value>
+  </data>
+  <data name="Settings.Section.Data" xml:space="preserve">
+    <value>Pengelolaan data</value>
+  </data>
+  <data name="Settings.Regional.Number" xml:space="preserve">
+    <value>Format angka</value>
+  </data>
+  <data name="Settings.Regional.Number.Hint" xml:space="preserve">
+    <value>Cara pengelompokan jumlah dan pemisah desimal yang digunakan.</value>
+  </data>
+  <data name="Settings.Regional.Date" xml:space="preserve">
+    <value>Format tanggal</value>
+  </data>
+  <data name="Settings.Regional.Preview" xml:space="preserve">
+    <value>Pratinjau</value>
+  </data>
+  <data name="Settings.Regional.Currency" xml:space="preserve">
+    <value>Mata uang dasar</value>
+  </data>
+  <data name="Settings.Regional.Currency.Locked" xml:space="preserve">
+    <value>Mata uang dasar tidak dapat diubah setelah ada akun, karena semua jumlah disimpan dalam mata uang tersebut. Versi 1 menggunakan satu mata uang untuk seluruh aplikasi.</value>
+  </data>
+  <data name="Settings.Categories.Intro" xml:space="preserve">
+    <value>Kategori mengelompokkan pemasukan dan pengeluaran. Kategori yang dinonaktifkan tetap ada pada transaksi lama tetapi tidak dapat dipilih lagi.</value>
+  </data>
+  <data name="Settings.Categories.ShowInactive" xml:space="preserve">
+    <value>Tampilkan kategori nonaktif</value>
+  </data>
+  <data name="Settings.Categories.Expense" xml:space="preserve">
+    <value>Kategori pengeluaran</value>
+  </data>
+  <data name="Settings.Categories.Income" xml:space="preserve">
+    <value>Kategori pemasukan</value>
+  </data>
+  <data name="Settings.Categories.AddExpense" xml:space="preserve">
+    <value>Tambah kategori pengeluaran</value>
+  </data>
+  <data name="Settings.Categories.AddIncome" xml:space="preserve">
+    <value>Tambah kategori pemasukan</value>
+  </data>
+  <data name="Settings.Categories.Edit" xml:space="preserve">
+    <value>Ubah kategori</value>
+  </data>
+  <data name="Settings.Categories.Deactivate" xml:space="preserve">
+    <value>Nonaktifkan / aktifkan kembali</value>
+  </data>
+  <data name="Settings.Categories.Deactivate.Title" xml:space="preserve">
+    <value>Nonaktifkan kategori?</value>
+  </data>
+  <data name="Settings.Categories.Deactivate.Body" xml:space="preserve">
+    <value>"{0}" tidak akan ditawarkan lagi untuk transaksi, anggaran, atau tagihan baru. Catatan yang ada tetap menggunakannya, dan Anda dapat mengaktifkannya kembali kapan saja.</value>
+  </data>
+  <data name="Settings.Categories.Inactive" xml:space="preserve">
+    <value>Nonaktif</value>
+  </data>
+  <data name="Settings.Categories.Saved" xml:space="preserve">
+    <value>Kategori disimpan</value>
+  </data>
+  <data name="Settings.Categories.Name" xml:space="preserve">
+    <value>Nama</value>
+  </data>
+  <data name="Settings.Categories.BuiltInHint" xml:space="preserve">
+    <value>Kategori bawaan: biarkan namanya agar diterjemahkan otomatis, atau ketik nama Anda sendiri.</value>
+  </data>
+  <data name="Validation.FeeCategoryRequired" xml:space="preserve">
+    <value>Biaya transfer dicatat dalam kategori ini, jadi kategori ini harus tetap aktif.</value>
+  </data>
+  <data name="Settings.Notifications.Backup" xml:space="preserve">
+    <value>Pengingat pencadangan</value>
+  </data>
+  <data name="Settings.Notifications.Backup.When" xml:space="preserve">
+    <value>Ingatkan saya setelah</value>
+  </data>
+  <data name="Settings.Notifications.Backup.Days" xml:space="preserve">
+    <value>{0} hari tanpa cadangan</value>
+  </data>
+  <data name="Settings.Notifications.Backup.Hint" xml:space="preserve">
+    <value>Pencadangan otomatis juga dihitung, jadi dengan jadwal pencadangan Anda jarang akan melihat pengingat ini.</value>
+  </data>
+  <data name="Reminder.Backup.Title" xml:space="preserve">
+    <value>Saatnya mencadangkan</value>
+  </data>
+  <data name="Reminder.Backup.Never" xml:space="preserve">
+    <value>Anda belum pernah mencadangkan data. Buka Pengaturan → Pengelolaan data.</value>
+  </data>
+  <data name="Reminder.Backup.Days" xml:space="preserve">
+    <value>Cadangan terakhir Anda {0} hari yang lalu. Buka Pengaturan → Pengelolaan data.</value>
+  </data>
+  <data name="Settings.Security.Pin" xml:space="preserve">
+    <value>PIN aplikasi</value>
+  </data>
+  <data name="Settings.Security.Pin.Hint" xml:space="preserve">
+    <value>Astra Finance meminta PIN setiap kali dimulai dan saat Anda menguncinya.</value>
+  </data>
+  <data name="Settings.Security.ChangePin" xml:space="preserve">
+    <value>Ubah PIN</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Confirm" xml:space="preserve">
+    <value>Ubah PIN</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Body" xml:space="preserve">
+    <value>Masukkan PIN saat ini, lalu PIN baru (4 sampai 8 angka) dua kali. PIN saat ini yang salah dihitung sebagai percobaan gagal.</value>
+  </data>
+  <data name="Settings.Security.CurrentPin" xml:space="preserve">
+    <value>PIN saat ini</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Wrong" xml:space="preserve">
+    <value>PIN salah. Tersisa {0} percobaan sebelum jeda.</value>
+  </data>
+  <data name="Settings.Security.ChangePin.Cooldown" xml:space="preserve">
+    <value>Terlalu banyak PIN salah. Coba lagi setelah pukul {0}.</value>
+  </data>
+  <data name="Settings.Security.PinChanged" xml:space="preserve">
+    <value>PIN diubah</value>
+  </data>
+  <data name="Settings.Security.LockNow" xml:space="preserve">
+    <value>Kunci sekarang</value>
+  </data>
+  <data name="Settings.Security.Cooldown" xml:space="preserve">
+    <value>Jeda setelah PIN salah</value>
+  </data>
+  <data name="Settings.Security.Cooldown.Summary" xml:space="preserve">
+    <value>Setelah {0} PIN salah, pengisian dijeda selama {1}; setiap PIN salah berikutnya menggandakan jeda, hingga {2}.</value>
+  </data>
+  <data name="Settings.Security.Attempts" xml:space="preserve">
+    <value>PIN salah yang diizinkan</value>
+  </data>
+  <data name="Settings.Security.Attempts.Option" xml:space="preserve">
+    <value>{0} percobaan</value>
+  </data>
+  <data name="Settings.Security.FirstCooldown" xml:space="preserve">
+    <value>Jeda pertama</value>
+  </data>
+  <data name="Settings.Security.Minutes" xml:space="preserve">
+    <value>{0} menit</value>
+  </data>
+  <data name="Settings.Security.Seconds" xml:space="preserve">
+    <value>{0} detik</value>
+  </data>
+  <data name="Settings.Security.Limitation" xml:space="preserve">
+    <value>PIN mengontrol akses ke aplikasi; PIN tidak mengenkripsi data Anda. File data Anda dilindungi oleh akun Windows Anda, jadi jaga keamanan login Windows dan simpan cadangan di tempat yang aman.</value>
+  </data>
+  <data name="Validation.AttemptSettingsOutOfRange" xml:space="preserve">
+    <value>Pilih 3 sampai 10 percobaan dan jeda 30 detik sampai 15 menit.</value>
+  </data>
+  <data name="Settings.Data.Backups" xml:space="preserve">
+    <value>Pencadangan</value>
+  </data>
+  <data name="Settings.Data.LastBackup" xml:space="preserve">
+    <value>Cadangan terakhir: {0}</value>
+  </data>
+  <data name="Settings.Data.NoBackupYet" xml:space="preserve">
+    <value>Belum ada cadangan</value>
+  </data>
+  <data name="Settings.Data.BackUpNow" xml:space="preserve">
+    <value>Cadangkan sekarang</value>
+  </data>
+  <data name="Settings.Data.Folder" xml:space="preserve">
+    <value>Folder cadangan</value>
+  </data>
+  <data name="Settings.Data.ChangeFolder" xml:space="preserve">
+    <value>Ubah…</value>
+  </data>
+  <data name="Settings.Data.OpenFolder" xml:space="preserve">
+    <value>Buka</value>
+  </data>
+  <data name="Settings.Data.ChooseFolder" xml:space="preserve">
+    <value>Pilih folder cadangan</value>
+  </data>
+  <data name="Settings.Data.Schedule" xml:space="preserve">
+    <value>Pencadangan otomatis</value>
+  </data>
+  <data name="Settings.Data.Retention" xml:space="preserve">
+    <value>Cadangan otomatis yang disimpan</value>
+  </data>
+  <data name="Settings.Data.Retention.Hint" xml:space="preserve">
+    <value>Cadangan otomatis yang lebih lama dihapus. Cadangan manual dan salinan pengaman tidak pernah dihapus otomatis.</value>
+  </data>
+  <data name="Settings.Data.History" xml:space="preserve">
+    <value>Riwayat cadangan</value>
+  </data>
+  <data name="Settings.Data.History.Empty" xml:space="preserve">
+    <value>Tidak ada cadangan di folder cadangan.</value>
+  </data>
+  <data name="Settings.Data.RestoreFromFile" xml:space="preserve">
+    <value>Pulihkan dari file…</value>
+  </data>
+  <data name="Settings.Data.Restore" xml:space="preserve">
+    <value>Pulihkan</value>
+  </data>
+  <data name="Settings.Data.Restore.Hint" xml:space="preserve">
+    <value>Pemulihan mengganti semua data saat ini dengan cadangan. Salinan pengaman data saat ini selalu dibuat terlebih dahulu.</value>
+  </data>
+  <data name="Settings.Data.Restore.Pick" xml:space="preserve">
+    <value>Pilih cadangan untuk dipulihkan</value>
+  </data>
+  <data name="Settings.Data.Restore.Filter" xml:space="preserve">
+    <value>Cadangan Astra Finance (*.db)|*.db</value>
+  </data>
+  <data name="Settings.Data.Restore.Title" xml:space="preserve">
+    <value>Pulihkan cadangan?</value>
+  </data>
+  <data name="Settings.Data.Restore.Body" xml:space="preserve">
+    <value>Pulihkan "{0}" ({1} akun, {2} transaksi, transaksi terakhir {3})? Semua data saat ini akan diganti. Salinan pengaman data saat ini disimpan terlebih dahulu. Setelah pemulihan, aplikasi terkunci dan PIN yang tersimpan di cadangan berlaku.</value>
+  </data>
+  <data name="Settings.Data.Restore.Confirm" xml:space="preserve">
+    <value>Pulihkan</value>
+  </data>
+  <data name="Settings.Data.ImportExport" xml:space="preserve">
+    <value>Impor dan ekspor</value>
+  </data>
+  <data name="Settings.Data.Export" xml:space="preserve">
+    <value>Ekspor semua data</value>
+  </data>
+  <data name="Settings.Data.Export.Hint" xml:space="preserve">
+    <value>Satu file JSON yang dapat dibaca dengan semua akun, kategori, transaksi (termasuk yang dihapus), anggaran, target, dan tagihan. PIN Anda tidak pernah disertakan.</value>
+  </data>
+  <data name="Settings.Data.Export.Button" xml:space="preserve">
+    <value>Ekspor ke JSON…</value>
+  </data>
+  <data name="Settings.Data.Export.Title" xml:space="preserve">
+    <value>Ekspor semua data</value>
+  </data>
+  <data name="Settings.Data.Export.Filter" xml:space="preserve">
+    <value>File JSON (*.json)|*.json</value>
+  </data>
+  <data name="Settings.Data.Export.Done" xml:space="preserve">
+    <value>{0} catatan diekspor</value>
+  </data>
+  <data name="Settings.Data.Import" xml:space="preserve">
+    <value>Impor transaksi</value>
+  </data>
+  <data name="Settings.Data.Import.Hint" xml:space="preserve">
+    <value>Tambahkan pemasukan dan pengeluaran dari file CSV, misalnya mutasi rekening atau ekspor transaksi Astra. Anda meninjau semuanya sebelum disimpan.</value>
+  </data>
+  <data name="Settings.Data.Import.Button" xml:space="preserve">
+    <value>Impor dari CSV…</value>
+  </data>
+  <data name="Settings.Data.Import.Pick" xml:space="preserve">
+    <value>Pilih file CSV</value>
+  </data>
+  <data name="Settings.Data.Import.Title" xml:space="preserve">
+    <value>Impor transaksi</value>
+  </data>
+  <data name="Settings.Data.Import.ReadFailed" xml:space="preserve">
+    <value>File tidak dapat dibaca. Pastikan file berformat CSV dan tidak sedang dibuka di program lain.</value>
+  </data>
+  <data name="Settings.Data.Import.Empty" xml:space="preserve">
+    <value>File tidak memiliki baris data, atau tidak memiliki baris judul.</value>
+  </data>
+  <data name="Settings.Data.Import.Done" xml:space="preserve">
+    <value>{0} transaksi diimpor</value>
+  </data>
+  <data name="Settings.Data.Import.Intro" xml:space="preserve">
+    <value>Periksa cara kolom dibaca, lalu tinjau baris-barisnya. File:</value>
+  </data>
+  <data name="Settings.Data.Import.Account" xml:space="preserve">
+    <value>Impor ke akun</value>
+  </data>
+  <data name="Settings.Data.Import.Columns" xml:space="preserve">
+    <value>Kolom</value>
+  </data>
+  <data name="Settings.Data.Import.DateFormat" xml:space="preserve">
+    <value>Tanggal di file</value>
+  </data>
+  <data name="Settings.Data.Import.NumberFormat" xml:space="preserve">
+    <value>Jumlah di file</value>
+  </data>
+  <data name="Settings.Data.Import.SignHint" xml:space="preserve">
+    <value>Tanpa kolom jenis, jumlah negatif adalah pengeluaran dan jumlah positif adalah pemasukan. Transfer tidak pernah diimpor.</value>
+  </data>
+  <data name="Settings.Data.Import.IncludeDuplicates" xml:space="preserve">
+    <value>Impor juga kemungkinan duplikat</value>
+  </data>
+  <data name="Settings.Data.Import.Number.Plain" xml:space="preserve">
+    <value>Angka biasa (1500000 atau 12.34)</value>
+  </data>
+  <data name="Settings.Data.Import.Number.Regional" xml:space="preserve">
+    <value>Format angka aplikasi ({0})</value>
+  </data>
+  <data name="Settings.Data.Import.NoColumn" xml:space="preserve">
+    <value>(tidak ada)</value>
+  </data>
+  <data name="Settings.Data.Import.Column" xml:space="preserve">
+    <value>Kolom {0}</value>
+  </data>
+  <data name="Settings.Data.Import.Confirm" xml:space="preserve">
+    <value>Impor {0}</value>
+  </data>
+  <data name="Settings.Data.Import.Summary" xml:space="preserve">
+    <value>{0} siap · {1} kemungkinan duplikat · {2} dilewati · {3} bermasalah</value>
+  </data>
+  <data name="Settings.Data.Import.More" xml:space="preserve">
+    <value>…dan {0} baris lainnya (semuanya diimpor, hanya baris pertama yang ditampilkan).</value>
+  </data>
+  <data name="Settings.Data.Import.Nothing" xml:space="preserve">
+    <value>Tidak ada yang dapat diimpor.</value>
+  </data>
+  <data name="Settings.Data.Import.Failed" xml:space="preserve">
+    <value>Tidak ada yang diimpor: baris {0} tidak dapat disimpan ({1}).</value>
+  </data>
+  <data name="ImportStatus.Ready" xml:space="preserve">
+    <value>Siap</value>
+  </data>
+  <data name="ImportStatus.Duplicate" xml:space="preserve">
+    <value>Duplikat?</value>
+  </data>
+  <data name="ImportStatus.Skipped" xml:space="preserve">
+    <value>Dilewati</value>
+  </data>
+  <data name="ImportStatus.Error" xml:space="preserve">
+    <value>Bermasalah</value>
+  </data>
+  <data name="ImportMessage.BadDate" xml:space="preserve">
+    <value>Tanggal tidak dapat dibaca; periksa format tanggal.</value>
+  </data>
+  <data name="ImportMessage.BadAmount" xml:space="preserve">
+    <value>Jumlah tidak dapat dibaca; periksa format angka.</value>
+  </data>
+  <data name="ImportMessage.ZeroAmount" xml:space="preserve">
+    <value>Jumlahnya nol.</value>
+  </data>
+  <data name="ImportMessage.Transfer" xml:space="preserve">
+    <value>Transfer tidak diimpor.</value>
+  </data>
+  <data name="ImportMessage.OtherAccount" xml:space="preserve">
+    <value>Milik akun lain.</value>
+  </data>
+  <data name="ImportMessage.EmptyRow" xml:space="preserve">
+    <value>Baris kosong.</value>
+  </data>
+  <data name="ImportMessage.ExistsInAccount" xml:space="preserve">
+    <value>Sudah ada di akun ini (tanggal, jumlah, dan deskripsi sama).</value>
+  </data>
+  <data name="ImportMessage.RepeatedInFile" xml:space="preserve">
+    <value>Sama dengan baris sebelumnya di file ini.</value>
+  </data>
+  <data name="ImportMessage.CategoryFallback" xml:space="preserve">
+    <value>Kategori tidak ditemukan; "Lainnya" digunakan.</value>
+  </data>
+  <data name="ImportMessage.TooLong" xml:space="preserve">
+    <value>Deskripsi atau catatan terlalu panjang.</value>
+  </data>
+  <data name="BackupKind.Manual" xml:space="preserve">
+    <value>Cadangan manual</value>
+  </data>
+  <data name="BackupKind.Automatic" xml:space="preserve">
+    <value>Cadangan otomatis</value>
+  </data>
+  <data name="BackupKind.PreMigration" xml:space="preserve">
+    <value>Salinan pengaman sebelum pembaruan</value>
+  </data>
+  <data name="BackupKind.PreRestore" xml:space="preserve">
+    <value>Salinan pengaman sebelum pemulihan</value>
+  </data>
+  <data name="BackupKind.External" xml:space="preserve">
+    <value>File cadangan</value>
+  </data>
+  <data name="Restore.Problem.NotFound" xml:space="preserve">
+    <value>File sudah tidak ada.</value>
+  </data>
+  <data name="Restore.Problem.NotADatabase" xml:space="preserve">
+    <value>File ini bukan cadangan Astra Finance.</value>
+  </data>
+  <data name="Restore.Problem.Damaged" xml:space="preserve">
+    <value>Cadangan ini rusak dan tidak dapat dipulihkan. Data Anda saat ini tidak diubah.</value>
+  </data>
+  <data name="Restore.Problem.NotAstra" xml:space="preserve">
+    <value>Basis data ini tidak dibuat oleh Astra Finance.</value>
+  </data>
+  <data name="Restore.Problem.NewerVersion" xml:space="preserve">
+    <value>Cadangan ini dibuat oleh versi Astra Finance yang lebih baru. Perbarui aplikasi terlebih dahulu.</value>
+  </data>
+  <data name="Restore.Problem.SameFile" xml:space="preserve">
+    <value>Ini adalah file data yang sedang digunakan, bukan cadangan.</value>
+  </data>
+  <data name="Restore.Problem.Failed" xml:space="preserve">
+    <value>Cadangan tidak dapat dipulihkan. Data Anda saat ini tidak diubah.</value>
+  </data>
+  <data name="Restore.Busy.Title" xml:space="preserve">
+    <value>Memulihkan cadangan…</value>
+  </data>
+  <data name="Restore.Busy.Body" xml:space="preserve">
+    <value>Mohon tunggu. Data Anda saat ini disimpan terlebih dahulu, lalu diganti dengan cadangan.</value>
+  </data>
+  <data name="Restore.Done.Title" xml:space="preserve">
+    <value>Cadangan dipulihkan</value>
+  </data>
+  <data name="Restore.Done.Body" xml:space="preserve">
+    <value>Salinan pengaman data sebelumnya disimpan: {0}</value>
+  </data>
+  <data name="Restore.Failed.Title" xml:space="preserve">
+    <value>Pemulihan gagal</value>
   </data>
 </root>

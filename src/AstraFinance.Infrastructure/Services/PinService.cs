@@ -11,7 +11,7 @@ namespace AstraFinance.Infrastructure.Services;
 /// persisted, so restarting the app does not reset the cooldown. Hashing runs on the thread pool
 /// to keep the UI responsive.
 /// </summary>
-public sealed class PinService : IPinService, IDisposable
+public sealed class PinService : IPinService, IPinSecuritySettings, IDisposable
 {
     private readonly ISettingsStore _settings;
     private readonly IClock _clock;
@@ -55,6 +55,7 @@ public sealed class PinService : IPinService, IDisposable
                 return new PinCheckResult(PinCheckOutcome.NotConfigured, 0, null);
             }
 
+            var policy = await GetPolicyAsync(cancellationToken).ConfigureAwait(false);
             var failures = await GetFailuresAsync(cancellationToken).ConfigureAwait(false);
             var cooldownEnd = await GetCooldownEndAsync(cancellationToken).ConfigureAwait(false);
             if (cooldownEnd is not null)
@@ -66,12 +67,12 @@ public sealed class PinService : IPinService, IDisposable
             if (ok)
             {
                 await ResetFailuresAsync(cancellationToken).ConfigureAwait(false);
-                return new PinCheckResult(PinCheckOutcome.Success, _policy.FreeAttempts, null);
+                return new PinCheckResult(PinCheckOutcome.Success, policy.FreeAttempts, null);
             }
 
             failures++;
             await _settings.SetAsync(Phase3SettingKeys.PinFailedAttempts, failures.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
-            var cooldown = _policy.CooldownAfter(failures);
+            var cooldown = policy.CooldownAfter(failures);
             DateTimeOffset? retryAt = null;
             if (cooldown > TimeSpan.Zero)
             {
@@ -79,7 +80,7 @@ public sealed class PinService : IPinService, IDisposable
                 await _settings.SetAsync(Phase3SettingKeys.PinCooldownUntil, retryAt.Value.ToString("O", CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
             }
 
-            return new PinCheckResult(PinCheckOutcome.Incorrect, _policy.RemainingFreeAttempts(failures), retryAt);
+            return new PinCheckResult(PinCheckOutcome.Incorrect, policy.RemainingFreeAttempts(failures), retryAt);
         }
         finally
         {
@@ -109,6 +110,47 @@ public sealed class PinService : IPinService, IDisposable
         }
 
         return check;
+    }
+
+    /// <summary>
+    /// The cooldown settings chosen in Settings → Security; without a saved choice, the policy this service was
+    /// created with (the app default, or a fast policy in tests).
+    /// </summary>
+    public async Task<PinAttemptSettings> GetAttemptSettingsAsync(CancellationToken cancellationToken = default)
+    {
+        var attempts = await _settings.GetAsync(SettingKeys.SecurityFreeAttempts, cancellationToken).ConfigureAwait(false);
+        var seconds = await _settings.GetAsync(SettingKeys.SecurityBaseCooldownSeconds, cancellationToken).ConfigureAwait(false);
+        if (int.TryParse(attempts, NumberStyles.None, CultureInfo.InvariantCulture, out var a)
+            && int.TryParse(seconds, NumberStyles.None, CultureInfo.InvariantCulture, out var s))
+        {
+            var saved = new PinAttemptSettings(a, TimeSpan.FromSeconds(s));
+            if (saved.IsValid)
+            {
+                return saved;
+            }
+        }
+
+        return new PinAttemptSettings(_policy.FreeAttempts, _policy.BaseCooldown);
+    }
+
+    public async Task SaveAttemptSettingsAsync(PinAttemptSettings settings, CancellationToken cancellationToken = default)
+    {
+        ArgumentNullException.ThrowIfNull(settings);
+        if (!settings.IsValid)
+        {
+            throw new FinanceValidationException("AttemptSettings", ValidationCodes.AttemptSettingsOutOfRange);
+        }
+
+        await _settings.SetAsync(SettingKeys.SecurityFreeAttempts, settings.FreeAttempts.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+        await _settings.SetAsync(SettingKeys.SecurityBaseCooldownSeconds, ((int)settings.BaseCooldown.TotalSeconds).ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
+    }
+
+    private async Task<PinAttemptPolicy> GetPolicyAsync(CancellationToken ct)
+    {
+        var settings = await GetAttemptSettingsAsync(ct).ConfigureAwait(false);
+        return settings.FreeAttempts == _policy.FreeAttempts && settings.BaseCooldown == _policy.BaseCooldown
+            ? _policy
+            : new PinAttemptPolicy(settings.FreeAttempts, settings.BaseCooldown, settings.MaxCooldown);
     }
 
     private async Task<int> GetFailuresAsync(CancellationToken ct) =>

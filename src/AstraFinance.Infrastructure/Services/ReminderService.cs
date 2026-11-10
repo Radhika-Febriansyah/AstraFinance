@@ -24,7 +24,10 @@ public sealed class NotificationSettingsService : INotificationSettingsService
             await GetBoolAsync(SettingKeys.BillRemindersEnabled, d.BillReminders, cancellationToken).ConfigureAwait(false),
             int.TryParse(days, NumberStyles.None, CultureInfo.InvariantCulture, out var n) && n <= NotificationSettings.MaxReminderDays ? n : d.BillReminderDays,
             await GetBoolAsync(SettingKeys.BudgetWarningsEnabled, d.BudgetWarnings, cancellationToken).ConfigureAwait(false),
-            await GetBoolAsync(SettingKeys.WindowsNotificationsEnabled, d.WindowsNotifications, cancellationToken).ConfigureAwait(false));
+            await GetBoolAsync(SettingKeys.WindowsNotificationsEnabled, d.WindowsNotifications, cancellationToken).ConfigureAwait(false),
+            await GetBoolAsync(SettingKeys.BackupRemindersEnabled, d.BackupReminders, cancellationToken).ConfigureAwait(false),
+            int.TryParse(await _settings.GetAsync(SettingKeys.BackupReminderDays, cancellationToken).ConfigureAwait(false), NumberStyles.None, CultureInfo.InvariantCulture, out var b)
+                && NotificationSettings.BackupReminderChoices.Contains(b) ? b : d.BackupReminderDays);
     }
 
     public async Task SaveAsync(NotificationSettings settings, CancellationToken cancellationToken = default)
@@ -40,6 +43,13 @@ public sealed class NotificationSettingsService : INotificationSettingsService
         await _settings.SetAsync(SettingKeys.BillReminderDays, settings.BillReminderDays.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
         await SetBoolAsync(SettingKeys.BudgetWarningsEnabled, settings.BudgetWarnings, cancellationToken).ConfigureAwait(false);
         await SetBoolAsync(SettingKeys.WindowsNotificationsEnabled, settings.WindowsNotifications, cancellationToken).ConfigureAwait(false);
+        if (!NotificationSettings.BackupReminderChoices.Contains(settings.BackupReminderDays))
+        {
+            throw new FinanceValidationException("BackupReminderDays", ValidationCodes.ReminderDaysOutOfRange);
+        }
+
+        await SetBoolAsync(SettingKeys.BackupRemindersEnabled, settings.BackupReminders, cancellationToken).ConfigureAwait(false);
+        await _settings.SetAsync(SettingKeys.BackupReminderDays, settings.BackupReminderDays.ToString(CultureInfo.InvariantCulture), cancellationToken).ConfigureAwait(false);
     }
 
     private async Task<bool> GetBoolAsync(string key, bool fallback, CancellationToken ct)
@@ -64,12 +74,18 @@ public sealed class ReminderService : IReminderService
     private readonly IBudgetService _budgets;
     private readonly ISettingsStore _settings;
 
-    public ReminderService(INotificationSettingsService notificationSettings, IBillService bills, IBudgetService budgets, ISettingsStore settings)
+    /// <summary>When the app first checked for backup reminders (so a new user isn't reminded on day one).</summary>
+    public const string BackupFirstSeenKey = "Reminders.Backup.FirstSeen";
+
+    private readonly IBackupService? _backups;
+
+    public ReminderService(INotificationSettingsService notificationSettings, IBillService bills, IBudgetService budgets, ISettingsStore settings, IBackupService? backups = null)
     {
         _notificationSettings = notificationSettings;
         _bills = bills;
         _budgets = budgets;
         _settings = settings;
+        _backups = backups;
     }
 
     public async Task<IReadOnlyList<Reminder>> CollectDueAsync(DateOnly today, CancellationToken cancellationToken = default)
@@ -142,6 +158,49 @@ public sealed class ReminderService : IReminderService
             }
         }
 
+        if (settings.BackupReminders && _backups is not null && await BackupReminderAsync(today, settings.BackupReminderDays, cancellationToken).ConfigureAwait(false) is { } backup)
+        {
+            reminders.Add(backup);
+        }
+
         return reminders;
+    }
+
+    /// <summary>
+    /// A backup reminder when no backup was made for <paramref name="days"/> days (counted from the first check
+    /// when there has never been one), repeated at most every <paramref name="days"/> days.
+    /// </summary>
+    private async Task<Reminder?> BackupReminderAsync(DateOnly today, int days, CancellationToken ct)
+    {
+        var last = await _backups!.GetLastBackupAsync(ct).ConfigureAwait(false);
+        DateOnly since;
+        if (last is { } l)
+        {
+            since = DateOnly.FromDateTime(l.LocalDateTime);
+        }
+        else
+        {
+            var firstSeen = await _settings.GetAsync(BackupFirstSeenKey, ct).ConfigureAwait(false);
+            if (!DateOnly.TryParseExact(firstSeen, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out since))
+            {
+                await _settings.SetAsync(BackupFirstSeenKey, today.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), ct).ConfigureAwait(false);
+                return null;
+            }
+        }
+
+        if (today.DayNumber - since.DayNumber < days)
+        {
+            return null;
+        }
+
+        var lastReminded = await _settings.GetAsync(SettingKeys.BackupReminderSent, ct).ConfigureAwait(false);
+        if (DateOnly.TryParseExact(lastReminded, "yyyy-MM-dd", CultureInfo.InvariantCulture, DateTimeStyles.None, out var reminded)
+            && reminded >= since && today.DayNumber - reminded.DayNumber < days)
+        {
+            return null;
+        }
+
+        await _settings.SetAsync(SettingKeys.BackupReminderSent, today.ToString("yyyy-MM-dd", CultureInfo.InvariantCulture), ct).ConfigureAwait(false);
+        return new Reminder(ReminderKind.BackupOverdue, Guid.Empty, string.Empty, 0, since, last is null ? -1 : today.DayNumber - since.DayNumber);
     }
 }

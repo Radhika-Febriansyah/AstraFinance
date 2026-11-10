@@ -29,6 +29,8 @@ public sealed partial class ShellTests : IAsyncLifetime, IDisposable
 
     internal FakeWindowsNotifier WindowsNotifier { get; } = new();
 
+    internal FakeFileOpenPicker OpenPicker { get; } = new();
+
     public ShellTests()
     {
         var collection = new ServiceCollection();
@@ -42,6 +44,7 @@ public sealed partial class ShellTests : IAsyncLifetime, IDisposable
         collection.AddSingleton(new PinHasher(1_000)); // fast hashing for tests only
         collection.AddSingleton<IFolderPicker>(new FakeFolderPicker());
         collection.AddSingleton<IFileSavePicker>(SavePicker);
+        collection.AddSingleton<IFileOpenPicker>(OpenPicker);
         collection.AddSingleton<IWindowsNotifier>(WindowsNotifier); // never show real Windows notifications from tests
         _services = collection.BuildServiceProvider(new ServiceProviderOptions { ValidateOnBuild = true, ValidateScopes = true });
     }

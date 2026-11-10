@@ -97,14 +97,19 @@ public interface IBillService
 /// <param name="Enabled">Master switch for reminders and warnings.</param>
 /// <param name="BillReminderDays">Days before a due date at which a bill is "due soon" and a reminder is shown (0–14).</param>
 /// <param name="WindowsNotifications">Also show reminders as Windows notifications (in addition to the in-app list).</param>
+/// <param name="BackupReminders">Remind when no backup was made for <paramref name="BackupReminderDays"/> days (Phase 9).</param>
 public sealed record NotificationSettings(
     bool Enabled,
     bool BillReminders,
     int BillReminderDays,
     bool BudgetWarnings,
-    bool WindowsNotifications)
+    bool WindowsNotifications,
+    bool BackupReminders = true,
+    int BackupReminderDays = 14)
 {
     public const int MaxReminderDays = 14;
+
+    public static IReadOnlyList<int> BackupReminderChoices { get; } = [7, 14, 30];
 
     public static NotificationSettings Default { get; } = new(true, true, 3, true, true);
 }
@@ -123,6 +128,8 @@ public enum ReminderKind
     BillOverdue = 2,
     BudgetWarning = 3,
     BudgetExceeded = 4,
+    /// <summary>No backup for the configured number of days. <see cref="Reminder.Percent"/> holds the days since the last backup (-1 = never).</summary>
+    BackupOverdue = 5,
 }
 
 /// <summary>A reminder that should be shown now. <paramref name="Date"/> is the due date for bills, the month for budgets.</summary>

@@ -35,6 +35,9 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
     private readonly IBackupService _backup;
     private readonly INotificationService _notificationService;
     private readonly ReminderScheduler _reminders;
+    private readonly IRestoreService _restore;
+    private readonly IRegionalFormatService _regional;
+    private readonly DataChangeNotifier _changes;
     private readonly Func<OnboardingViewModel> _onboardingFactory;
     private readonly Func<LockViewModel> _lockFactory;
     private readonly Func<AstraFinance.App.ViewModels.Dialogs.TransactionFormViewModel> _transactionFormFactory;
@@ -52,6 +55,10 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
         IBackupService backup,
         INotificationService notificationService,
         ReminderScheduler reminders,
+        AppSession session,
+        IRestoreService restore,
+        IRegionalFormatService regional,
+        DataChangeNotifier changes,
         Func<OnboardingViewModel> onboardingFactory,
         Func<LockViewModel> lockFactory,
         Func<AstraFinance.App.ViewModels.Dialogs.TransactionFormViewModel> transactionFormFactory)
@@ -62,6 +69,11 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
         _backup = backup;
         _notificationService = notificationService;
         _reminders = reminders;
+        _restore = restore;
+        _regional = regional;
+        _changes = changes;
+        session.LockHandler = () => LockCommand.CanExecute(null) ? LockAsync() : Task.CompletedTask;
+        session.RestoreHandler = RestoreAsync;
         _onboardingFactory = onboardingFactory;
         _lockFactory = lockFactory;
         _navigation = navigation;
@@ -174,6 +186,40 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
     }
 
     private bool CanUseShell() => !IsGated;
+
+    /// <summary>
+    /// Restores a backup. The whole window is blocked and background work (reminders) stopped while the data is
+    /// replaced, so nothing else touches the database. Afterwards everything is reopened from the restored data and
+    /// the app is locked: the restored data's own PIN applies.
+    /// </summary>
+    public async Task<bool> RestoreAsync(string path)
+    {
+        Search.Clear();
+        Notifications.IsOpen = false;
+        IsOverlayOpen = false;
+        _reminders.Stop();
+        SetGate(new BusyGateViewModel(_localization.GetString("Restore.Busy.Title"), _localization.GetString("Restore.Busy.Body")));
+        try
+        {
+            var result = await _restore.RestoreAsync(path).ConfigureAwait(true);
+            await _regional.LoadAsync().ConfigureAwait(true);
+            _changes.Notify(DataChangeKind.Accounts);
+            _notificationService.Notify(NotificationKind.Success, _localization.GetString("Restore.Done.Title"),
+                _localization.Format("Restore.Done.Body", result.SafetyBackupPath));
+            await InitializeAsync().ConfigureAwait(true); // lock with the restored PIN (or onboarding), then the Dashboard
+            return true;
+        }
+        catch (Exception ex) when (ex is AstraFinance.Infrastructure.Backup.InvalidBackupException or IOException or UnauthorizedAccessException
+                                       or InvalidDataException or Microsoft.Data.Sqlite.SqliteException)
+        {
+            var code = ex is AstraFinance.Infrastructure.Backup.InvalidBackupException invalid ? invalid.Code : "Failed";
+            SetGate(null);
+            _ = _reminders.StartAsync();
+            await Dialogs.AlertAsync(NotificationKind.Error, _localization.GetString("Restore.Failed.Title"),
+                _localization.GetString($"Restore.Problem.{code}")).ConfigureAwait(true);
+            return false;
+        }
+    }
 
     [RelayCommand(CanExecute = nameof(CanUseShell))]
     public async Task LockAsync()
