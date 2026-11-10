@@ -31,6 +31,24 @@ All data is stored in `%LOCALAPPDATA%\AstraFinance` (database, settings, backups
 - Reinstalling (or installing a newer version) picks up the existing data. Before a newer version changes the database, it saves a safety copy in the Backups folder.
 - For silent/IT uninstalls: data is kept unless `/DELETEUSERDATA` is passed.
 
+## Release verification (2026-11-11)
+
+Verified on Windows 11 (125 % scaling) with the installer built from `master` at commit `a735ed6`:
+
+| Check | Result |
+|---|---|
+| Release build (`installer/build-release.ps1`) | 321/321 tests passed (Release); self-contained publish; installer built — **AstraFinance-Setup-1.0.0.exe**, 56.8 MB, SHA-256 `20F193E6F5A33B4A9FBA4B66B1B573152AC1FC97F6B8D4B0D4001C1C813E978F` (the checksum is specific to this build) |
+| Dependency audit | No vulnerable packages |
+| Clean installation | Per-user, no administrator rights; program in `%LOCALAPPDATA%\Programs\Astra Finance`; Apps entry "Astra Finance 1.0.0 — Aprotoos" |
+| Start Menu shortcut | Present, starts the installed app (window in ≈2.6 s), carries the notification ID `Aprotoos.AstraFinance` |
+| Desktop shortcut (optional) | Present when chosen; starts the app; a second launch focuses the open window (one process) |
+| First run | Setup wizard on an empty data folder → Dashboard with the opening balance |
+| Main features (installed app) | Accounts, Quick Add, budget, savings goal allocation, bill payment, Analytics, PDF report export, manual + automatic backup, global search, PIN lock on restart — all figures consistent (total balance Rp4.930.000, month expenses Rp320.000) |
+| Uninstall, default answers | Program, shortcuts and Apps entry removed; database, settings, backups and logs **unchanged byte for byte** |
+| Reinstall after uninstall | Kept data opens with every record intact; integrity check passed |
+| Silent uninstall | Data kept |
+| Logs | No errors or warnings |
+
 ## Known limitations
 
 - **The PIN is access control, not encryption.** The data file is protected by your Windows account; keep your Windows sign-in secure and store backups in a safe place.
@@ -39,6 +57,8 @@ All data is stored in `%LOCALAPPDATA%\AstraFinance` (database, settings, backups
 - Reports use the current budget limits for past months.
 - The installer's own screens are in English (the app itself is in Indonesian and English).
 - Very large CSV imports (over 20 MB) are refused.
+- Transactions entered with Quick Add have no description; reports show an empty description for them (the app's lists show the category name instead).
+- Category shares in reports are rounded down, so they can add up to slightly less than 100 %.
 
 ## Third-party components
 
