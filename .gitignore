@@ -480,3 +480,21 @@ $RECYCLE.BIN/
 
 # Vim temporary swap files
 *.swp
+
+# ---------------------------------------------------------------------------
+# Astra Finance
+# ---------------------------------------------------------------------------
+# "Backup*/" above (Visual Studio upgrade backups) would also hide our source folder.
+!src/**/Backup/
+
+# Local application data must never be committed: SQLite databases (with WAL/journal
+# files; backups are .db files too) and personal settings.
+*.db
+*.db-wal
+*.db-shm
+*.db-journal
+*.sqlite
+*.sqlite3
+*.sqlite-wal
+*.sqlite-shm
+preferences.json
