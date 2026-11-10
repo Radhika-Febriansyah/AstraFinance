@@ -34,6 +34,9 @@ internal sealed class FinanceTestContext : IAsyncDisposable
         NotificationSettings = new NotificationSettingsService(Settings);
         Bills = new BillService(Factory, NotificationSettings, Clock);
         Reminders = new ReminderService(NotificationSettings, Bills, Budgets, Settings);
+        Analytics = new AnalyticsService(Factory);
+        Localization = new AstraFinance.Core.Localization.LocalizationService(AppLanguage.English);
+        Reports = new ReportService(Factory, Budgets, Localization, Regional, Clock);
         Initializer = new DatabaseInitializer(Factory, Paths, Categories, Clock, NullLogger<DatabaseInitializer>.Instance);
     }
 
@@ -68,6 +71,14 @@ internal sealed class FinanceTestContext : IAsyncDisposable
     public BillService Bills { get; }
 
     public ReminderService Reminders { get; }
+
+    public AnalyticsService Analytics { get; }
+
+    public AstraFinance.Core.Localization.LocalizationService Localization { get; }
+
+    public ReportService Reports { get; }
+
+    public AstraFinance.Infrastructure.Export.ReportExporter Exporter { get; } = new();
 
     public DatabaseInitializer Initializer { get; }
 

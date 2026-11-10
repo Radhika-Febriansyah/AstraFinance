@@ -195,15 +195,6 @@
   <data name="Dashboard.Subtitle" xml:space="preserve">
     <value>Berikut ringkasan keuangan Anda.</value>
   </data>
-  <data name="Module.InDevelopment.Title" xml:space="preserve">
-    <value>Belum tersedia</value>
-  </data>
-  <data name="Module.InDevelopment.Body" xml:space="preserve">
-    <value>{0} dijadwalkan pada fase pengembangan {1}. Tidak ada angka yang ditampilkan di sini sampai modul ini bekerja dengan data asli Anda.</value>
-  </data>
-  <data name="Module.InDevelopment.Badge" xml:space="preserve">
-    <value>Fase {0}</value>
-  </data>
   <data name="Settings.Section.General" xml:space="preserve">
     <value>Umum</value>
   </data>
@@ -1619,5 +1610,452 @@
   </data>
   <data name="Settings.Reminders.Days" xml:space="preserve">
     <value>{0} hari sebelumnya</value>
+  </data>
+  <data name="Report.Period" xml:space="preserve">
+    <value>{0} – {1}</value>
+  </data>
+  <data name="Report.Generated" xml:space="preserve">
+    <value>Dibuat {0} pukul {1}</value>
+  </data>
+  <data name="Report.Income.Title" xml:space="preserve">
+    <value>Laporan Pemasukan</value>
+  </data>
+  <data name="Report.Expense.Title" xml:space="preserve">
+    <value>Laporan Pengeluaran</value>
+  </data>
+  <data name="Report.CashFlow.Title" xml:space="preserve">
+    <value>Laporan Arus Kas</value>
+  </data>
+  <data name="Report.AccountBalance.Title" xml:space="preserve">
+    <value>Laporan Saldo Akun</value>
+  </data>
+  <data name="Report.Budget.Title" xml:space="preserve">
+    <value>Laporan Anggaran</value>
+  </data>
+  <data name="Report.SavingsGoals.Title" xml:space="preserve">
+    <value>Laporan Target Tabungan</value>
+  </data>
+  <data name="Report.Income.Total" xml:space="preserve">
+    <value>Total pemasukan</value>
+  </data>
+  <data name="Report.Expense.Total" xml:space="preserve">
+    <value>Total pengeluaran</value>
+  </data>
+  <data name="Report.TransactionCount" xml:space="preserve">
+    <value>Jumlah transaksi</value>
+  </data>
+  <data name="Report.AveragePerTransaction" xml:space="preserve">
+    <value>Rata-rata per transaksi</value>
+  </data>
+  <data name="Report.AveragePerDay" xml:space="preserve">
+    <value>Rata-rata per hari</value>
+  </data>
+  <data name="Report.ByCategory" xml:space="preserve">
+    <value>Per kategori</value>
+  </data>
+  <data name="Report.Transactions" xml:space="preserve">
+    <value>Transaksi</value>
+  </data>
+  <data name="Report.Total" xml:space="preserve">
+    <value>Total</value>
+  </data>
+  <data name="Report.Uncategorized" xml:space="preserve">
+    <value>Tanpa kategori</value>
+  </data>
+  <data name="Report.FeeDescription" xml:space="preserve">
+    <value>{0} (biaya transfer)</value>
+  </data>
+  <data name="Report.Income.Empty" xml:space="preserve">
+    <value>Tidak ada pemasukan pada periode ini.</value>
+  </data>
+  <data name="Report.Expense.Empty" xml:space="preserve">
+    <value>Tidak ada pengeluaran pada periode ini.</value>
+  </data>
+  <data name="Report.Income.Note" xml:space="preserve">
+    <value>Mencakup semua transaksi pemasukan pada periode ini. Transfer antar akun Anda sendiri bukan pemasukan. Transaksi yang dihapus tidak disertakan.</value>
+  </data>
+  <data name="Report.Expense.Note" xml:space="preserve">
+    <value>Mencakup semua transaksi pengeluaran pada periode ini, termasuk biaya transfer. Transfer antar akun Anda sendiri bukan pengeluaran. Transaksi yang dihapus tidak disertakan.</value>
+  </data>
+  <data name="Report.Column.Category" xml:space="preserve">
+    <value>Kategori</value>
+  </data>
+  <data name="Report.Column.Count" xml:space="preserve">
+    <value>Transaksi</value>
+  </data>
+  <data name="Report.Column.Amount" xml:space="preserve">
+    <value>Jumlah</value>
+  </data>
+  <data name="Report.Column.Share" xml:space="preserve">
+    <value>Porsi</value>
+  </data>
+  <data name="Report.Column.Date" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="Report.Column.Description" xml:space="preserve">
+    <value>Deskripsi</value>
+  </data>
+  <data name="Report.Column.Account" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="Report.Column.Period" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="Report.Column.Income" xml:space="preserve">
+    <value>Pemasukan</value>
+  </data>
+  <data name="Report.Column.Expenses" xml:space="preserve">
+    <value>Pengeluaran</value>
+  </data>
+  <data name="Report.Column.Net" xml:space="preserve">
+    <value>Bersih</value>
+  </data>
+  <data name="Report.Column.Adjustments" xml:space="preserve">
+    <value>Penyesuaian</value>
+  </data>
+  <data name="Report.Column.BalanceAfter" xml:space="preserve">
+    <value>Saldo akhir</value>
+  </data>
+  <data name="Report.Column.Type" xml:space="preserve">
+    <value>Jenis</value>
+  </data>
+  <data name="Report.Column.Opening" xml:space="preserve">
+    <value>Awal</value>
+  </data>
+  <data name="Report.Column.TransfersIn" xml:space="preserve">
+    <value>Transfer masuk</value>
+  </data>
+  <data name="Report.Column.TransfersOut" xml:space="preserve">
+    <value>Transfer keluar</value>
+  </data>
+  <data name="Report.Column.Closing" xml:space="preserve">
+    <value>Akhir</value>
+  </data>
+  <data name="Report.Column.Month" xml:space="preserve">
+    <value>Bulan</value>
+  </data>
+  <data name="Report.Column.Limit" xml:space="preserve">
+    <value>Batas</value>
+  </data>
+  <data name="Report.Column.Spent" xml:space="preserve">
+    <value>Terpakai</value>
+  </data>
+  <data name="Report.Column.Remaining" xml:space="preserve">
+    <value>Sisa</value>
+  </data>
+  <data name="Report.Column.Used" xml:space="preserve">
+    <value>Terpakai %</value>
+  </data>
+  <data name="Report.Column.Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="Report.Column.Goal" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="Report.Column.Target" xml:space="preserve">
+    <value>Jumlah target</value>
+  </data>
+  <data name="Report.Column.Allocated" xml:space="preserve">
+    <value>Dialokasikan</value>
+  </data>
+  <data name="Report.Column.Progress" xml:space="preserve">
+    <value>Progres</value>
+  </data>
+  <data name="Report.Column.TargetDate" xml:space="preserve">
+    <value>Tanggal target</value>
+  </data>
+  <data name="Report.Column.Note" xml:space="preserve">
+    <value>Catatan</value>
+  </data>
+  <data name="Report.CashFlow.Opening" xml:space="preserve">
+    <value>Total saldo awal</value>
+  </data>
+  <data name="Report.CashFlow.Income" xml:space="preserve">
+    <value>Pemasukan</value>
+  </data>
+  <data name="Report.CashFlow.Expense" xml:space="preserve">
+    <value>Pengeluaran</value>
+  </data>
+  <data name="Report.CashFlow.Net" xml:space="preserve">
+    <value>Arus kas bersih</value>
+  </data>
+  <data name="Report.CashFlow.Adjustments" xml:space="preserve">
+    <value>Penyesuaian saldo</value>
+  </data>
+  <data name="Report.CashFlow.Closing" xml:space="preserve">
+    <value>Total saldo akhir</value>
+  </data>
+  <data name="Report.CashFlow.ByDay" xml:space="preserve">
+    <value>Per hari</value>
+  </data>
+  <data name="Report.CashFlow.ByMonth" xml:space="preserve">
+    <value>Per bulan</value>
+  </data>
+  <data name="Report.CashFlow.Note" xml:space="preserve">
+    <value>Saldo awal + pemasukan - pengeluaran + penyesuaian saldo = saldo akhir, untuk semua akun. Transfer antar akun Anda sendiri tidak mengubah total dan tidak ditampilkan.</value>
+  </data>
+  <data name="Report.Accounts.OpeningTotal" xml:space="preserve">
+    <value>Total saldo awal</value>
+  </data>
+  <data name="Report.Accounts.ClosingTotal" xml:space="preserve">
+    <value>Total saldo akhir</value>
+  </data>
+  <data name="Report.Accounts.Count" xml:space="preserve">
+    <value>Akun</value>
+  </data>
+  <data name="Report.Accounts.Table" xml:space="preserve">
+    <value>Saldo per akun</value>
+  </data>
+  <data name="Report.Accounts.Empty" xml:space="preserve">
+    <value>Tidak ada akun.</value>
+  </data>
+  <data name="Report.Accounts.Note" xml:space="preserve">
+    <value>Awal = saldo sebelum periode dimulai; akhir = saldo pada akhir periode. Akun tidak aktif disertakan agar total tetap lengkap.</value>
+  </data>
+  <data name="Report.Budget.TotalLimit" xml:space="preserve">
+    <value>Total batas anggaran</value>
+  </data>
+  <data name="Report.Budget.TotalSpent" xml:space="preserve">
+    <value>Total terpakai</value>
+  </data>
+  <data name="Report.Budget.Remaining" xml:space="preserve">
+    <value>Sisa</value>
+  </data>
+  <data name="Report.Budget.Exceeded" xml:space="preserve">
+    <value>Anggaran terlampaui</value>
+  </data>
+  <data name="Report.Budget.Table" xml:space="preserve">
+    <value>Anggaran per bulan</value>
+  </data>
+  <data name="Report.Budget.Empty" xml:space="preserve">
+    <value>Tidak ada anggaran yang berlaku pada periode ini.</value>
+  </data>
+  <data name="Report.Budget.Note" xml:space="preserve">
+    <value>Anggaran dievaluasi per bulan kalender penuh dengan batas saat ini. Hanya pengeluaran yang dihitung; pemasukan dan transfer tidak pernah dihitung.</value>
+  </data>
+  <data name="Report.Goals.TotalAllocated" xml:space="preserve">
+    <value>Total dialokasikan pada akhir periode</value>
+  </data>
+  <data name="Report.Goals.NetContributions" xml:space="preserve">
+    <value>Kontribusi bersih pada periode</value>
+  </data>
+  <data name="Report.Goals.Count" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="Report.Goals.Table" xml:space="preserve">
+    <value>Target</value>
+  </data>
+  <data name="Report.Goals.Empty" xml:space="preserve">
+    <value>Belum ada target tabungan.</value>
+  </data>
+  <data name="Report.Goals.History" xml:space="preserve">
+    <value>Kontribusi pada periode</value>
+  </data>
+  <data name="Report.Goals.HistoryEmpty" xml:space="preserve">
+    <value>Tidak ada alokasi atau pelepasan pada periode ini.</value>
+  </data>
+  <data name="Report.Goals.Note" xml:space="preserve">
+    <value>Alokasi menyisihkan uang yang sudah ada di akun Anda; alokasi tidak pernah mengubah saldo akun. Jumlah negatif adalah pelepasan.</value>
+  </data>
+  <data name="Report.FeeOnly" xml:space="preserve">
+    <value>Biaya transfer</value>
+  </data>
+  <data name="Analytics.Intro" xml:space="preserve">
+    <value>Lihat dari mana uang Anda berasal dan ke mana perginya. Hanya pemasukan dan pengeluaran yang dihitung; transfer antar akun Anda tidak pernah dihitung.</value>
+  </data>
+  <data name="Analytics.Period" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="Analytics.Period.Week" xml:space="preserve">
+    <value>Mingguan</value>
+  </data>
+  <data name="Analytics.Period.Month" xml:space="preserve">
+    <value>Bulanan</value>
+  </data>
+  <data name="Analytics.Period.Year" xml:space="preserve">
+    <value>Tahunan</value>
+  </data>
+  <data name="Analytics.Period.Custom" xml:space="preserve">
+    <value>Rentang khusus</value>
+  </data>
+  <data name="Analytics.Previous" xml:space="preserve">
+    <value>Periode sebelumnya</value>
+  </data>
+  <data name="Analytics.Next" xml:space="preserve">
+    <value>Periode berikutnya</value>
+  </data>
+  <data name="Analytics.ThisPeriod" xml:space="preserve">
+    <value>Periode saat ini</value>
+  </data>
+  <data name="Analytics.Custom.From" xml:space="preserve">
+    <value>Dari</value>
+  </data>
+  <data name="Analytics.Custom.To" xml:space="preserve">
+    <value>Sampai</value>
+  </data>
+  <data name="Analytics.Custom.Required" xml:space="preserve">
+    <value>Pilih tanggal mulai dan tanggal akhir.</value>
+  </data>
+  <data name="Analytics.Custom.Order" xml:space="preserve">
+    <value>Tanggal akhir tidak boleh sebelum tanggal mulai.</value>
+  </data>
+  <data name="Analytics.Empty.Title" xml:space="preserve">
+    <value>Tidak ada pemasukan atau pengeluaran pada periode ini</value>
+  </data>
+  <data name="Analytics.Empty.Body" xml:space="preserve">
+    <value>Grafik muncul segera setelah ada transaksi pada periode yang dipilih. Coba periode lain atau tambahkan transaksi.</value>
+  </data>
+  <data name="Analytics.AverageDaily" xml:space="preserve">
+    <value>Rata-rata per hari:</value>
+  </data>
+  <data name="Analytics.Net" xml:space="preserve">
+    <value>Bersih (pemasukan - pengeluaran)</value>
+  </data>
+  <data name="Analytics.LargestExpense" xml:space="preserve">
+    <value>Pengeluaran terbesar</value>
+  </data>
+  <data name="Analytics.NoExpenses" xml:space="preserve">
+    <value>Tidak ada pengeluaran pada periode ini.</value>
+  </data>
+  <data name="Analytics.NoIncome" xml:space="preserve">
+    <value>Tidak ada pemasukan pada periode ini.</value>
+  </data>
+  <data name="Analytics.NoTrend" xml:space="preserve">
+    <value>Riwayat belum cukup untuk menampilkan tren.</value>
+  </data>
+  <data name="Analytics.IncomeVsExpenses" xml:space="preserve">
+    <value>Pemasukan vs pengeluaran</value>
+  </data>
+  <data name="Analytics.CashFlow" xml:space="preserve">
+    <value>Arus kas</value>
+  </data>
+  <data name="Analytics.CashFlow.Caption" xml:space="preserve">
+    <value>Selisih berjalan (pemasukan dikurangi pengeluaran) sejak awal periode</value>
+  </data>
+  <data name="Analytics.ExpenseBreakdown" xml:space="preserve">
+    <value>Rincian pengeluaran</value>
+  </data>
+  <data name="Analytics.IncomeSources" xml:space="preserve">
+    <value>Sumber pemasukan</value>
+  </data>
+  <data name="Analytics.MonthlyTrends" xml:space="preserve">
+    <value>Tren bulanan</value>
+  </data>
+  <data name="Analytics.MonthlyTrends.Caption" xml:space="preserve">
+    <value>12 bulan hingga akhir periode</value>
+  </data>
+  <data name="Analytics.SpendingHabits" xml:space="preserve">
+    <value>Kebiasaan belanja</value>
+  </data>
+  <data name="Analytics.ShowTransactions" xml:space="preserve">
+    <value>Tampilkan transaksi ini</value>
+  </data>
+  <data name="Analytics.PerDay" xml:space="preserve">
+    <value>Per hari</value>
+  </data>
+  <data name="Analytics.PerMonth" xml:space="preserve">
+    <value>Per bulan</value>
+  </data>
+  <data name="Analytics.Counts" xml:space="preserve">
+    <value>{0} transaksi pemasukan dan {1} transaksi pengeluaran</value>
+  </data>
+  <data name="Analytics.SavingsRate" xml:space="preserve">
+    <value>{0}% dari pemasukan tersisa</value>
+  </data>
+  <data name="Analytics.SavingsRate.NoIncome" xml:space="preserve">
+    <value>Tidak ada pemasukan pada periode ini</value>
+  </data>
+  <data name="Analytics.TopWeekday" xml:space="preserve">
+    <value>Pengeluaran terbesar pada hari {0} ({1})</value>
+  </data>
+  <data name="Analytics.Largest" xml:space="preserve">
+    <value>{0}: {1} pada {2}</value>
+  </data>
+  <data name="Analytics.NoDescription" xml:space="preserve">
+    <value>Tanpa deskripsi</value>
+  </data>
+  <data name="Reports.Intro" xml:space="preserve">
+    <value>Buat dokumen untuk disimpan, dicetak, atau dibagikan. Setiap laporan mencakup semua catatan yang sesuai untuk periode yang Anda pilih.</value>
+  </data>
+  <data name="Reports.Step.Report" xml:space="preserve">
+    <value>Laporan</value>
+  </data>
+  <data name="Reports.Step.Period" xml:space="preserve">
+    <value>Periode</value>
+  </data>
+  <data name="Reports.Step.Format" xml:space="preserve">
+    <value>Format</value>
+  </data>
+  <data name="Reports.Period.ThisMonth" xml:space="preserve">
+    <value>Bulan ini</value>
+  </data>
+  <data name="Reports.Period.LastMonth" xml:space="preserve">
+    <value>Bulan lalu</value>
+  </data>
+  <data name="Reports.Period.ThisYear" xml:space="preserve">
+    <value>Tahun ini</value>
+  </data>
+  <data name="Reports.Period.LastYear" xml:space="preserve">
+    <value>Tahun lalu</value>
+  </data>
+  <data name="Reports.Period.Custom" xml:space="preserve">
+    <value>Rentang khusus</value>
+  </data>
+  <data name="Reports.Income.Description" xml:space="preserve">
+    <value>Semua pemasukan pada periode ini, dengan total per kategori.</value>
+  </data>
+  <data name="Reports.Expense.Description" xml:space="preserve">
+    <value>Semua pengeluaran pada periode ini (termasuk biaya transfer), dengan total per kategori.</value>
+  </data>
+  <data name="Reports.CashFlow.Description" xml:space="preserve">
+    <value>Total saldo pada awal dan akhir periode, beserta pemasukan, pengeluaran, dan penyesuaian di antaranya.</value>
+  </data>
+  <data name="Reports.AccountBalance.Description" xml:space="preserve">
+    <value>Saldo awal dan akhir setiap akun, beserta semua pergerakan pada periode ini.</value>
+  </data>
+  <data name="Reports.Budget.Description" xml:space="preserve">
+    <value>Setiap anggaran per bulan: batas, jumlah terpakai, sisa, dan status.</value>
+  </data>
+  <data name="Reports.SavingsGoals.Description" xml:space="preserve">
+    <value>Setiap target tabungan dengan alokasinya pada akhir periode, ditambah kontribusi pada periode ini.</value>
+  </data>
+  <data name="Reports.Preview" xml:space="preserve">
+    <value>Pratinjau</value>
+  </data>
+  <data name="Reports.RowsOne" xml:space="preserve">
+    <value>{0} catatan</value>
+  </data>
+  <data name="Reports.Rows" xml:space="preserve">
+    <value>{0} catatan</value>
+  </data>
+  <data name="Reports.AllIncluded" xml:space="preserve">
+    <value>Ekspor berisi seluruh {0} catatan di atas; tidak ada yang dihilangkan.</value>
+  </data>
+  <data name="Reports.Export.Button" xml:space="preserve">
+    <value>Ekspor laporan</value>
+  </data>
+  <data name="Reports.Export.Title" xml:space="preserve">
+    <value>Ekspor laporan</value>
+  </data>
+  <data name="Reports.Export.Done" xml:space="preserve">
+    <value>{0} diekspor</value>
+  </data>
+  <data name="Reports.Filter.Pdf" xml:space="preserve">
+    <value>Dokumen PDF (*.pdf)|*.pdf</value>
+  </data>
+  <data name="Reports.Filter.Excel" xml:space="preserve">
+    <value>Buku kerja Excel (*.xlsx)|*.xlsx</value>
+  </data>
+  <data name="Reports.Filter.Csv" xml:space="preserve">
+    <value>File CSV (*.csv)|*.csv</value>
+  </data>
+  <data name="Reports.Saved" xml:space="preserve">
+    <value>Laporan disimpan</value>
+  </data>
+  <data name="Reports.Open" xml:space="preserve">
+    <value>Buka</value>
+  </data>
+  <data name="Reports.ShowInFolder" xml:space="preserve">
+    <value>Tampilkan di folder</value>
   </data>
 </root>

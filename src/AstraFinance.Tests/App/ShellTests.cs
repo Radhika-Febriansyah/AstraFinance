@@ -175,13 +175,25 @@ public sealed partial class ShellTests : IAsyncLifetime, IDisposable
     }
 
     [Fact]
+    public async Task Every_page_opens_its_real_view_model()
+    {
+        foreach (var descriptor in PageCatalog.All)
+        {
+            await Navigation.NavigateAsync(descriptor.Page);
+            var page = Navigation.CurrentPage!;
+            Assert.Equal(descriptor.Page, page.Page);
+            Assert.DoesNotContain("Upcoming", page.GetType().Name, StringComparison.Ordinal);
+        }
+    }
+
+    [Fact]
     public async Task Navigating_to_the_current_page_is_a_no_op()
     {
         await Navigation.NavigateAsync(AppPage.Reports);
         var first = Navigation.CurrentPage;
         await Navigation.NavigateAsync(AppPage.Reports);
         Assert.Same(first, Navigation.CurrentPage);
-        Assert.IsType<UpcomingModuleViewModel>(first);
+        Assert.IsType<ReportsViewModel>(first);
     }
 
     [Fact]

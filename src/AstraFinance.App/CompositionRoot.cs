@@ -74,6 +74,9 @@ public static class CompositionRoot
         services.AddSingleton<INotificationSettingsService, NotificationSettingsService>();
         services.AddSingleton<IBillService, BillService>();
         services.AddSingleton<IReminderService, ReminderService>();
+        services.AddSingleton<IAnalyticsService, AnalyticsService>();
+        services.AddSingleton<IReportService, ReportService>();
+        services.AddSingleton<IReportExporter, AstraFinance.Infrastructure.Export.ReportExporter>();
         services.AddSingleton<IWindowsNotifier, WindowsToastNotifier>();
         services.AddSingleton<ReminderScheduler>();
 
@@ -115,10 +118,7 @@ public static class CompositionRoot
         services.AddSingleton<MainWindow>();
     }
 
-    /// <summary>
-    /// Page registrations. Modules not yet implemented use <see cref="UpcomingModuleViewModel"/>;
-    /// each roadmap phase replaces its entry with the real page view model.
-    /// </summary>
+    /// <summary>Page registrations: every page in <see cref="PageCatalog"/> has its real view model.</summary>
     public static PageRegistry CreatePageRegistry()
     {
         var registry = new PageRegistry()
@@ -128,14 +128,15 @@ public static class CompositionRoot
             .Register(AppPage.Transactions, sp => ActivatorUtilities.CreateInstance<TransactionsViewModel>(sp))
             .Register(AppPage.Budgets, sp => ActivatorUtilities.CreateInstance<BudgetsViewModel>(sp))
             .Register(AppPage.SavingsGoals, sp => ActivatorUtilities.CreateInstance<SavingsGoalsViewModel>(sp))
-            .Register(AppPage.Bills, sp => ActivatorUtilities.CreateInstance<BillsViewModel>(sp));
+            .Register(AppPage.Bills, sp => ActivatorUtilities.CreateInstance<BillsViewModel>(sp))
+            .Register(AppPage.Analytics, sp => ActivatorUtilities.CreateInstance<AnalyticsViewModel>(sp))
+            .Register(AppPage.Reports, sp => ActivatorUtilities.CreateInstance<ReportsViewModel>(sp));
 
         foreach (var descriptor in PageCatalog.All)
         {
             if (!registry.IsRegistered(descriptor.Page))
             {
-                var page = descriptor.Page;
-                registry.Register(page, sp => new UpcomingModuleViewModel(page, sp.GetRequiredService<ILocalizationService>()));
+                throw new InvalidOperationException($"No view model is registered for page {descriptor.Page}.");
             }
         }
 

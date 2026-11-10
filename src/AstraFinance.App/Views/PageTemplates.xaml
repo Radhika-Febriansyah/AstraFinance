@@ -13,9 +13,6 @@
     <DataTemplate DataType="{x:Type pages:SettingsViewModel}">
         <views:SettingsPage />
     </DataTemplate>
-    <DataTemplate DataType="{x:Type pages:UpcomingModuleViewModel}">
-        <views:UpcomingModulePage />
-    </DataTemplate>
     <DataTemplate DataType="{x:Type pages:TransactionsViewModel}">
         <views:TransactionsPage />
     </DataTemplate>
@@ -33,6 +30,12 @@
     </DataTemplate>
     <DataTemplate DataType="{x:Type pages:AllocationFormViewModel}">
         <forms:AllocationForm />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:AnalyticsViewModel}">
+        <views:AnalyticsPage />
+    </DataTemplate>
+    <DataTemplate DataType="{x:Type pages:ReportsViewModel}">
+        <views:ReportsPage />
     </DataTemplate>
     <DataTemplate DataType="{x:Type pages:BillsViewModel}">
         <views:BillsPage />

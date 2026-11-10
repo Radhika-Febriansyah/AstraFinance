@@ -1,6 +1,8 @@
 <Project>
   <PropertyGroup>
     <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+    <!-- Lets the versions below also pin transitive dependencies (security fixes). -->
+    <CentralPackageTransitivePinningEnabled>true</CentralPackageTransitivePinningEnabled>
   </PropertyGroup>
   <ItemGroup>
     <!-- Application -->
@@ -10,6 +12,12 @@
     <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.14" />
     <!-- Charts (MIT; depends on SkiaSharp, MIT) -->
     <PackageVersion Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.5" />
+    <!-- Export: Excel (MIT) and PDF. PDFsharp/MigraDoc is pinned to 6.2.4, the last MIT release;
+         6.5.0 and later are AGPL-3.0 and must not be used. -->
+    <PackageVersion Include="ClosedXML" Version="0.105.1" />
+    <PackageVersion Include="PDFsharp-MigraDoc" Version="[6.2.4]" />
+    <!-- Security pin: PDFsharp 6.2.4 depends on 8.0.1, affected by CVE-2026-70162 / CVE-2026-84008 (fixed in 10.0.13). -->
+    <PackageVersion Include="System.Security.Cryptography.Pkcs" Version="10.0.15" />
     <!-- Data -->
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Sqlite" Version="10.0.14" />
     <PackageVersion Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.14" />

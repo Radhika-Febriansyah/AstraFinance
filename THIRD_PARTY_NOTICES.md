@@ -13,6 +13,10 @@ Astra Finance includes or depends on the following third-party components.
 | SQLite | Public domain | https://sqlite.org/copyright.html |
 | LiveCharts2 (LiveChartsCore.SkiaSharpView.WPF) | MIT | https://github.com/beto-rodriguez/LiveCharts2 |
 | SkiaSharp / HarfBuzzSharp (via LiveCharts2) | MIT | https://github.com/mono/SkiaSharp |
+| ClosedXML (Excel export) | MIT | https://github.com/ClosedXML/ClosedXML |
+| DocumentFormat.OpenXml, ClosedXML.Parser, ExcelNumberFormat, RBush (via ClosedXML) | MIT | https://github.com/dotnet/Open-XML-SDK |
+| SixLabors.Fonts 1.0.0 (via ClosedXML) | Apache-2.0 | https://github.com/SixLabors/Fonts |
+| PDFsharp / MigraDoc 6.2.4 (PDF export; pinned to the last MIT release — 6.5.0 and later are AGPL-3.0) | MIT | https://github.com/empira/PDFsharp |
 | Lucide icons (geometry adapted as XAML paths) | ISC | https://lucide.dev |
 | xUnit (tests only, not distributed) | Apache-2.0 | https://github.com/xunit/xunit |
 

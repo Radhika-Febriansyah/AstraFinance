@@ -75,6 +75,33 @@ public partial class ThemeTests
         Assert.True(missing.Count == 0, "Undefined icons: " + string.Join(", ", missing));
     }
 
+    /// <summary>
+    /// A StaticResource must be defined in the same file or in an app-wide dictionary (App.xaml, Themes);
+    /// a key that only exists in another page's resources fails at runtime when the page is shown.
+    /// </summary>
+    [Fact]
+    public void Every_static_resource_is_defined_where_it_is_used()
+    {
+        var globalFiles = XamlFiles().Where(f =>
+            Path.GetFileName(f) == "App.xaml"
+            || f.Contains($"{Path.DirectorySeparatorChar}Themes{Path.DirectorySeparatorChar}", StringComparison.Ordinal));
+        var global = globalFiles.SelectMany(f => XKey().Matches(File.ReadAllText(f)).Select(m => m.Groups[1].Value))
+            .ToHashSet(StringComparer.Ordinal);
+
+        var missing = new List<string>();
+        foreach (var file in XamlFiles())
+        {
+            var text = File.ReadAllText(file);
+            var local = XKey().Matches(text).Select(m => m.Groups[1].Value).ToHashSet(StringComparer.Ordinal);
+            missing.AddRange(StaticResource().Matches(text)
+                .Select(m => m.Groups[1].Value)
+                .Where(k => !local.Contains(k) && !global.Contains(k))
+                .Select(k => $"{Path.GetFileName(file)}: {k}"));
+        }
+
+        Assert.True(missing.Count == 0, "Undefined static resources: " + string.Join(", ", missing.Distinct()));
+    }
+
     [Theory]
     [InlineData(ResolvedTheme.Dark)]
     [InlineData(ResolvedTheme.Light)]
@@ -112,6 +139,12 @@ public partial class ThemeTests
 
     [GeneratedRegex(@"DynamicResource\s+([A-Za-z0-9_.]+)\}")]
     private static partial Regex DynamicResource();
+
+    [GeneratedRegex(@"StaticResource\s+([A-Za-z0-9_.]+)\}")]
+    private static partial Regex StaticResource();
+
+    [GeneratedRegex(@"x:Key=""([^""]+)""")]
+    private static partial Regex XKey();
 
     [GeneratedRegex(@"(?<![\w.])Icon\.[A-Z][A-Za-z]+\b")]
     private static partial Regex IconKey();

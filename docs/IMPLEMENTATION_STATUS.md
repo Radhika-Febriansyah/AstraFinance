@@ -1,6 +1,6 @@
 # Astra Finance — Implementation Status
 
-Last updated: 2026-11-10 (Phase 7)
+Last updated: 2026-11-10 (Phase 8)
 
 | Phase | Name | Status |
 |---|---|---|
@@ -11,8 +11,8 @@ Last updated: 2026-11-10 (Phase 7)
 | 5 | Dashboard | ✅ Complete (built, tested, run-verified) |
 | 6 | Budgets and Savings Goals | ✅ Complete (built, tested, run-verified) |
 | 7 | Bills and Subscriptions | ✅ Complete (built, tested, run-verified) |
-| 8 | Analytics and Reports | ⏳ Next |
-| 9 | Settings and Data Protection | Partially started (language, theme, accent, notifications, About) |
+| 8 | Analytics and Reports | ✅ Complete (built, tested, run-verified) |
+| 9 | Settings and Data Protection | ⏳ Next (language, theme, accent, notifications and About already done) |
 | 10 | QA and Release | Not started |
 
 ## Environment
@@ -559,6 +559,62 @@ New coverage: recurrence arithmetic (month ends, 29 February, next/latest occurr
 
 ---
 
-## Phase 8 — Analytics and Reports (next)
+## Phase 8 — Analytics and Reports
 
-Planned: analytics charts (income vs expenses, cash flow, expense breakdown, monthly trends, income sources, spending habits) with weekly/monthly/yearly/custom filters and empty-data handling; Income, Expense, Cash Flow, Account Balance, Budget and Savings Goals reports exported to PDF (library chosen after a licence check), Excel (ClosedXML) and CSV, respecting filters and formatting.
+### Completed tasks
+
+- **Analytics service** (`IAnalyticsService`, `AnalyticsService`): one snapshot per period — income and expense totals and counts, a time series (per day up to 62 days, per month beyond), expense breakdown and income sources by category, spending per weekday, largest expense. Only non-deleted Income and Expense transactions count (transfer fees are expenses); transfers and balance adjustments never do. Exact `long` sums.
+- **Periods** (`AnalyticsPeriods`): weekly (Monday–Sunday), monthly, yearly, custom range; previous/next/current period; no navigation into empty future periods.
+- **Analytics page**: KPI cards (income, expenses with average per day, net with share of income kept, largest expense); charts — *Income vs expenses* (columns), *Cash flow* (running net line), *Expense breakdown* (donut + clickable legend), *Income sources* (bars), *Monthly trends* (12-month lines), *Spending habits* (spending per weekday + the busiest day). Formatted currency tooltips and compact axis labels, theme-aware colours, two-column → one-column layout. Empty periods show an explanation instead of empty charts; each chart has its own "nothing to show" state. Clicking a category opens its transactions.
+- **Report service** (`IReportService`, `ReportService`): Income, Expense, Cash Flow, Account Balance, Budget and Savings Goals reports for any period, as a format-independent `ReportDocument` (summary, tables with typed cells, totals, notes). Every matching record is included — no paging or truncation — and each report states what it includes.
+  - *Cash flow*: total balance at start + income − expenses + balance adjustments = total balance at end (transfers cancel out across accounts), with a running balance per day/month.
+  - *Account balance*: per account opening (before the period), income, expenses, transfers in/out, adjustments and closing balance; inactive accounts included.
+  - *Budget*: one row per budget and month (whole calendar months, current limits).
+  - *Savings goals*: allocation of each goal at the end of the period plus contributions and releases within it.
+- **Exporters** (`ReportExporter`): **PDF** (PDFsharp/MigraDoc 6.2.4: A4, landscape for wide tables, repeating table headers, page numbers, Segoe UI embedded), **Excel** (ClosedXML: summary sheet + one sheet per table, real numbers with currency number formats, real dates in the user's date format, frozen header rows), **CSV** (same sections; plain machine-readable amounts like the transaction export, user date format, UTF-8 BOM, formula-injection protection). Files are written to a temporary path and moved into place.
+- **Reports page**: choose report, period (this/last month, this/last year, custom) and format; live preview of the summary and the number of records per table ("the export contains all N records"); export via the native Save dialog; open the file or show it in its folder.
+- The placeholder ("in development") page is gone: every navigation page now has its real implementation, and startup fails fast if a page has no view model.
+
+### Build status
+
+`dotnet build` — **succeeded, 0 warnings, 0 errors**.
+
+### Test status
+
+`dotnet test` — **301 passed, 0 failed** (283 previous + 18 new); 8 consecutive full runs green after the backup lock fix.
+
+New coverage: period resolution (Monday weeks, month-end shifts, bucket choice); analytics totals excluding transfers/deleted and including fees, weekday and category breakdowns, yearly buckets, empty periods; income/expense reports (every record, totals, shares, fee labelling); cash-flow reconciliation (opening + income − expenses + adjustments = closing = total balance); account report matching account balances; budget rows per month; goal allocations as of the period end; CSV (BOM, plain amounts, formula protection, totals), Excel (sheets, numeric/date cells and formats, totals), PDF (multi-page, portrait/landscape), no partial file after a failed export; Analytics and Reports pages; every page opens a real view model; every `StaticResource` is defined where it is used; repeated-error throttling; log size cap.
+
+### Manual verification (real app, 125 % DPI)
+
+- Analytics: monthly and yearly views, all six charts, empty-state behaviour; layout at 1600 px.
+- Reports: exported Expense report (PDF and Excel), Account Balance report (PDF, landscape) and Cash Flow report (CSV) through the native Save dialog; the PDFs were reviewed page by page and the figures reconcile with the dashboard total (Rp14.948.500).
+- Test data was only borrowed; the real data folder is back to a clean setup state.
+
+### Bugs found and fixed during this phase
+
+- **Analytics page failed to load** — it used a style (`LegendDot`) defined only inside the Dashboard page. Moved to the shared styles; a new test now checks every `StaticResource` in every XAML file.
+- **Error storm filled the log** — that layout error repeated on every layout pass and each repeat was logged (≈130 MB in three minutes). Identical UI errors are now logged and shown once per minute, and each day's log file is capped at 20 MB (one notice when the cap is reached). The oversized log from the test run was moved out of the data folder.
+- **Backups could fail with "database is locked"** if another connection briefly held a lock (seen as an intermittent test failure). Backup connections now use a 5-second busy timeout and retry a few times.
+- PDFsharp's built-in Windows font lookup doesn't include Segoe UI → a small font resolver loads it from the Windows Fonts folder (Arial fallback).
+- MigraDoc ignored the landscape flag → wide reports set the A4 landscape size explicitly.
+- Income-sources rows overlapped the amount with the name → full-width row layout.
+
+### Important decisions
+
+1. **PDF library: PDFsharp/MigraDoc 6.2.4 (MIT), pinned exactly.** PDFsharp 6.5.0 and later are AGPL-3.0, QuestPDF uses a non-OSI community licence; the user chose the last MIT release (2026-11-10). Never upgrade past 6.2.x without a licence review.
+2. **Security pin:** PDFsharp 6.2.4 depends on `System.Security.Cryptography.Pkcs` 8.0.1 (CVE-2026-70162, CVE-2026-84008). Central transitive pinning forces 10.0.15; `dotnet list package --vulnerable` reports no vulnerable packages.
+3. **One report model, three renderers**, so PDF, Excel and CSV always contain the same records and totals.
+4. **Opening balance** of an account counts from the beginning of time (it has no date); "balance at start of period" = opening balance + all activity before the period.
+5. **CSV amounts are machine-readable** (no grouping, base currency stated in the header) — consistent with the transaction export; PDF and Excel show formatted currency.
+
+### Remaining / notes
+
+- Reports use the current budget limits for past months (no history of limit changes in v1) — stated in the report note.
+- Large custom ranges are computed in memory; fine for personal data volumes, revisit in Phase 10 performance testing.
+
+---
+
+## Phase 9 — Settings and Data Protection (next)
+
+Planned: regional settings after onboarding, category management, security settings (change PIN, lock, cooldown), backup scheduling/history/restore UI with the safe restore procedure, data import/export, backup reminders.

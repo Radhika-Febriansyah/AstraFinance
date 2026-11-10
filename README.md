@@ -2,7 +2,7 @@
 
 A local-first, offline personal finance app for Windows (WPF, .NET 10). Developed by **Aprotoos**.
 
-> Status: in development — Phases 1–7 (foundation, database, onboarding & accounts, transactions, dashboard, budgets & savings goals, bills & subscriptions) complete. See [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md).
+> Status: in development — Phases 1–8 (foundation, database, onboarding & accounts, transactions, dashboard, budgets & savings goals, bills & subscriptions, analytics & reports) complete. See [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md).
 
 Astra Finance keeps your data on your device. It does not connect to or control any bank account.
 

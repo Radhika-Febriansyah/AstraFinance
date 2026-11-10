@@ -14,15 +14,20 @@ public sealed class FileLoggerProvider : ILoggerProvider
 {
     public const int RetentionDays = 14;
 
+    /// <summary>Default size limit of one day's log file; later entries that day are dropped.</summary>
+    public const long DefaultMaxFileBytes = 20L * 1024 * 1024;
+
     private readonly string _directory;
     private readonly LogLevel _minimumLevel;
     private readonly ConcurrentDictionary<string, FileLogger> _loggers = new(StringComparer.Ordinal);
     private readonly Lock _writeLock = new();
+    private readonly long _maxFileBytes;
 
-    public FileLoggerProvider(string directory, LogLevel minimumLevel = LogLevel.Information)
+    public FileLoggerProvider(string directory, LogLevel minimumLevel = LogLevel.Information, long maxFileBytes = DefaultMaxFileBytes)
     {
         _directory = directory;
         _minimumLevel = minimumLevel;
+        _maxFileBytes = maxFileBytes;
         Directory.CreateDirectory(directory);
         PurgeOldLogs();
     }
@@ -49,7 +54,20 @@ public sealed class FileLoggerProvider : ILoggerProvider
         {
             try
             {
-                File.AppendAllText(CurrentLogFile, builder.ToString(), Encoding.UTF8);
+                var file = CurrentLogFile;
+                var size = File.Exists(file) ? new FileInfo(file).Length : 0;
+                if (size >= _maxFileBytes)
+                {
+                    return; // limit reached (and noted once, below); the log can never fill the disk
+                }
+
+                var text = builder.ToString();
+                if (size + Encoding.UTF8.GetByteCount(text) >= _maxFileBytes)
+                {
+                    text = $"{DateTimeOffset.UtcNow.ToString("yyyy-MM-dd HH:mm:ss.fff'Z'", CultureInfo.InvariantCulture)} [WARNING] Logging: Daily log size limit reached; further entries today are not written.{Environment.NewLine}";
+                }
+
+                File.AppendAllText(file, text, Encoding.UTF8);
             }
             catch (IOException)
             {

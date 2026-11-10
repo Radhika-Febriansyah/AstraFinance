@@ -158,6 +158,8 @@ public sealed partial class SettingsViewModel : PageViewModel
         new("SQLite", "Public domain", "https://sqlite.org"),
         new("LiveCharts2", "MIT", "https://github.com/beto-rodriguez/LiveCharts2"),
         new("SkiaSharp", "MIT", "https://github.com/mono/SkiaSharp"),
+        new("ClosedXML (Open XML SDK, SixLabors.Fonts)", "MIT / Apache-2.0", "https://github.com/ClosedXML/ClosedXML"),
+        new("PDFsharp / MigraDoc 6.2.4", "MIT", "https://github.com/empira/PDFsharp"),
         new("Lucide icon geometry", "ISC", "https://lucide.dev/license"),
     ];
 

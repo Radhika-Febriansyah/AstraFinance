@@ -53,6 +53,11 @@ Language (UI text) is separate from regional formatting (currency/number/date), 
 - Constraints also live in the database (CHECKs, RESTRICT foreign keys, unique indexes).
 - Bills: `Bill` holds the schedule (first due date + recurrence); `BillPayment` records how one occurrence was handled — paid (`TransactionId` → the Expense it created) or skipped (`TransactionId` null), unique per (bill, due date). The next due date is derived (first occurrence after the latest handled one); a payment whose Expense was deleted counts as unpaid.
 
+## Analytics and reports
+
+- `AnalyticsService` returns one `AnalyticsSnapshot` per period; the Analytics page builds LiveCharts2 series from it in the view (theme colours), so view-model logic stays testable.
+- `ReportService` builds a format-independent `ReportDocument` (summary, tables of typed `ReportCell`s, totals, notes). `ReportExporter` renders it as PDF (PDFsharp/MigraDoc 6.2.4, pinned MIT release; Segoe UI via `WindowsFontResolver`), Excel (ClosedXML) or CSV. All three contain the same records; files are written to a temporary path and moved into place.
+
 ## Database lifecycle
 
 `DatabaseInitializer` runs before the main window: newer-version guard → verified safety copy (when migrating an existing file) → `Migrate` → `quick_check` → seed built-in categories. Services use `IDbContextFactory` (one short-lived context per operation) and wrap multi-row writes in a transaction. Connection pragmas: foreign keys, WAL, `synchronous=FULL`, busy timeout (journal mode only on writable connections).

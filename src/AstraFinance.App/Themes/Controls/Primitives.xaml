@@ -112,6 +112,14 @@
         <Setter Property="Effect" Value="{DynamicResource Effect.Shadow.Popup}" />
     </Style>
 
+    <!-- Chart legend marker -->
+    <Style x:Key="LegendDot" TargetType="Ellipse">
+        <Setter Property="Width" Value="9" />
+        <Setter Property="Height" Value="9" />
+        <Setter Property="Margin" Value="0,0,6,0" />
+        <Setter Property="VerticalAlignment" Value="Center" />
+    </Style>
+
     <!-- Badge / pill -->
     <Style x:Key="Badge" TargetType="Border">
         <Setter Property="Background" Value="{DynamicResource Brush.Accent.Subtle}" />

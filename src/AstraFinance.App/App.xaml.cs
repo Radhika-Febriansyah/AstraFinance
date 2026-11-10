@@ -18,6 +18,7 @@ namespace AstraFinance.App;
 public partial class App : Application
 {
     private SingleInstanceGuard? _instanceGuard;
+    private readonly RepeatedErrorFilter _uiErrors = new(TimeSpan.FromMinutes(1));
     private ServiceProvider? _services;
     private ILogger<App>? _logger;
     private string _logsDirectory = string.Empty;
@@ -190,12 +191,18 @@ public partial class App : Application
 
     private void OnDispatcherUnhandledException(object sender, DispatcherUnhandledExceptionEventArgs e)
     {
+        e.Handled = true;
+
+        // The same error repeating (e.g. on every layout pass) is logged and shown once per minute.
+        if (!_uiErrors.ShouldReport(e.Exception))
+        {
+            return;
+        }
+
         if (_logger is not null)
         {
             LogUiException(_logger, e.Exception);
         }
-
-        e.Handled = true;
 
         var localization = _services?.GetService<ILocalizationService>();
         var dialogs = _services?.GetService<IDialogService>();
