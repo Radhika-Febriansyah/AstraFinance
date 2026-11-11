@@ -10,38 +10,6 @@
              xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=pages:DashboardViewModel}">
-    <UserControl.Resources>
-        <!-- Whole card is clickable (navigates to its detail page). -->
-        <Style x:Key="CardButton" TargetType="Button">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
-            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="VerticalContentAlignment" Value="Stretch" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Astra}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Root" Style="{StaticResource Card}">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource Brush.Border.Strong}" />
-                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Surface.Raised}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
-        </Style>
-
-        <Style x:Key="StatValue" TargetType="TextBlock" BasedOn="{StaticResource Text.Title}">
-            <Setter Property="FontSize" Value="26" />
-            <Setter Property="Margin" Value="0,6,0,4" />
-        </Style>
-
-    </UserControl.Resources>
 
     <ScrollViewer VerticalScrollBarVisibility="Auto" Focusable="False">
         <StackPanel Margin="{DynamicResource Padding.Page.Current}" MaxWidth="1240">
@@ -54,35 +22,40 @@
 
             <!-- Summary cards -->
             <UniformGrid x:Name="SummaryGrid" Columns="3" Margin="-8,0,-8,8">
-                <Button Style="{StaticResource CardButton}" Margin="8,0,8,16" Command="{Binding OpenAccountsCommand}"
+                <Button Style="{StaticResource Card.Hero.Button}" Margin="8,0,8,16" Command="{Binding OpenAccountsCommand}"
                         AutomationProperties.Name="{loc:Loc Dashboard.TotalBalance}" ToolTip="{loc:Loc Dashboard.TotalBalance.Tooltip}">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <c:AstraIcon Data="{StaticResource Icon.Accounts}" Width="16" Height="16" Foreground="{DynamicResource Brush.Accent.Text}" Margin="0,0,8,0" />
-                            <TextBlock Text="{loc:Loc Dashboard.TotalBalance}" Style="{StaticResource Text.Secondary}" />
+                            <Border Style="{StaticResource IconTile.OnHero}">
+                                <c:AstraIcon Data="{StaticResource Icon.Accounts}" Style="{StaticResource IconTile.Icon}" />
+                            </Border>
+                            <TextBlock Text="{loc:Loc Dashboard.TotalBalance}" Style="{StaticResource Text.OnHero.Secondary}" Margin="12,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
                         <TextBlock Text="{Binding TotalBalanceText}">
                             <TextBlock.Style>
-                                <Style TargetType="TextBlock" BasedOn="{StaticResource StatValue}">
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource Text.Stat.Value}">
+                                    <Setter Property="Foreground" Value="{DynamicResource Brush.Hero.Text}" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsTotalNegative}" Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                            <Setter Property="Foreground" Value="{StaticResource Brush.OnBrand.Danger}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
-                        <TextBlock Text="{Binding AccountsText}" Style="{StaticResource Text.Caption}" />
+                        <TextBlock Text="{Binding AccountsText}" Style="{StaticResource Text.OnHero.Secondary}" FontSize="{StaticResource FontSize.Caption}" />
                     </StackPanel>
                 </Button>
 
                 <Border Style="{StaticResource Card}" Margin="8,0,8,16">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <c:AstraIcon Data="{StaticResource Icon.ArrowDownLeft}" Width="16" Height="16" Foreground="{DynamicResource Brush.Success}" Margin="0,0,8,0" />
-                            <TextBlock Text="{loc:Loc Dashboard.MonthIncome}" Style="{StaticResource Text.Secondary}" />
+                            <Border Style="{StaticResource IconTile.Success}">
+                                <c:AstraIcon Data="{StaticResource Icon.ArrowDownLeft}" Style="{StaticResource IconTile.Icon}" />
+                            </Border>
+                            <TextBlock Text="{loc:Loc Dashboard.MonthIncome}" Style="{StaticResource Text.Stat.Label}" Margin="12,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <TextBlock Text="{Binding MonthIncomeText}" Style="{StaticResource StatValue}" />
+                        <TextBlock Text="{Binding MonthIncomeText}" Style="{StaticResource Text.Stat.Value}" />
                         <TextBlock Text="{Binding MonthName}" Style="{StaticResource Text.Caption}" />
                     </StackPanel>
                 </Border>
@@ -90,10 +63,12 @@
                 <Border Style="{StaticResource Card}" Margin="8,0,8,16">
                     <StackPanel>
                         <StackPanel Orientation="Horizontal">
-                            <c:AstraIcon Data="{StaticResource Icon.ArrowUpRight}" Width="16" Height="16" Foreground="{DynamicResource Brush.Danger}" Margin="0,0,8,0" />
-                            <TextBlock Text="{loc:Loc Dashboard.MonthExpense}" Style="{StaticResource Text.Secondary}" />
+                            <Border Style="{StaticResource IconTile.Danger}">
+                                <c:AstraIcon Data="{StaticResource Icon.ArrowUpRight}" Style="{StaticResource IconTile.Icon}" />
+                            </Border>
+                            <TextBlock Text="{loc:Loc Dashboard.MonthExpense}" Style="{StaticResource Text.Stat.Label}" Margin="12,0,0,0" VerticalAlignment="Center" />
                         </StackPanel>
-                        <TextBlock Text="{Binding MonthExpenseText}" Style="{StaticResource StatValue}" />
+                        <TextBlock Text="{Binding MonthExpenseText}" Style="{StaticResource Text.Stat.Value}" />
                         <TextBlock Text="{Binding MonthNetText}">
                             <TextBlock.Style>
                                 <Style TargetType="TextBlock" BasedOn="{StaticResource Text.Caption}">
@@ -122,12 +97,12 @@
                 </Grid.RowDefinitions>
 
                 <!-- Cash flow -->
-                <Button x:Name="CashFlowCard" Style="{StaticResource CardButton}" Margin="0,0,16,16" Command="{Binding OpenAnalyticsCommand}"
+                <Button x:Name="CashFlowCard" Style="{StaticResource Card.Button}" Margin="0,0,16,16" Command="{Binding OpenAnalyticsCommand}"
                         AutomationProperties.Name="{loc:Loc Dashboard.CashFlow}" ToolTip="{loc:Loc Dashboard.CashFlow.Tooltip}">
                     <DockPanel>
                         <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
                             <StackPanel>
-                                <TextBlock Text="{loc:Loc Dashboard.CashFlow}" Style="{StaticResource Text.Subtitle}" />
+                                <TextBlock Text="{loc:Loc Dashboard.CashFlow}" Style="{StaticResource Text.CardTitle}" />
                                 <TextBlock Text="{Binding CashFlowPeriodText}" Style="{StaticResource Text.Caption}" />
                             </StackPanel>
                             <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top"
@@ -155,7 +130,7 @@
                 <Border x:Name="RecentCard" Grid.Column="1" Style="{StaticResource Card}" Margin="0,0,0,16">
                     <DockPanel>
                         <Grid DockPanel.Dock="Top" Margin="0,0,0,8">
-                            <TextBlock Text="{loc:Loc Dashboard.Recent}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Loc Dashboard.Recent}" Style="{StaticResource Text.CardTitle}" VerticalAlignment="Center" />
                             <Button Style="{StaticResource Button.Link}" HorizontalAlignment="Right" Content="{loc:Loc Dashboard.ViewAll}"
                                     Command="{Binding OpenTransactionsCommand}"
                                     Visibility="{Binding HasNoTransactions, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
@@ -180,8 +155,8 @@
                                                     <ColumnDefinition Width="*" />
                                                     <ColumnDefinition Width="Auto" />
                                                 </Grid.ColumnDefinitions>
-                                                <Border Width="34" Height="34" CornerRadius="17" Background="{DynamicResource Brush.Surface.Raised}">
-                                                    <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{DynamicResource Brush.Text.Secondary}" />
+                                                <Border x:Name="Tile" Style="{StaticResource IconTile.Danger}">
+                                                    <c:AstraIcon IconKey="{Binding IconKey}" Style="{StaticResource IconTile.Icon}" Width="16" Height="16" />
                                                 </Border>
                                                 <StackPanel Grid.Column="1" Margin="12,0" VerticalAlignment="Center">
                                                     <TextBlock Text="{Binding Title}" Style="{StaticResource Text.BodyStrong}" />
@@ -195,9 +170,11 @@
                                         <DataTemplate.Triggers>
                                             <DataTrigger Binding="{Binding IsIncoming}" Value="True">
                                                 <Setter TargetName="Amount" Property="Foreground" Value="{DynamicResource Brush.Success}" />
+                                                <Setter TargetName="Tile" Property="Style" Value="{StaticResource IconTile.Success}" />
                                             </DataTrigger>
                                             <DataTrigger Binding="{Binding IsNeutral}" Value="True">
                                                 <Setter TargetName="Amount" Property="Foreground" Value="{DynamicResource Brush.Text.Secondary}" />
+                                                <Setter TargetName="Tile" Property="Style" Value="{StaticResource IconTile.Info}" />
                                             </DataTrigger>
                                         </DataTemplate.Triggers>
                                     </DataTemplate>
@@ -211,7 +188,7 @@
                 <Border x:Name="BudgetCard" Grid.Row="1" Grid.ColumnSpan="2" Style="{StaticResource Card}">
                     <StackPanel>
                         <Grid Margin="0,0,0,8">
-                            <TextBlock Text="{loc:Loc Dashboard.Budgets}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center" />
+                            <TextBlock Text="{loc:Loc Dashboard.Budgets}" Style="{StaticResource Text.CardTitle}" VerticalAlignment="Center" />
                             <Button Style="{StaticResource Button.Link}" HorizontalAlignment="Right" Content="{loc:Loc Dashboard.ViewAll}"
                                     Command="{Binding OpenBudgetsCommand}" />
                         </Grid>
@@ -236,8 +213,8 @@
                                             </StackPanel>
                                             <TextBlock Text="{Binding PercentText}" Style="{StaticResource Text.Caption}" HorizontalAlignment="Right" />
                                         </Grid>
-                                        <ProgressBar x:Name="Bar" Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Height="6" Margin="0,8,0,4"
-                                                     Foreground="{DynamicResource Brush.Success}" />
+                                        <ProgressBar x:Name="Bar" Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Margin="0,8,0,4"
+                                                     Foreground="{DynamicResource Brush.Info}" />
                                         <TextBlock x:Name="Detail" Style="{StaticResource Text.Caption}">
                                             <Run Text="{Binding SpentText, Mode=OneWay}" /><Run Text=" / " /><Run Text="{Binding LimitText, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding RemainingText, Mode=OneWay}" />
                                         </TextBlock>

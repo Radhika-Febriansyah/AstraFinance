@@ -216,6 +216,33 @@ public sealed partial class ShellTests
     }
 
     [Fact]
+    public async Task Account_card_deactivation_uses_the_same_confirmation()
+    {
+        await StartUnlockedAsync();
+        await Shell.NavigateAsync(AppPage.Accounts);
+        var page = Assert.IsType<AccountsViewModel>(Shell.CurrentPage);
+        var dialogs = Get<DialogService>();
+        var card = page.Accounts.Single();
+
+        // Cancel from the card: still active, still on the list.
+        var cancelled = page.ToggleActiveItemCommand.ExecuteAsync(card);
+        Assert.True(dialogs.ActiveDialog!.IsDestructive);
+        dialogs.ActiveDialog.CancelCommand.Execute(null);
+        await cancelled;
+        Assert.True(page.Accounts.Single().IsActive);
+
+        // Confirm from the card: deactivated, history kept (it reappears with "show inactive").
+        var confirmed = page.ToggleActiveItemCommand.ExecuteAsync(page.Accounts.Single());
+        await dialogs.ActiveDialog!.AcceptCommand.ExecuteAsync(null);
+        await confirmed;
+        Assert.False(page.IsDetailsMode);
+        Assert.Empty(page.Accounts);
+        page.ShowInactive = true;
+        await Task.Delay(50);
+        Assert.False(page.Accounts.Single().IsActive);
+    }
+
+    [Fact]
     public async Task Back_up_now_creates_a_backup_and_notifies()
     {
         await StartUnlockedAsync();

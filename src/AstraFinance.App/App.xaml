@@ -20,6 +20,7 @@
                 <ResourceDictionary Source="/AstraFinance;component/Themes/Controls/DatePicker.xaml" />
                 <ResourceDictionary Source="/AstraFinance;component/Themes/Controls/DataGrid.xaml" />
                 <ResourceDictionary Source="/AstraFinance;component/Themes/Controls/Forms.xaml" />
+                <ResourceDictionary Source="/AstraFinance;component/Themes/Controls/Cards.xaml" />
                 <ResourceDictionary Source="/AstraFinance;component/Views/PageTemplates.xaml" />
             </ResourceDictionary.MergedDictionaries>
 

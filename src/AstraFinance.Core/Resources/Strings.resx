@@ -2466,4 +2466,7 @@
   <data name="Lock.Keypad.Delete" xml:space="preserve">
     <value>Delete last digit</value>
   </data>
+  <data name="Accounts.ViewDetails" xml:space="preserve">
+    <value>View details</value>
+  </data>
 </root>

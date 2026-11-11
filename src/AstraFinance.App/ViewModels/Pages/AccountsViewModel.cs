@@ -200,22 +200,61 @@ public sealed partial class AccountsViewModel : PageViewModel
             return;
         }
 
-        var deactivate = Selected.IsActive;
+        if (await ToggleActiveWithConfirmationAsync(Selected).ConfigureAwait(true))
+        {
+            await OpenDetailsAsync(Selected.Id).ConfigureAwait(true);
+        }
+    }
+
+    /// <summary>Deactivate/reactivate from an account card on the list (same confirmation as the details view).</summary>
+    [RelayCommand]
+    private async Task ToggleActiveItemAsync(AccountItemViewModel? item)
+    {
+        if (item is not null && await ToggleActiveWithConfirmationAsync(item).ConfigureAwait(true))
+        {
+            await LoadListAsync().ConfigureAwait(true);
+        }
+    }
+
+    /// <summary>Edit from an account card on the list.</summary>
+    [RelayCommand]
+    private async Task EditItemAsync(AccountItemViewModel? item)
+    {
+        if (item is null)
+        {
+            return;
+        }
+
+        var editor = _editorFactory();
+        editor.LoadForEdit(item.Summary.Account);
+        if (await _dialogs.ShowFormAsync(editor).ConfigureAwait(true))
+        {
+            await LoadListAsync().ConfigureAwait(true);
+        }
+    }
+
+    /// <summary>
+    /// Deactivating needs a destructive confirmation (history is kept); reactivating doesn't.
+    /// Returns true when the account's state changed.
+    /// </summary>
+    private async Task<bool> ToggleActiveWithConfirmationAsync(AccountItemViewModel item)
+    {
+        var deactivate = item.IsActive;
         if (deactivate)
         {
             var confirmed = await _dialogs.ConfirmAsync(
                 Localization.GetString("Accounts.Deactivate.Title"),
-                Localization.Format("Accounts.Deactivate.Body", Selected.Name),
+                Localization.Format("Accounts.Deactivate.Body", item.Name),
                 Localization.GetString("Accounts.Deactivate.Confirm"),
                 isDestructive: true).ConfigureAwait(true);
             if (!confirmed)
             {
-                return;
+                return false;
             }
         }
 
-        await _accounts.SetActiveAsync(Selected.Id, !deactivate).ConfigureAwait(true);
-        await OpenDetailsAsync(Selected.Id).ConfigureAwait(true);
+        await _accounts.SetActiveAsync(item.Id, !deactivate).ConfigureAwait(true);
+        return true;
     }
 
     /// <summary>Transfer money from this account to another (same form and service as the Transactions page).</summary>

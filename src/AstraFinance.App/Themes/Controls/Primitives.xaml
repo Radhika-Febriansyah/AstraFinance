@@ -226,7 +226,7 @@
 
     <!-- ProgressBar -->
     <Style TargetType="ProgressBar">
-        <Setter Property="Height" Value="6" />
+        <Setter Property="Height" Value="8" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Accent}" />
         <Setter Property="Background" Value="{DynamicResource Brush.Surface.Sunken}" />
         <Setter Property="BorderThickness" Value="0" />
@@ -234,8 +234,8 @@
             <Setter.Value>
                 <ControlTemplate TargetType="ProgressBar">
                     <Grid>
-                        <Border x:Name="PART_Track" Background="{TemplateBinding Background}" CornerRadius="3" />
-                        <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}" CornerRadius="3" HorizontalAlignment="Left" />
+                        <Border x:Name="PART_Track" Background="{TemplateBinding Background}" CornerRadius="4" />
+                        <Border x:Name="PART_Indicator" Background="{TemplateBinding Foreground}" CornerRadius="4" HorizontalAlignment="Left" />
                     </Grid>
                 </ControlTemplate>
             </Setter.Value>
