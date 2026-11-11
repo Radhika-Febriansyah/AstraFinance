@@ -19,6 +19,20 @@ public partial class TransactionsPage : UserControl
     {
         // Keep Date, Description and Amount visible on small windows; the details panel still shows every field.
         var width = e.NewSize.Width;
+
+        // Summary cards stay one compact row (icon tiles hidden when narrow) so the table keeps its room;
+        // on very short windows they give way to the table entirely.
+        SummaryGrid.Columns = width < 560 ? 2 : 4;
+        SummaryGrid.Visibility = e.NewSize.Height < 520 || (width < 560 && e.NewSize.Height < 700) ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+        var tileVisibility = width < 900 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
+        foreach (var card in SummaryGrid.Children.OfType<System.Windows.Controls.Border>())
+        {
+            if (card.Child is System.Windows.Controls.DockPanel { Children.Count: > 0 } panel && panel.Children[0] is System.Windows.Controls.Border tile)
+            {
+                tile.Visibility = tileVisibility;
+                ((System.Windows.FrameworkElement)panel.Children[1]).Margin = width < 900 ? new System.Windows.Thickness(0) : new System.Windows.Thickness(12, 0, 0, 0);
+            }
+        }
         TypeColumn.Visibility = width < 820 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
         AccountColumn.Visibility = width < 820 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;
         CategoryColumn.Visibility = width < 640 ? System.Windows.Visibility.Collapsed : System.Windows.Visibility.Visible;

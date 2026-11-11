@@ -157,6 +157,22 @@ public sealed partial class TransactionsViewModel : PageViewModel
     [ObservableProperty]
     public partial string SummaryText { get; private set; } = string.Empty;
 
+    // Summary cards: totals of every transaction matching the filters (all pages), from SummarizeAsync.
+    [ObservableProperty]
+    public partial string SummaryCountText { get; private set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string SummaryIncomeText { get; private set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string SummaryExpenseText { get; private set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial string SummaryNetText { get; private set; } = string.Empty;
+
+    [ObservableProperty]
+    public partial bool IsSummaryNetNegative { get; private set; }
+
     [ObservableProperty]
     public partial bool IsEmpty { get; private set; }
 
@@ -580,6 +596,11 @@ public sealed partial class TransactionsViewModel : PageViewModel
             PageCount = result.PageCount;
             SummaryText = Localization.Format(
                 "Transactions.Summary", summary.Count, _format.FormatMoney(summary.Income), _format.FormatMoney(summary.Expense));
+            SummaryCountText = summary.Count.ToString("N0", Localization.Culture);
+            SummaryIncomeText = _format.FormatMoney(summary.Income);
+            SummaryExpenseText = _format.FormatMoney(summary.Expense);
+            SummaryNetText = (summary.Net > 0 ? "+" : string.Empty) + _format.FormatMoney(summary.Net);
+            IsSummaryNetNegative = summary.Net < 0;
             IsEmpty = result.TotalCount == 0;
             HasNoRecordsAtAll = IsEmpty && !HasActiveFilters && !ShowDeleted;
             OnPropertyChanged(nameof(HasActiveFilters));

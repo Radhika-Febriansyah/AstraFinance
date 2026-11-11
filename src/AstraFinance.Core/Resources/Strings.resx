@@ -2469,4 +2469,19 @@
   <data name="Accounts.ViewDetails" xml:space="preserve">
     <value>View details</value>
   </data>
+  <data name="Transactions.Summary.Count" xml:space="preserve">
+    <value>Transactions</value>
+  </data>
+  <data name="Transactions.Summary.Income" xml:space="preserve">
+    <value>Income</value>
+  </data>
+  <data name="Transactions.Summary.Expense" xml:space="preserve">
+    <value>Expenses</value>
+  </data>
+  <data name="Transactions.Summary.Net" xml:space="preserve">
+    <value>Net</value>
+  </data>
+  <data name="Transactions.Summary.Hint" xml:space="preserve">
+    <value>Matching the current filters</value>
+  </data>
 </root>

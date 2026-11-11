@@ -2469,4 +2469,19 @@
   <data name="Accounts.ViewDetails" xml:space="preserve">
     <value>Lihat detail</value>
   </data>
+  <data name="Transactions.Summary.Count" xml:space="preserve">
+    <value>Transaksi</value>
+  </data>
+  <data name="Transactions.Summary.Income" xml:space="preserve">
+    <value>Pemasukan</value>
+  </data>
+  <data name="Transactions.Summary.Expense" xml:space="preserve">
+    <value>Pengeluaran</value>
+  </data>
+  <data name="Transactions.Summary.Net" xml:space="preserve">
+    <value>Selisih bersih</value>
+  </data>
+  <data name="Transactions.Summary.Hint" xml:space="preserve">
+    <value>Sesuai filter saat ini</value>
+  </data>
 </root>
