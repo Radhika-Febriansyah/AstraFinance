@@ -62,6 +62,16 @@ public partial class App : Application
             // PreferencesService keeps the localization language in sync; mirror it to the thread culture.
             ApplyUiCulture(localization);
             localization.LanguageChanged += (_, _) => ApplyUiCulture(localization);
+
+            // The next upgrade Setup and its uninstaller follow the app's language.
+            InstallerLanguageSync.Apply(preferences.Current.Language);
+            preferences.Changed += (_, args) =>
+            {
+                if (args.Previous.Language != args.Current.Language)
+                {
+                    InstallerLanguageSync.Apply(args.Current.Language);
+                }
+            };
             LocalizationSource.Instance.Attach(localization);
 
             _services.GetRequiredService<ThemeService>().Initialize(Resources);

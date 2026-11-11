@@ -2,7 +2,7 @@
 #   svg/      symbol (light/dark), horizontal + vertical lockups (light/dark), app icon, installer banner
 #   png/      each SVG exported at 512 and 1024 px (longest side), transparent where the SVG is
 #   src/AstraFinance.App/Resources/astra.ico   Windows icon, 16-256 px frames (small sizes tuned for legibility)
-#   installer/branding/   Inno Setup wizard bitmaps (24-bit BMP) for 100-250 % display scaling
+#   installer/branding/   Inno Setup wizard bitmaps (24-bit BMP) for 100-250 % display scaling and the header banner (PNG)
 #
 # No third-party tools: uses WPF (PresentationCore) for geometry, text outlines and rasterising.
 # Usage (repository root, Windows PowerShell 5.1):
@@ -259,6 +259,20 @@ foreach ($pct in 100, 125, 150, 175, 200, 225, 250) {
     $s = [int][Math]::Round(55 * $k)
     Write-Bmp (IconLayout 0.68) $s $s $White (Join-Path $innoDir "wizard-small-$pct.bmp")
 }
+
+# Header banner shown on every inner page of Setup and in the uninstaller ("Minimalist Corporate": Deep Navy,
+# symbol left, white wordmark right, no tagline). PNG, scaled by Setup to the header height at run time.
+function HeaderBannerLayout {
+    $sh = 58; $cap = 19; $gap = 14; $padX = 24; $ch = 100
+    $sw = SymbolWidth $sh; $tw = WordmarkWidth $cap
+    $top = ($ch - $sh) / 2
+    Layout ($padX + $sw + $gap + $tw + $padX) $ch (Bg $Navy 0) @(
+        (SymbolInBox $padX $top $sh $OnDark),
+        (WordmarkAt ($padX + $sw + $gap) ($top + $sh * 0.58 - $cap / 2) $cap $White))
+}
+$hb = HeaderBannerLayout
+[IO.File]::WriteAllBytes((Join-Path $innoDir 'header-banner.png'),
+    (PngBytes (Render $hb ([int][Math]::Round(200 * $hb.W / $hb.H)) 200)))
 
 "Symbol bounds: $($SB.ToString($inv)); wordmark font: $WordmarkFont $WordmarkWeight"
 "SVG: $((Get-ChildItem $svgDir -Filter *.svg).Count)  PNG: $((Get-ChildItem $pngDir -Filter *.png).Count)  ICO: $((Get-Item $icoPath).Length) bytes  BMP: $((Get-ChildItem $innoDir -Filter *.bmp).Count)"

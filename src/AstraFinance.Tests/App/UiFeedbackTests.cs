@@ -88,6 +88,19 @@ public class UiFeedbackTests
         Assert.True(result.Preferences.PinSounds && result.Preferences.NotificationSounds && result.Preferences.TransactionSounds);
     }
 
+    [Fact]
+    public void Installer_language_names_match_the_setup_script()
+    {
+        Assert.Equal("indonesian", InstallerLanguageSync.InstallerLanguageName(AppLanguage.Indonesian));
+        Assert.Equal("english", InstallerLanguageSync.InstallerLanguageName(AppLanguage.English));
+
+        var script = File.ReadAllText(Path.Combine(RepoPaths.Root, "installer", "AstraFinance.iss"));
+        Assert.Contains("Name: \"english\"", script, StringComparison.Ordinal);
+        Assert.Contains("Name: \"indonesian\"", script, StringComparison.Ordinal);
+        Assert.Contains("AppId={{6E1B2C5A-7F43-4D8E-9A21-3C5F0B8D7E14}", script, StringComparison.Ordinal);
+        Assert.EndsWith("{6E1B2C5A-7F43-4D8E-9A21-3C5F0B8D7E14}_is1", InstallerLanguageSync.UninstallKey, StringComparison.Ordinal);
+    }
+
     private static short[] Samples(byte[] wav)
     {
         var samples = new short[(wav.Length - 44) / 2];
