@@ -42,6 +42,19 @@ Run `AstraFinance-Setup-1.1.0.exe`. It upgrades an existing installation in plac
 uses the language Setup remembered for your installation. Your data folder (`%LOCALAPPDATA%\AstraFinance`) is not
 touched by the upgrade.
 
+### Release verification (2026-11-11)
+
+Built with `installer/build-release.ps1` from commit `2acfe9b` on branch `rebrand-v1.1`:
+
+| Check | Result |
+|---|---|
+| Release build | 353/353 tests passed (Release); self-contained publish; **AstraFinance-Setup-1.1.0.exe**, 57.2 MB, SHA-256 `0C4B7A45F2274B4D24540273A0521078DC85048CF1472ACCDBAC060433544546` (specific to this build) |
+| Dependency audit | No vulnerable packages |
+| Version | App 1.1.0 (file 1.1.0.0); Setup 1.1.0; splash and About show "Version 1.1.0" |
+| Data compatibility | No database schema or migration change since 1.0.0; database, backup/restore and export code unchanged apart from the PDF brand colour |
+| Manual QA (test data, 125 % scaling) | All pages in English/Indonesian, light/dark/follow system and the smallest window; PIN; add/delete/restore with exact totals; backup and restore; PDF/Excel/CSV export; keyboard shortcuts; icons |
+| Upgrade from 1.0.0 | Released 1.0.0 installed, upgraded with the rebranded Setup, data kept; uninstall keeps data by default (verified before the version bump with the same installer script) |
+
 ### Known limitations (new in 1.1.0)
 
 - The uninstaller uses the language of the most recent installation or upgrade.
