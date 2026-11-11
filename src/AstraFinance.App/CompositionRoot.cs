@@ -53,6 +53,7 @@ public static class CompositionRoot
         services.AddSingleton<IPreferencesService, PreferencesService>();
         services.AddSingleton<ISystemThemeProvider, WindowsSystemThemeProvider>();
         services.AddSingleton<ThemeService>();
+        services.AddSingleton<IUiSoundPlayer, UiSoundPlayer>();
 
         // Database & financial services (SQLite via EF Core; short-lived contexts per operation).
         services.AddAstraDatabase(paths);
@@ -121,6 +122,7 @@ public static class CompositionRoot
         services.AddTransient<CategoriesSettingsViewModel>();
         services.AddTransient<SecuritySettingsViewModel>();
         services.AddTransient<DataSettingsViewModel>();
+        services.AddTransient<SoundSettingsViewModel>();
         AddFactory<OnboardingViewModel>(services);
         AddFactory<LockViewModel>(services);
 

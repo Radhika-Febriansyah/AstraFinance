@@ -1,3 +1,4 @@
+using AstraFinance.Core.Enums;
 using AstraFinance.Core.Interfaces;
 using AstraFinance.Core.Security;
 using CommunityToolkit.Mvvm.ComponentModel;
@@ -14,8 +15,11 @@ public sealed partial class LockViewModel : ObservableObject, IDisposable
     private Func<Task> _onUnlocked = () => Task.CompletedTask;
     private CancellationTokenSource? _countdown;
 
-    public LockViewModel(IPinService pin, ILocalizationService localization, IClock clock)
+    private readonly IUiSoundPlayer _sounds;
+
+    public LockViewModel(IPinService pin, ILocalizationService localization, IClock clock, IUiSoundPlayer sounds)
     {
+        _sounds = sounds;
         _pin = pin;
         _localization = localization;
         _clock = clock;
@@ -72,12 +76,15 @@ public sealed partial class LockViewModel : ObservableObject, IDisposable
             {
                 case PinCheckOutcome.Success:
                 case PinCheckOutcome.NotConfigured:
+                    _sounds.Play(UiSound.PinSuccess);
                     await _onUnlocked().ConfigureAwait(true);
                     return;
                 case PinCheckOutcome.CoolingDown:
+                    _sounds.Play(UiSound.PinError);
                     StartCountdown(result.RetryAt!.Value);
                     break;
                 default:
+                    _sounds.Play(UiSound.PinError);
                     if (result.RetryAt is { } retryAt)
                     {
                         StartCountdown(retryAt);

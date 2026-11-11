@@ -81,7 +81,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Border x:Name="Root" Style="{StaticResource Card}">
+                    <Border x:Name="Root" Style="{StaticResource Card}" RenderTransformOrigin="0.5,0.5">
                         <ContentPresenter />
                     </Border>
                     <ControlTemplate.Triggers>
@@ -89,6 +89,13 @@
                             <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource Brush.Border.Strong}" />
                             <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Surface.Raised}" />
                             <Setter TargetName="Root" Property="Effect" Value="{DynamicResource Effect.Shadow.Card}" />
+                        </Trigger>
+                        <Trigger Property="IsPressed" Value="True">
+                            <Setter TargetName="Root" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.99" ScaleY="0.99" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>
@@ -107,7 +114,7 @@
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="Button">
-                    <Grid>
+                    <Grid x:Name="HeroRoot" RenderTransformOrigin="0.5,0.5">
                         <Border x:Name="Root" Style="{StaticResource Card.Hero}" />
                         <Border x:Name="Overlay" CornerRadius="{StaticResource Radius.Card}" Background="Transparent" />
                         <ContentPresenter Margin="{StaticResource Padding.Card}" />
@@ -119,6 +126,11 @@
                         </Trigger>
                         <Trigger Property="IsPressed" Value="True">
                             <Setter TargetName="Overlay" Property="Background" Value="#1A000000" />
+                            <Setter TargetName="HeroRoot" Property="RenderTransform">
+                                <Setter.Value>
+                                    <ScaleTransform ScaleX="0.99" ScaleY="0.99" />
+                                </Setter.Value>
+                            </Setter>
                         </Trigger>
                     </ControlTemplate.Triggers>
                 </ControlTemplate>

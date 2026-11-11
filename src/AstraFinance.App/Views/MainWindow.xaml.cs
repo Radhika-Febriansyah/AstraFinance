@@ -278,6 +278,19 @@ public partial class MainWindow : Window
         }
     }
 
+    // Notification cards pause their countdown while the pointer or keyboard focus is on them.
+    private void Toast_HoverChanged(object sender, MouseEventArgs e) => UpdateToastHover(sender);
+
+    private void Toast_FocusChanged(object sender, DependencyPropertyChangedEventArgs e) => UpdateToastHover(sender);
+
+    private static void UpdateToastHover(object sender)
+    {
+        if (sender is FrameworkElement { DataContext: NotificationItemViewModel toast } card)
+        {
+            toast.IsHovered = card.IsMouseOver || card.IsKeyboardFocusWithin;
+        }
+    }
+
     /// <summary>Dialog entrance: the scrim fades in while the panel fades and scales up from 96 %.</summary>
     private void AnimateDialogIn()
     {

@@ -2553,4 +2553,37 @@
   <data name="About.Details" xml:space="preserve">
     <value>Detail</value>
   </data>
+  <data name="Settings.Sounds" xml:space="preserve">
+    <value>Suara</value>
+  </data>
+  <data name="Settings.Sounds.Enabled" xml:space="preserve">
+    <value>Putar suara antarmuka</value>
+  </data>
+  <data name="Settings.Sounds.Enabled.Hint" xml:space="preserve">
+    <value>Nada singkat dan halus untuk beberapa momen. Tidak ada suara yang diputar saat ini nonaktif.</value>
+  </data>
+  <data name="Settings.Sounds.Volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Settings.Sounds.Pin" xml:space="preserve">
+    <value>Layar PIN</value>
+  </data>
+  <data name="Settings.Sounds.Pin.Hint" xml:space="preserve">
+    <value>Nada saat PIN diterima atau tidak.</value>
+  </data>
+  <data name="Settings.Sounds.Notifications" xml:space="preserve">
+    <value>Notifikasi penting</value>
+  </data>
+  <data name="Settings.Sounds.Notifications.Hint" xml:space="preserve">
+    <value>Peringatan dan kesalahan.</value>
+  </data>
+  <data name="Settings.Sounds.Transactions" xml:space="preserve">
+    <value>Transaksi tersimpan</value>
+  </data>
+  <data name="Settings.Sounds.Transactions.Hint" xml:space="preserve">
+    <value>Bunyi ringan saat transaksi disimpan.</value>
+  </data>
+  <data name="Settings.Sounds.Preview" xml:space="preserve">
+    <value>Pratinjau</value>
+  </data>
 </root>

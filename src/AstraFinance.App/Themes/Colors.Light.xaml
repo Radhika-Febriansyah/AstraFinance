@@ -34,6 +34,8 @@
     <SolidColorBrush x:Key="Brush.ScrollThumb.Hover" Color="#FFA6B1C4" />
 
     <SolidColorBrush x:Key="Brush.Tooltip.Background" Color="#FF172554" />
+    <!-- Floating notification card: nearly opaque, so content behind shows through very slightly. -->
+    <SolidColorBrush x:Key="Brush.Toast.Background" Color="#F5FFFFFF" />
     <SolidColorBrush x:Key="Brush.Tooltip.Text" Color="#FFF5F7FB" />
 
     <!-- Functional colors: green = income/success, red = expense/error, amber = attention, blue = information. -->

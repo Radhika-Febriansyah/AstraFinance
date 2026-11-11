@@ -43,6 +43,7 @@ public sealed partial class TransactionFormViewModel : ValidatableViewModel, IFo
     };
 
     private readonly ITransactionService _transactions;
+    private readonly IUiSoundPlayer _sounds;
     private readonly ICategoryService _categoryService;
     private readonly IAccountService _accountService;
     private readonly IRegionalFormatService _format;
@@ -59,8 +60,10 @@ public sealed partial class TransactionFormViewModel : ValidatableViewModel, IFo
         IRegionalFormatService format,
         ILocalizationService localization,
         IClock clock,
-        DataChangeNotifier changes)
+        DataChangeNotifier changes,
+        IUiSoundPlayer sounds)
     {
+        _sounds = sounds;
         _transactions = transactions;
         _categoryService = categories;
         _accountService = accounts;
@@ -246,6 +249,7 @@ public sealed partial class TransactionFormViewModel : ValidatableViewModel, IFo
                 ? await _transactions.UpdateAsync(draft).ConfigureAwait(true)
                 : await _transactions.CreateAsync(draft).ConfigureAwait(true);
             _changes.Notify(DataChangeKind.Transactions);
+            _sounds.Play(UiSound.TransactionSaved); // optional; silent unless enabled in Settings
             return true;
         }
         catch (FinanceValidationException ex)

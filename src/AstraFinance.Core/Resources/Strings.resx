@@ -2553,4 +2553,37 @@
   <data name="About.Details" xml:space="preserve">
     <value>Details</value>
   </data>
+  <data name="Settings.Sounds" xml:space="preserve">
+    <value>Sounds</value>
+  </data>
+  <data name="Settings.Sounds.Enabled" xml:space="preserve">
+    <value>Play interface sounds</value>
+  </data>
+  <data name="Settings.Sounds.Enabled.Hint" xml:space="preserve">
+    <value>Short, subtle tones for a few moments. Nothing plays while this is off.</value>
+  </data>
+  <data name="Settings.Sounds.Volume" xml:space="preserve">
+    <value>Volume</value>
+  </data>
+  <data name="Settings.Sounds.Pin" xml:space="preserve">
+    <value>PIN screen</value>
+  </data>
+  <data name="Settings.Sounds.Pin.Hint" xml:space="preserve">
+    <value>A tone when the PIN is accepted or not.</value>
+  </data>
+  <data name="Settings.Sounds.Notifications" xml:space="preserve">
+    <value>Important notifications</value>
+  </data>
+  <data name="Settings.Sounds.Notifications.Hint" xml:space="preserve">
+    <value>Warnings and errors.</value>
+  </data>
+  <data name="Settings.Sounds.Transactions" xml:space="preserve">
+    <value>Saved transactions</value>
+  </data>
+  <data name="Settings.Sounds.Transactions.Hint" xml:space="preserve">
+    <value>A light tick when a transaction is saved.</value>
+  </data>
+  <data name="Settings.Sounds.Preview" xml:space="preserve">
+    <value>Preview</value>
+  </data>
 </root>

@@ -840,3 +840,34 @@ dark, narrow layouts (Transactions, Calendar), Indonesian (PIN screen, Calendar)
 - The test database copied from earlier QA stored a backup folder inside the real data folder; it was re-pointed to
   the test folder before any automatic backup was due (nothing was written to the real folder).
 - Settings sections keep one card per section (with icon headers) rather than one card per setting.
+
+## Rebrand Phase 5 — Notifications, interactions and audio ✅
+
+### Completed tasks
+- **Notification cards (Premium Floating Card):** top right below the header, newest first, up to three; tinted
+  icon tile per type, slight transparency, popup shadow; slide-in and fade-out (`MotionAssist`). Duration from
+  `ToastTiming`: 4–12 s by text length, warnings longer, errors stay until dismissed. The countdown bar pauses while
+  the card is hovered or has keyboard focus. When room is needed the oldest self-closing card goes first.
+- **Micro-interactions:** buttons settle to 98 % and clickable cards to 99 % while pressed (instant feedback, no
+  animation); existing hover, dialog, sidebar and dropdown motion kept. All motion follows Windows "Animation effects".
+- **Optional UI sounds:** short two-note tones generated in code (`ToneSynthesizer`, 16-bit WAV in memory) and played
+  with the Windows sound player — no audio files or dependencies. Events: PIN accepted / rejected, important
+  notifications (warnings and errors), transaction saved. Off by default.
+- **Sound settings** (Settings → Notifications → Sounds): master switch (disables every sound), volume 0–100,
+  one switch per category, preview per category (needs the master switch). Stored in the local preferences file;
+  1.0 preference files load unchanged with sounds off.
+- Backup reminder dropdown widened (its text was cut off).
+
+### Build status
+Debug and Release builds succeeded (warnings as errors).
+
+### Test status
+352/352 passed (new: toast timing, sound rules and volume clamping, tone WAV format and volume scaling,
+1.0 preferences compatibility, notification ordering/stickiness/sounds, sound settings persistence and preview).
+Manual: success card with countdown at top right; Sounds card; preview plays without errors (real data folder
+verified unchanged by hash).
+
+### Known issues / notes
+- Sound output itself was not listened to during automated checks; playback failures (e.g. no audio device) are
+  ignored by design.
+- Clicking a Windows (system) notification still only dismisses it (unchanged from 1.0).

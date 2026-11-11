@@ -341,30 +341,67 @@
         <ContentControl x:Name="GateHost" Content="{Binding Gate}" Focusable="False"
                         Visibility="{Binding Gate, Converter={StaticResource NullToVisibility}}" />
 
-        <!-- ===================== Toasts ===================== -->
-        <ItemsControl ItemsSource="{Binding Notifications.Toasts}" HorizontalAlignment="Right" VerticalAlignment="Bottom"
-                      Margin="0,0,20,20" Width="360" Focusable="False">
+        <!-- ===================== Notifications: floating cards, top right, newest first ===================== -->
+        <ItemsControl ItemsSource="{Binding Notifications.Toasts}" HorizontalAlignment="Right" VerticalAlignment="Top"
+                      Margin="0,76,20,0" Width="372" Focusable="False" AutomationProperties.LiveSetting="Polite">
             <ItemsControl.ItemTemplate>
                 <DataTemplate DataType="{x:Type vm:NotificationItemViewModel}">
-                    <Border Style="{StaticResource Card.Raised}" Padding="14,12" Margin="0,8,0,0" Effect="{DynamicResource Effect.Shadow.Popup}">
+                    <Border x:Name="Card" Margin="0,0,0,10" CornerRadius="{StaticResource Radius.Overlay}"
+                            Background="{DynamicResource Brush.Toast.Background}" BorderBrush="{DynamicResource Brush.Border}" BorderThickness="1"
+                            Effect="{DynamicResource Effect.Shadow.Popup}" AutomationProperties.Name="{Binding Title}"
+                            c:MotionAssist.AnimateEntrance="True" c:MotionAssist.IsLeaving="{Binding IsLeaving}"
+                            MouseEnter="Toast_HoverChanged" MouseLeave="Toast_HoverChanged" IsKeyboardFocusWithinChanged="Toast_FocusChanged">
                         <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto" />
-                                <ColumnDefinition Width="*" />
-                                <ColumnDefinition Width="Auto" />
-                            </Grid.ColumnDefinitions>
-                            <c:AstraIcon Style="{StaticResource NotificationIcon}" VerticalAlignment="Top" Margin="0,1,12,0" />
-                            <StackPanel Grid.Column="1">
-                                <TextBlock Text="{Binding Title}" Style="{StaticResource Text.BodyStrong}" />
-                                <TextBlock Text="{Binding Message}" Style="{StaticResource Text.Paragraph}" FontSize="{StaticResource FontSize.Caption}" LineHeight="18" Margin="0,2,0,0" />
-                            </StackPanel>
-                            <Button Grid.Column="2" Style="{StaticResource Button.Icon}" Width="28" Height="28" VerticalAlignment="Top"
-                                    c:Assist.Icon="Icon.X" ToolTip="{loc:Loc Shell.Notifications.Dismiss}"
-                                    AutomationProperties.Name="{loc:Loc Shell.Notifications.Dismiss}"
-                                    Command="{Binding DataContext.Notifications.DismissToastCommand, RelativeSource={RelativeSource AncestorType=Window}}"
-                                    CommandParameter="{Binding}" />
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid Margin="14,12,8,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <Border x:Name="Tile" Style="{StaticResource IconTile.Info}" Width="34" Height="34" CornerRadius="10" VerticalAlignment="Top">
+                                    <c:AstraIcon IconKey="{Binding IconKey}" Width="18" Height="18" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="12,0,4,0" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Title}" Style="{StaticResource Text.BodyStrong}" TextWrapping="Wrap" TextTrimming="None" />
+                                    <TextBlock Text="{Binding Message}" Style="{StaticResource Text.Paragraph}" FontSize="{StaticResource FontSize.Caption}" LineHeight="18" Margin="0,2,0,0" />
+                                </StackPanel>
+                                <Button Grid.Column="2" Style="{StaticResource Button.Icon}" Width="28" Height="28" VerticalAlignment="Top"
+                                        c:Assist.Icon="Icon.X" ToolTip="{loc:Loc Shell.Notifications.Dismiss}"
+                                        AutomationProperties.Name="{loc:Loc Shell.Notifications.Dismiss}"
+                                        Command="{Binding DataContext.Notifications.DismissToastCommand, RelativeSource={RelativeSource AncestorType=Window}}"
+                                        CommandParameter="{Binding}" />
+                            </Grid>
+                            <!-- Countdown (paused while hovered); hidden for notices that wait for the user -->
+                            <Border x:Name="Track" Grid.Row="1" Height="3" Margin="14,0,14,8" CornerRadius="1.5" Background="{DynamicResource Brush.Surface.Sunken}">
+                                <Border x:Name="Bar" CornerRadius="1.5" Background="{DynamicResource Brush.Info}" RenderTransformOrigin="0,0.5">
+                                    <Border.RenderTransform>
+                                        <ScaleTransform ScaleX="{Binding Progress}" />
+                                    </Border.RenderTransform>
+                                </Border>
+                            </Border>
                         </Grid>
                     </Border>
+                    <DataTemplate.Triggers>
+                        <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Success}">
+                            <Setter TargetName="Tile" Property="Style" Value="{StaticResource IconTile.Success}" />
+                            <Setter TargetName="Bar" Property="Background" Value="{DynamicResource Brush.Success}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Warning}">
+                            <Setter TargetName="Tile" Property="Style" Value="{StaticResource IconTile.Warning}" />
+                            <Setter TargetName="Bar" Property="Background" Value="{DynamicResource Brush.Warning}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding Kind}" Value="{x:Static enums:NotificationKind.Error}">
+                            <Setter TargetName="Tile" Property="Style" Value="{StaticResource IconTile.Danger}" />
+                            <Setter TargetName="Card" Property="BorderBrush" Value="{DynamicResource Brush.Danger}" />
+                        </DataTrigger>
+                        <DataTrigger Binding="{Binding IsSticky}" Value="True">
+                            <Setter TargetName="Track" Property="Visibility" Value="Collapsed" />
+                        </DataTrigger>
+                    </DataTemplate.Triggers>
                 </DataTemplate>
             </ItemsControl.ItemTemplate>
         </ItemsControl>

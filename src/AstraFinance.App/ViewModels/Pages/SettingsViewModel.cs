@@ -63,6 +63,7 @@ public sealed partial class SettingsViewModel : PageViewModel
         CategoriesSettingsViewModel categories,
         SecuritySettingsViewModel security,
         DataSettingsViewModel data,
+        SoundSettingsViewModel sounds,
         IClock clock)
         : base(AppPage.Settings, localization)
     {
@@ -71,6 +72,7 @@ public sealed partial class SettingsViewModel : PageViewModel
         Categories = categories;
         Security = security;
         Data = data;
+        Sounds = sounds;
         SectionOptions = Enum.GetValues<SettingsSection>()
             .Select(s => new ChoiceOption<SettingsSection>(s, () => Localization.GetString($"Settings.Section.{s}"), SectionIcon(s), v => Section = v))
             .ToList();
@@ -131,6 +133,8 @@ public sealed partial class SettingsViewModel : PageViewModel
     public CategoriesSettingsViewModel Categories { get; }
 
     public SecuritySettingsViewModel Security { get; }
+
+    public SoundSettingsViewModel Sounds { get; }
 
     public DataSettingsViewModel Data { get; }
 
@@ -338,6 +342,7 @@ public sealed partial class SettingsViewModel : PageViewModel
         {
             _preferences.Changed -= OnPreferencesChanged;
             _theme.ThemeApplied -= OnThemeApplied;
+            Sounds.Dispose();
         }
 
         base.Dispose(disposing);
