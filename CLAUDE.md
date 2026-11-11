@@ -122,21 +122,28 @@ The application name is **Astra Finance**.
 
 Use a modern, clean, professional financial dashboard aesthetic.
 
-Primary accent: Soft coral / orange.
+> **Superseded by the 1.1 visual rebranding.** The brand palette and visual system are defined in
+> `docs/ASTRA_FINANCE_REBRANDING.md`; that document takes precedence over this section.
+
+Brand palette: Royal Blue `#2563EB` (primary interactions, highlights), Deep Navy `#172554`
+(dark surfaces, brand backgrounds), White (contrast, clean surfaces). Functional colors are kept:
+green = income/success, red = expense/error, amber = attention, blue = information.
+
+Primary accent: Royal Blue (the "Blue" accent preset, default). Other accent presets remain
+available as a user preference.
 
 Dark theme:
-- Charcoal background.
-- Subtle navy surfaces.
+- Deep-navy background and surfaces.
 - Soft white primary text.
-- Muted gray secondary text.
-- Coral accent.
+- Cool gray secondary text.
+- Royal Blue accent.
 
 Light theme:
 - White background.
-- Soft gray surfaces.
-- Dark charcoal primary text.
+- Soft cool-gray surfaces.
+- Navy-charcoal primary text.
 - Muted gray secondary text.
-- Coral accent.
+- Royal Blue accent.
 
 ### Appearance settings
 

@@ -97,6 +97,12 @@
         <Setter Property="SnapsToDevicePixels" Value="True" />
     </Style>
 
+    <!-- Hero statistic card: restrained Deep Navy → Royal Blue gradient. Use Text.OnHero* styles inside. -->
+    <Style x:Key="Card.Hero" TargetType="Border" BasedOn="{StaticResource Card}">
+        <Setter Property="Background" Value="{DynamicResource Brush.Hero}" />
+        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Hero.Border}" />
+    </Style>
+
     <Style x:Key="Card.Raised" TargetType="Border" BasedOn="{StaticResource Card}">
         <Setter Property="Background" Value="{DynamicResource Brush.Surface.Raised}" />
     </Style>
@@ -131,6 +137,38 @@
     <Style x:Key="Badge.Text" TargetType="TextBlock" BasedOn="{StaticResource Text.Caption}">
         <Setter Property="FontWeight" Value="SemiBold" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Accent.Text}" />
+    </Style>
+
+    <!-- Status badges: soft background + matching text. Pair Badge.X (Border) with Badge.X.Text (TextBlock). -->
+    <Style x:Key="Badge.Success" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{DynamicResource Brush.Success.Subtle}" />
+    </Style>
+    <Style x:Key="Badge.Success.Text" TargetType="TextBlock" BasedOn="{StaticResource Badge.Text}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Success}" />
+    </Style>
+    <Style x:Key="Badge.Danger" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{DynamicResource Brush.Danger.Subtle}" />
+    </Style>
+    <Style x:Key="Badge.Danger.Text" TargetType="TextBlock" BasedOn="{StaticResource Badge.Text}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+    </Style>
+    <Style x:Key="Badge.Warning" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{DynamicResource Brush.Warning.Subtle}" />
+    </Style>
+    <Style x:Key="Badge.Warning.Text" TargetType="TextBlock" BasedOn="{StaticResource Badge.Text}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+    </Style>
+    <Style x:Key="Badge.Info" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{DynamicResource Brush.Info.Subtle}" />
+    </Style>
+    <Style x:Key="Badge.Info.Text" TargetType="TextBlock" BasedOn="{StaticResource Badge.Text}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Info}" />
+    </Style>
+    <Style x:Key="Badge.Neutral" TargetType="Border" BasedOn="{StaticResource Badge}">
+        <Setter Property="Background" Value="{DynamicResource Brush.Selected}" />
+    </Style>
+    <Style x:Key="Badge.Neutral.Text" TargetType="TextBlock" BasedOn="{StaticResource Badge.Text}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Secondary}" />
     </Style>
 
     <!-- Separator -->

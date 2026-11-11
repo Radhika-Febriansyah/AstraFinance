@@ -32,7 +32,7 @@ public sealed class ThemeService : IDisposable
 
     public ResolvedTheme CurrentTheme { get; private set; } = ResolvedTheme.Light;
 
-    public AccentColor CurrentAccent { get; private set; } = AccentColor.Coral;
+    public AccentColor CurrentAccent { get; private set; } = AccentColor.Blue;
 
     /// <summary>Raised on the UI thread after a theme or accent change has been applied.</summary>
     public event EventHandler? ThemeApplied;
@@ -97,7 +97,17 @@ public sealed class ThemeService : IDisposable
             ["Brush.Accent.Text"] = Brush(swatch.Text),
             ["Brush.Accent.Foreground"] = Brush(swatch.Foreground),
             ["Brush.Focus"] = Brush(swatch.Text),
+            ["Color.Accent.GradientStart"] = ToColor(swatch.GradientStart),
+            ["Brush.Accent.Gradient"] = Gradient(swatch.GradientStart, swatch.Accent),
         };
+    }
+
+    /// <summary>Diagonal primary-action gradient: bottom-left <paramref name="start"/> to top-right <paramref name="end"/>.</summary>
+    private static LinearGradientBrush Gradient(RgbColor start, RgbColor end)
+    {
+        var brush = new LinearGradientBrush(ToColor(start), ToColor(end), new Point(0, 1), new Point(1, 0));
+        brush.Freeze();
+        return brush;
     }
 
     /// <summary>Swaps a theme dictionary in place, or inserts it at <paramref name="initialIndex"/> the first time.</summary>

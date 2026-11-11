@@ -14,7 +14,7 @@ public static class Assist
         "IsBusy", typeof(bool), typeof(Assist), new PropertyMetadata(false));
 
     public static readonly DependencyProperty CornerRadiusProperty = DependencyProperty.RegisterAttached(
-        "CornerRadius", typeof(CornerRadius), typeof(Assist), new PropertyMetadata(new CornerRadius(6)));
+        "CornerRadius", typeof(CornerRadius), typeof(Assist), new PropertyMetadata(new CornerRadius(8)));
 
     /// <summary>Placeholder text shown by text inputs when empty.</summary>
     public static readonly DependencyProperty PlaceholderProperty = DependencyProperty.RegisterAttached(
@@ -23,6 +23,13 @@ public static class Assist
     /// <summary>Badge text displayed on an icon button (e.g. unread count). Hidden when null or empty.</summary>
     public static readonly DependencyProperty BadgeProperty = DependencyProperty.RegisterAttached(
         "Badge", typeof(string), typeof(Assist), new PropertyMetadata(null));
+
+    /// <summary>
+    /// True for controls drawn on a strong fill or gradient (primary, danger): hover lightens and
+    /// pressed darkens the fill instead of using the neutral surface overlays.
+    /// </summary>
+    public static readonly DependencyProperty IsOnFillProperty = DependencyProperty.RegisterAttached(
+        "IsOnFill", typeof(bool), typeof(Assist), new PropertyMetadata(false));
 
     public static string? GetIcon(DependencyObject element) => (string?)element.GetValue(IconProperty);
 
@@ -43,4 +50,8 @@ public static class Assist
     public static string? GetBadge(DependencyObject element) => (string?)element.GetValue(BadgeProperty);
 
     public static void SetBadge(DependencyObject element, string? value) => element.SetValue(BadgeProperty, value);
+
+    public static bool GetIsOnFill(DependencyObject element) => (bool)element.GetValue(IsOnFillProperty);
+
+    public static void SetIsOnFill(DependencyObject element, bool value) => element.SetValue(IsOnFillProperty, value);
 }

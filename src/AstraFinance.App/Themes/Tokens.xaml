@@ -19,11 +19,51 @@
     <system:Double x:Key="FontSize.PageTitle">24</system:Double>
     <system:Double x:Key="FontSize.Display">32</system:Double>
 
-    <!-- Corner radii (restrained) -->
-    <CornerRadius x:Key="Radius.Small">4</CornerRadius>
-    <CornerRadius x:Key="Radius.Control">6</CornerRadius>
-    <CornerRadius x:Key="Radius.Card">10</CornerRadius>
-    <CornerRadius x:Key="Radius.Overlay">12</CornerRadius>
+    <!-- ============== Brand (theme-independent) ==============
+         Deep Navy #172554, Royal Blue #2563EB, White. Sky #60A5FA is Royal Blue's light tint,
+         used where the symbol sits on Deep Navy (Navy would disappear there). -->
+    <Color x:Key="Color.Brand.Navy">#FF172554</Color>
+    <Color x:Key="Color.Brand.Royal">#FF2563EB</Color>
+    <Color x:Key="Color.Brand.Sky">#FF60A5FA</Color>
+    <Color x:Key="Color.Brand.Night">#FF0B1229</Color>
+
+    <SolidColorBrush x:Key="Brush.Brand.Navy" Color="#FF172554" />
+    <SolidColorBrush x:Key="Brush.Brand.Royal" Color="#FF2563EB" />
+    <SolidColorBrush x:Key="Brush.OnBrand" Color="#FFFFFFFF" />
+    <SolidColorBrush x:Key="Brush.OnBrand.Secondary" Color="#FFB4C3EA" />
+
+    <!-- Symbol gradient on light backgrounds: Deep Navy (bottom-left) to Royal Blue (top-right). -->
+    <LinearGradientBrush x:Key="Brush.Brand.Gradient" StartPoint="0,1" EndPoint="1,0">
+        <GradientStop Color="#FF172554" Offset="0" />
+        <GradientStop Color="#FF2563EB" Offset="1" />
+    </LinearGradientBrush>
+    <!-- Symbol gradient on Deep Navy backgrounds: Royal Blue to Sky. -->
+    <LinearGradientBrush x:Key="Brush.Brand.Gradient.OnDark" StartPoint="0,1" EndPoint="1,0">
+        <GradientStop Color="#FF2563EB" Offset="0" />
+        <GradientStop Color="#FF60A5FA" Offset="1" />
+    </LinearGradientBrush>
+    <!-- Splash and PIN backdrop: always Deep Navy, in both themes. -->
+    <LinearGradientBrush x:Key="Brush.Brand.Backdrop" StartPoint="0,0" EndPoint="1,1">
+        <GradientStop Color="#FF172554" Offset="0" />
+        <GradientStop Color="#FF0B1229" Offset="1" />
+    </LinearGradientBrush>
+
+    <!-- Glass panels and keys on the Deep Navy backdrop (PIN screen). -->
+    <SolidColorBrush x:Key="Brush.Glass.Background" Color="#14FFFFFF" />
+    <SolidColorBrush x:Key="Brush.Glass.Border" Color="#29FFFFFF" />
+    <SolidColorBrush x:Key="Brush.Glass.Key" Color="#12FFFFFF" />
+    <SolidColorBrush x:Key="Brush.Glass.Key.Hover" Color="#24FFFFFF" />
+    <SolidColorBrush x:Key="Brush.Glass.Key.Pressed" Color="#38FFFFFF" />
+
+    <!-- Hover/pressed overlays for controls on a strong fill or gradient (c:Assist.IsOnFill). -->
+    <SolidColorBrush x:Key="Brush.Overlay.OnFill.Hover" Color="#1FFFFFFF" />
+    <SolidColorBrush x:Key="Brush.Overlay.OnFill.Pressed" Color="#24000000" />
+
+    <!-- Corner radii: rounded but restrained. -->
+    <CornerRadius x:Key="Radius.Small">6</CornerRadius>
+    <CornerRadius x:Key="Radius.Control">8</CornerRadius>
+    <CornerRadius x:Key="Radius.Card">14</CornerRadius>
+    <CornerRadius x:Key="Radius.Overlay">16</CornerRadius>
     <CornerRadius x:Key="Radius.Pill">999</CornerRadius>
 
     <!-- Spacing scale (4px grid) -->
@@ -51,6 +91,7 @@
     <!-- Motion (subtle) -->
     <Duration x:Key="Motion.Fast">0:0:0.12</Duration>
     <Duration x:Key="Motion.Normal">0:0:0.20</Duration>
+    <Duration x:Key="Motion.Slow">0:0:0.32</Duration>
     <QuadraticEase x:Key="Motion.Ease" EasingMode="EaseOut" />
 
     <!-- ============== Text styles ============== -->
@@ -99,6 +140,14 @@
 
     <Style x:Key="Text.Display" TargetType="TextBlock" BasedOn="{StaticResource Text.Title}">
         <Setter Property="FontSize" Value="{StaticResource FontSize.Display}" />
+    </Style>
+
+    <!-- Text on hero (gradient) cards. -->
+    <Style x:Key="Text.OnHero" TargetType="TextBlock" BasedOn="{StaticResource Text.Base}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Hero.Text}" />
+    </Style>
+    <Style x:Key="Text.OnHero.Secondary" TargetType="TextBlock" BasedOn="{StaticResource Text.Base}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Hero.Text.Secondary}" />
     </Style>
 
     <Style x:Key="Text.Paragraph" TargetType="TextBlock" BasedOn="{StaticResource Text.Secondary}">

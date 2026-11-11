@@ -30,7 +30,7 @@ public sealed class Account : AuditedEntity
 
     public string IconKey { get; set; } = "Icon.Accounts";
 
-    public string ColorHex { get; set; } = "#F4806B";
+    public string ColorHex { get; set; } = "#2563EB";
 
     /// <summary>Inactive accounts keep their history but accept no new activity.</summary>
     public bool IsActive { get; set; } = true;
@@ -51,7 +51,7 @@ public sealed class Category : AuditedEntity
 
     public string IconKey { get; set; } = "Icon.Layers";
 
-    public string ColorHex { get; set; } = "#F4806B";
+    public string ColorHex { get; set; } = "#2563EB";
 
     public bool IsActive { get; set; } = true;
 
@@ -146,7 +146,7 @@ public sealed class SavingsGoal : AuditedEntity
 
     public string IconKey { get; set; } = "Icon.SavingsGoals";
 
-    public string ColorHex { get; set; } = "#F4806B";
+    public string ColorHex { get; set; } = "#2563EB";
 
     public string? ImagePath { get; set; }
 

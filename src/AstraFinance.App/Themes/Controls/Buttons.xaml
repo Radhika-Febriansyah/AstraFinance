@@ -48,6 +48,20 @@
             <Trigger Property="IsPressed" Value="True">
                 <Setter TargetName="Overlay" Property="Background" Value="{DynamicResource Brush.Selected}" />
             </Trigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="c:Assist.IsOnFill" Value="True" />
+                    <Condition Property="IsMouseOver" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Overlay" Property="Background" Value="{StaticResource Brush.Overlay.OnFill.Hover}" />
+            </MultiTrigger>
+            <MultiTrigger>
+                <MultiTrigger.Conditions>
+                    <Condition Property="c:Assist.IsOnFill" Value="True" />
+                    <Condition Property="IsPressed" Value="True" />
+                </MultiTrigger.Conditions>
+                <Setter TargetName="Overlay" Property="Background" Value="{StaticResource Brush.Overlay.OnFill.Pressed}" />
+            </MultiTrigger>
             <Trigger Property="IsEnabled" Value="False">
                 <Setter TargetName="Root" Property="Opacity" Value="0.45" />
             </Trigger>
@@ -79,16 +93,23 @@
 
     <Style TargetType="Button" BasedOn="{StaticResource Button.Base}" />
 
+    <!-- Primary: the accent gradient (Deep Navy → Royal Blue for the brand accent), white SemiBold text. -->
     <Style x:Key="Button.Primary" TargetType="Button" BasedOn="{StaticResource Button.Base}">
-        <Setter Property="Background" Value="{DynamicResource Brush.Accent}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Accent}" />
+        <Setter Property="Background" Value="{DynamicResource Brush.Accent.Gradient}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="15,0" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Accent.Foreground}" />
+        <Setter Property="c:Assist.IsOnFill" Value="True" />
     </Style>
 
     <Style x:Key="Button.Danger" TargetType="Button" BasedOn="{StaticResource Button.Base}">
         <Setter Property="Background" Value="{DynamicResource Brush.Danger}" />
-        <Setter Property="BorderBrush" Value="{DynamicResource Brush.Danger}" />
+        <Setter Property="BorderBrush" Value="Transparent" />
+        <Setter Property="BorderThickness" Value="0" />
+        <Setter Property="Padding" Value="15,0" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Text.OnStrong}" />
+        <Setter Property="c:Assist.IsOnFill" Value="True" />
     </Style>
 
     <Style x:Key="Button.Ghost" TargetType="Button" BasedOn="{StaticResource Button.Base}">

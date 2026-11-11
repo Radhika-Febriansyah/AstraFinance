@@ -104,6 +104,7 @@ public sealed partial class SettingsViewModel : PageViewModel
         ];
 
         AccentOptions = Enum.GetValues<AccentColor>()
+            .OrderBy(a => a == AccentColor.Blue ? 0 : 1) // the brand color first
             .Select(a => new ChoiceOption<AccentColor>(a, () => Localization.GetString($"Accent.{a}"), null, SetAccent))
             .ToList();
 

@@ -16,7 +16,7 @@ public sealed record UserPreferences
 
     public AppThemeMode ThemeMode { get; init; } = AppThemeMode.System;
 
-    public AccentColor Accent { get; init; } = AccentColor.Coral;
+    public AccentColor Accent { get; init; } = AccentColor.Blue;
 
     public bool IsSidebarExpanded { get; init; } = true;
 

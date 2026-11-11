@@ -25,6 +25,7 @@ public partial class ThemeTests
     [
         "Color.Accent", "Brush.Accent", "Brush.Accent.Hover", "Brush.Accent.Pressed",
         "Brush.Accent.Subtle", "Brush.Accent.Text", "Brush.Accent.Foreground", "Brush.Focus",
+        "Color.Accent.GradientStart", "Brush.Accent.Gradient",
     ];
 
     [Theory]
@@ -35,6 +36,22 @@ public partial class ThemeTests
     [InlineData(AppThemeMode.System, null, ResolvedTheme.Light)]
     public void Resolves_theme(AppThemeMode mode, ResolvedTheme? system, ResolvedTheme expected) =>
         Assert.Equal(expected, ThemeResolver.Resolve(mode, system));
+
+    [Theory]
+    [InlineData(ResolvedTheme.Light)]
+    [InlineData(ResolvedTheme.Dark)]
+    public void Royal_blue_brand_accent_is_the_default(ResolvedTheme theme)
+    {
+        Assert.Equal(AccentColor.Blue, new AstraFinance.Core.Models.UserPreferences().Accent);
+
+        var swatch = AccentPalette.Get(AccentColor.Blue, theme);
+        Assert.Equal(AccentPalette.BrandRoyal, swatch.Accent);
+        Assert.Equal(RgbColor.Parse("#FFFFFF"), swatch.Foreground); // white text on the brand gradient
+        if (theme == ResolvedTheme.Light)
+        {
+            Assert.Equal(AccentPalette.BrandNavy, swatch.GradientStart); // Deep Navy → Royal Blue
+        }
+    }
 
     [Fact]
     public void Light_and_dark_palettes_define_identical_keys()
@@ -49,6 +66,7 @@ public partial class ThemeTests
     public void Every_dynamic_color_resource_used_in_xaml_is_defined()
     {
         var defined = DictionaryKeys("Themes/Colors.Light.xaml");
+        defined.UnionWith(DictionaryKeys("Themes/Tokens.xaml")); // theme-independent brand brushes
         defined.UnionWith(AccentKeys);
         defined.Add("Padding.Page.Current");
 
@@ -116,6 +134,7 @@ public partial class ThemeTests
             Assert.True(ColorMath.ContrastRatio(swatch.Text, background) >= 4.5, $"{accent}/{theme}: accent text on background");
             Assert.True(ColorMath.ContrastRatio(swatch.Text, surface) >= 4.5, $"{accent}/{theme}: accent text on surface");
             Assert.True(ColorMath.ContrastRatio(swatch.Foreground, swatch.Accent) >= 4.5, $"{accent}/{theme}: text on accent fill");
+            Assert.True(ColorMath.ContrastRatio(swatch.Foreground, swatch.GradientStart) >= 4.5, $"{accent}/{theme}: text on gradient start");
 
             var selected = ColorMath.Composite(swatch.Subtle, background);
             Assert.True(ColorMath.ContrastRatio(swatch.Text, selected) >= 4.5, $"{accent}/{theme}: accent text on selected row");

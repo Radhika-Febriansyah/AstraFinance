@@ -197,5 +197,5 @@ public static class AccountDefaults
         ["Icon.Banknote", "Icon.Landmark", "Icon.Smartphone", "Icon.PiggyBank", "Icon.CreditCard", "Icon.Accounts", "Icon.Briefcase", "Icon.Store"];
 
     public static IReadOnlyList<string> Colors { get; } =
-        ["#F4806B", "#F2B04A", "#3DBE8B", "#2EC4B0", "#6AA6F2", "#A78BFA", "#F07272", "#8A94A6"];
+        ["#2563EB", "#F4806B", "#F2B04A", "#3DBE8B", "#2EC4B0", "#6AA6F2", "#A78BFA", "#F07272", "#8A94A6"]; // brand Royal Blue first (default for new records)
 }
