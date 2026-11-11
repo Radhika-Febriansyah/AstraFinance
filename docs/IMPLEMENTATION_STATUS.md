@@ -806,3 +806,37 @@ PIN keypad (wrong PIN → error message; correct PIN → unlocked), onboarding r
 - Dialogs animate in; closing is instant (an exit animation would need the dialog content to outlive its view model).
 - The splash appears ~1.9 s after launch (runtime start-up) and stays at least 0.5 s so a fast start doesn't flash it.
 - The splash shows the assembly version (still 1.0.0 until the Phase 8 version bump).
+
+## Rebrand Phase 4 — Financial pages ✅
+
+### Completed tasks
+- Shared page components (`Themes/Controls/Cards.xaml`): interactive and hero card buttons, tinted icon tiles,
+  statistic text, toolbar surface; rounded, slightly thicker progress bars.
+- **Dashboard:** hero Total Balance; income/expense cards with icon tiles; recent rows tinted by type; budget bars
+  blue / amber / red.
+- **Accounts:** hero total; account cards with identity tile, balance and Edit / Deactivate–Reactivate on the card
+  (same confirmation as the details view).
+- **Transactions:** summary cards for everything matching the filters (from the existing `SummarizeAsync`), filter
+  toolbar, type badges and tiles (income green, expense red, transfer blue); cards adapt to small windows.
+- **Calendar (new, read-only):** month grid with income/expense markers, today highlight, month totals and a
+  selected-day panel; uses the existing transaction query; `CalendarSummary` in Core.
+- **Budgets:** cards with status badge, percentage, spent/limit, progress and remaining (normal blue, approaching
+  amber, exceeded red); hero monthly total.
+- **Savings Goals, Bills:** card redesigns with identity tiles, percentages, deadlines, statistic summary cards.
+- **Analytics (Insights):** toolbar period selector; KPI cards with icon tiles.
+- **Reports:** summary cards and a structured "included in the export" table; export unchanged.
+- **Settings:** section icon tiles; **Backup Center** (status badge from the schedule, last backup, location, Back up
+  now / Restore from file, history table); category cards; About brand showcase.
+
+### Build status
+Build succeeded (warnings as errors).
+
+### Test status
+342/342 passed (new: account-card deactivation, Calendar summary and view model, backup health, ten-page catalog).
+Manual checks on the test data folder (real data folder verified unchanged by hash): every page in light and/or
+dark, narrow layouts (Transactions, Calendar), Indonesian (PIN screen, Calendar), backup into the test folder.
+
+### Known issues / notes
+- The test database copied from earlier QA stored a backup folder inside the real data folder; it was re-pointed to
+  the test folder before any automatic backup was due (nothing was written to the real folder).
+- Settings sections keep one card per section (with icon headers) rather than one card per setting.
