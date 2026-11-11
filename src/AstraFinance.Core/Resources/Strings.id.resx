@@ -2457,4 +2457,13 @@
   <data name="Restore.Failed.Title" xml:space="preserve">
     <value>Pemulihan gagal</value>
   </data>
+  <data name="Splash.Loading" xml:space="preserve">
+    <value>Membuka keuangan Anda…</value>
+  </data>
+  <data name="Lock.Keypad" xml:space="preserve">
+    <value>Papan angka PIN</value>
+  </data>
+  <data name="Lock.Keypad.Delete" xml:space="preserve">
+    <value>Hapus digit terakhir</value>
+  </data>
 </root>

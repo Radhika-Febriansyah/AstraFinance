@@ -29,8 +29,11 @@
 
     <SolidColorBrush x:Key="Brush.Brand.Navy" Color="#FF172554" />
     <SolidColorBrush x:Key="Brush.Brand.Royal" Color="#FF2563EB" />
+    <SolidColorBrush x:Key="Brush.Brand.Sky" Color="#FF60A5FA" />
     <SolidColorBrush x:Key="Brush.OnBrand" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="Brush.OnBrand.Secondary" Color="#FFB4C3EA" />
+    <!-- Error text on Deep Navy (8:1 on #172554). -->
+    <SolidColorBrush x:Key="Brush.OnBrand.Danger" Color="#FFFCA5A5" />
 
     <!-- Symbol gradient on light backgrounds: Deep Navy (bottom-left) to Royal Blue (top-right). -->
     <LinearGradientBrush x:Key="Brush.Brand.Gradient" StartPoint="0,1" EndPoint="1,0">

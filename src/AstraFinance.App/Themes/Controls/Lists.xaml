@@ -57,35 +57,35 @@
         </Setter>
     </Style>
 
-    <!-- Sidebar navigation item -->
+    <!-- Sidebar navigation item (on the Deep Navy brand sidebar in both themes) -->
     <Style x:Key="NavItem" TargetType="ListBoxItem">
-        <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Secondary}" />
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Sidebar.Text.Secondary}" />
         <Setter Property="FontFamily" Value="{StaticResource Font.Base}" />
         <Setter Property="FontSize" Value="{StaticResource FontSize.Body}" />
-        <Setter Property="Height" Value="40" />
+        <Setter Property="Height" Value="42" />
         <Setter Property="Margin" Value="0,2" />
         <Setter Property="Cursor" Value="Hand" />
         <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Astra}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.OnBrand}" />
         <Setter Property="AutomationProperties.Name" Value="{Binding Title}" />
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListBoxItem">
                     <Grid Background="Transparent">
                         <Border x:Name="Root" CornerRadius="{StaticResource Radius.Control}" Background="Transparent" />
-                        <Border x:Name="Indicator" Width="3" Height="18" CornerRadius="2" HorizontalAlignment="Left"
-                                Background="{DynamicResource Brush.Accent}" Visibility="Hidden" />
+                        <Border x:Name="Indicator" Width="3" Height="20" CornerRadius="2" HorizontalAlignment="Left"
+                                Background="{DynamicResource Brush.Sidebar.Indicator}" Visibility="Hidden" />
                         <ContentPresenter VerticalAlignment="Center" />
                     </Grid>
                     <ControlTemplate.Triggers>
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Hover}" />
-                            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Sidebar.Hover}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Brush.Sidebar.Text}" />
                         </Trigger>
                         <Trigger Property="IsSelected" Value="True">
-                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Accent.Subtle}" />
+                            <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Sidebar.Selected}" />
                             <Setter TargetName="Indicator" Property="Visibility" Value="Visible" />
-                            <Setter Property="Foreground" Value="{DynamicResource Brush.Accent.Text}" />
+                            <Setter Property="Foreground" Value="{DynamicResource Brush.Sidebar.Text}" />
                             <Setter Property="FontWeight" Value="SemiBold" />
                         </Trigger>
                     </ControlTemplate.Triggers>

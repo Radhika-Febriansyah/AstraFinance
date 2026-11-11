@@ -47,7 +47,7 @@
     <SolidColorBrush x:Key="Brush.Info" Color="#FF60A5FA" />
     <SolidColorBrush x:Key="Brush.Info.Subtle" Color="#2660A5FA" />
 
-    <!-- Brand sidebar: Deep Navy with a subtle blue gradient (used by the shell from Phase 3). -->
+    <!-- Brand sidebar: Deep Navy with a subtle blue gradient. -->
     <LinearGradientBrush x:Key="Brush.Sidebar.Brand" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Color="#FF0F1B44" Offset="0" />
         <GradientStop Color="#FF13235A" Offset="1" />

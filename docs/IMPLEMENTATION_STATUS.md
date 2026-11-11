@@ -771,3 +771,38 @@ icon sizes, asset set, notification icon refresh).
 1. Royal Blue on Deep Navy is unreadable as navy → navy, so symbols on navy use Royal Blue → Sky (`#60A5FA`, a Royal Blue tint).
 2. Accent presets other than Blue stay available (existing user preference); a saved accent is respected.
 3. No database, migration, financial-logic or PIN changes.
+
+## Rebrand Phase 3 — Application shell ✅
+
+### Completed tasks
+- **Sidebar:** Deep Navy brand gradient in both themes; symbol + white wordmark; nav items with sidebar text colors,
+  translucent hover/selected states and a Sky active indicator; white focus ring on navy; collapse toggle restyled;
+  collapsed/expanded preference unchanged (already persisted).
+- **Title bar:** Deep Navy caption with white text and light caption buttons, continuing the sidebar.
+- **Header:** page title with its section icon tile; gradient Quick Add; search, notifications and menu kept.
+- **Buttons:** icon buttons support on-fill/navy states (`Button.Icon.OnBrand`); disabled primary buttons turn neutral
+  instead of a washed-out gradient.
+- **Dialogs:** floating panel with an entrance animation (scrim fade, panel fade + scale from 96 %).
+- **Reduced motion:** `MotionPreferences` follows Windows "Animation effects"; sidebar, page, dialog and splash motion
+  become instant when it is off.
+- **Splash ("Elegant Dark"):** Deep Navy window with orbit-ring details, large symbol, product name, loading line and
+  version; fades in; shown while the database opens and the shell initializes; closed before any startup error
+  message. Shutdown is explicit until the main window exists, so closing the splash can't end the app.
+- **PIN screen ("Premium Glass"):** Deep Navy backdrop with orbit rings, translucent panel with a glass edge,
+  rounded-square keypad with white numerals, delete and gradient unlock keys. The keypad types into the existing PIN
+  box (same length limit, caret and binding); PIN logic, cooldown and verification are unchanged.
+- **Onboarding:** progress rail uses the navy brand sidebar style.
+- **Development:** Debug builds honour `ASTRA_FINANCE_DATA_DIR` to run against a separate data folder (Release ignores it).
+
+### Build status
+Debug and Release builds succeeded (warnings as errors).
+
+### Test status
+327/327 passed. Manual checks on a test data folder (real data folder verified unchanged by hash):
+light and dark shell, collapsed sidebar, narrow window (auto icon-only sidebar), Quick Add dialog, splash,
+PIN keypad (wrong PIN → error message; correct PIN → unlocked), onboarding rail on an empty folder.
+
+### Known issues / notes
+- Dialogs animate in; closing is instant (an exit animation would need the dialog content to outlive its view model).
+- The splash appears ~1.9 s after launch (runtime start-up) and stays at least 0.5 s so a fast start doesn't flash it.
+- The splash shows the assembly version (still 1.0.0 until the Phase 8 version bump).

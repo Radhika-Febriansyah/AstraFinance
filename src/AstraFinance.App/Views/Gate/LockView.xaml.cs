@@ -1,5 +1,8 @@
 using System.ComponentModel;
+using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Input;
 using System.Windows.Threading;
 using AstraFinance.App.ViewModels.Gate;
 
@@ -35,4 +38,21 @@ public partial class LockView : UserControl
 
     private void FocusPin() =>
         Dispatcher.BeginInvoke(() => PinInput.Focus(), DispatcherPriority.Input);
+
+    // The on-screen keypad types into the PIN box exactly like the keyboard, so the PIN box stays the single
+    // input path (length limit, caret position and the view-model binding behave the same either way).
+    private void Digit_Click(object sender, RoutedEventArgs e)
+    {
+        if (sender is Button { Content: string digit })
+        {
+            PinInput.Focus();
+            TextCompositionManager.StartComposition(new TextComposition(InputManager.Current, PinInput, digit));
+        }
+    }
+
+    private void Delete_Click(object sender, RoutedEventArgs e)
+    {
+        PinInput.Focus();
+        EditingCommands.Backspace.Execute(null, PinInput);
+    }
 }

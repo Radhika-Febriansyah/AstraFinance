@@ -101,6 +101,13 @@
         <Setter Property="Padding" Value="15,0" />
         <Setter Property="Foreground" Value="{DynamicResource Brush.Accent.Foreground}" />
         <Setter Property="c:Assist.IsOnFill" Value="True" />
+        <Style.Triggers>
+            <!-- Disabled: a quiet neutral button instead of a washed-out gradient. -->
+            <Trigger Property="IsEnabled" Value="False">
+                <Setter Property="Background" Value="{DynamicResource Brush.Surface.Sunken}" />
+                <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Secondary}" />
+            </Trigger>
+        </Style.Triggers>
     </Style>
 
     <Style x:Key="Button.Danger" TargetType="Button" BasedOn="{StaticResource Button.Base}">
@@ -134,7 +141,7 @@
         </Style.Triggers>
     </Style>
 
-    <!-- Square icon-only button with optional badge (c:Assist.Badge). -->
+    <!-- Square icon-only button with optional badge (c:Assist.Badge). On the navy brand chrome use Button.Icon.OnBrand. -->
     <Style x:Key="Button.Icon" TargetType="ButtonBase">
         <Setter Property="OverridesDefaultStyle" Value="True" />
         <Setter Property="Width" Value="{StaticResource Size.Control.Height}" />
@@ -175,6 +182,21 @@
                             <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Selected}" />
                             <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
                         </Trigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="c:Assist.IsOnFill" Value="True" />
+                                <Condition Property="IsMouseOver" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource Brush.Overlay.OnFill.Hover}" />
+                            <Setter Property="Foreground" Value="{StaticResource Brush.OnBrand}" />
+                        </MultiTrigger>
+                        <MultiTrigger>
+                            <MultiTrigger.Conditions>
+                                <Condition Property="c:Assist.IsOnFill" Value="True" />
+                                <Condition Property="IsPressed" Value="True" />
+                            </MultiTrigger.Conditions>
+                            <Setter TargetName="Root" Property="Background" Value="{StaticResource Brush.Overlay.OnFill.Pressed}" />
+                        </MultiTrigger>
                         <Trigger Property="IsEnabled" Value="False">
                             <Setter Property="Opacity" Value="0.45" />
                         </Trigger>
@@ -182,6 +204,12 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <Style x:Key="Button.Icon.OnBrand" TargetType="ButtonBase" BasedOn="{StaticResource Button.Icon}">
+        <Setter Property="Foreground" Value="{DynamicResource Brush.Sidebar.Text.Secondary}" />
+        <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.OnBrand}" />
+        <Setter Property="c:Assist.IsOnFill" Value="True" />
     </Style>
 
     <!-- ToggleButton default -->

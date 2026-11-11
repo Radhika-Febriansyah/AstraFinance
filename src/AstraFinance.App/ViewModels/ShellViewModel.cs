@@ -110,6 +110,9 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
 
     public string PageTitle => CurrentPage?.Title ?? string.Empty;
 
+    /// <summary>Icon of the current page's navigation item (shown beside the page title), or null.</summary>
+    public string? PageIconKey => PrimaryItems.Concat(FooterItems).FirstOrDefault(i => i.Page == CurrentPage?.Page)?.IconKey;
+
     [ObservableProperty]
     public partial NavItemViewModel? SelectedPrimaryItem { get; set; }
 
@@ -412,6 +415,7 @@ public sealed partial class ShellViewModel : ObservableObject, IDisposable
 
         OnPropertyChanged(nameof(CurrentPage));
         OnPropertyChanged(nameof(PageTitle));
+        OnPropertyChanged(nameof(PageIconKey));
     }
 
     private void OnLanguageChanged(object? sender, EventArgs e)

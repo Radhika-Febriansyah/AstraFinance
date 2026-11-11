@@ -34,6 +34,16 @@ internal static partial class DwmTitleBar
         SetInt(handle, DwmwaBorderColor, ToColorRef(border));
     }
 
+    /// <summary>Rounded corners for a borderless window (Windows 11; ignored elsewhere).</summary>
+    public static void RoundCorners(Window window)
+    {
+        var handle = new WindowInteropHelper(window).Handle;
+        if (handle != IntPtr.Zero)
+        {
+            SetInt(handle, DwmwaWindowCornerPreference, DwmwcpRound);
+        }
+    }
+
     private static int ToColorRef(Color c) => c.R | (c.G << 8) | (c.B << 16);
 
     private static void SetInt(IntPtr hwnd, int attribute, int value)

@@ -8,6 +8,18 @@
 
 
     <!-- Keyboard focus ring (shown only for keyboard navigation). -->
+    <!-- Keyboard focus ring on Deep Navy surfaces (sidebar, splash, PIN screen). -->
+    <Style x:Key="FocusVisual.OnBrand">
+        <Setter Property="Control.Template">
+            <Setter.Value>
+                <ControlTemplate>
+                    <Border Margin="-2" BorderThickness="2" CornerRadius="10"
+                            BorderBrush="{StaticResource Brush.OnBrand}" SnapsToDevicePixels="True" />
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
     <Style x:Key="FocusVisual.Astra">
         <Setter Property="Control.Template">
             <Setter.Value>

@@ -8,33 +8,180 @@
              xmlns:gate="clr-namespace:AstraFinance.App.ViewModels.Gate"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=gate:LockViewModel}"
-             Background="{DynamicResource Brush.Background}">
-    <Grid>
-        <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Margin="24">
-            <Border Width="64" Height="64" CornerRadius="14" Background="{StaticResource Brush.Brand.Navy}" HorizontalAlignment="Center">
-                <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="48" Height="48" Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
+             Background="{StaticResource Brush.Brand.Backdrop}">
+    <!--
+        PIN lock — "Premium Glass": Deep Navy backdrop in both themes, a translucent panel and a rounded-square
+        keypad. Presentation only: the keypad types into the PIN box, so entry, validation, cooldown and
+        verification stay exactly as in LockViewModel / IPinService.
+    -->
+    <UserControl.Resources>
+        <!-- PIN field on glass -->
+        <Style x:Key="GlassPinBox" TargetType="PasswordBox" BasedOn="{StaticResource PinBox}">
+            <Setter Property="Foreground" Value="{StaticResource Brush.OnBrand}" />
+            <Setter Property="CaretBrush" Value="{StaticResource Brush.OnBrand}" />
+            <Setter Property="SelectionBrush" Value="{StaticResource Brush.Brand.Royal}" />
+            <Setter Property="FontSize" Value="24" />
+            <Setter Property="MinHeight" Value="52" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="PasswordBox">
+                        <Border x:Name="Root" CornerRadius="14" BorderThickness="1.5"
+                                Background="{StaticResource Brush.Glass.Key}" BorderBrush="{StaticResource Brush.Glass.Border}">
+                            <ScrollViewer x:Name="PART_ContentHost" Focusable="False" Margin="12,0"
+                                          HorizontalAlignment="Center" VerticalAlignment="Center"
+                                          HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="Root" Property="BorderBrush" Value="{StaticResource Brush.Brand.Sky}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Rounded-square keypad key -->
+        <Style x:Key="PinKey" TargetType="Button">
+            <Setter Property="OverridesDefaultStyle" Value="True" />
+            <Setter Property="Focusable" Value="False" />
+            <Setter Property="Width" Value="76" />
+            <Setter Property="Height" Value="56" />
+            <Setter Property="Margin" Value="6" />
+            <Setter Property="Cursor" Value="Hand" />
+            <Setter Property="Foreground" Value="{StaticResource Brush.OnBrand}" />
+            <Setter Property="Background" Value="{StaticResource Brush.Glass.Key}" />
+            <Setter Property="FontFamily" Value="{StaticResource Font.Display}" />
+            <Setter Property="FontSize" Value="22" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Root" CornerRadius="14" Background="{TemplateBinding Background}"
+                                BorderThickness="1" BorderBrush="{StaticResource Brush.Glass.Border}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="{StaticResource Brush.Glass.Key.Hover}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Background" Value="{StaticResource Brush.Glass.Key.Pressed}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.4" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- The unlock key: brand gradient -->
+        <Style x:Key="PinKey.Unlock" TargetType="Button" BasedOn="{StaticResource PinKey}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid>
+                            <Border x:Name="Root" CornerRadius="14" Background="{StaticResource Brush.Brand.Gradient.OnDark}" />
+                            <Border x:Name="Overlay" CornerRadius="14" Background="Transparent" />
+                            <ContentPresenter x:Name="Content" HorizontalAlignment="Center" VerticalAlignment="Center" />
+                            <Control x:Name="Spinner" Style="{StaticResource Spinner}" Foreground="{StaticResource Brush.OnBrand}" Visibility="Collapsed" />
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="Overlay" Property="Background" Value="{StaticResource Brush.Overlay.OnFill.Hover}" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Overlay" Property="Background" Value="{StaticResource Brush.Overlay.OnFill.Pressed}" />
+                            </Trigger>
+                            <Trigger Property="c:Assist.IsBusy" Value="True">
+                                <Setter TargetName="Content" Property="Visibility" Value="Hidden" />
+                                <Setter TargetName="Spinner" Property="Visibility" Value="Visible" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter TargetName="Root" Property="Background" Value="{StaticResource Brush.Glass.Key}" />
+                                <Setter TargetName="Root" Property="Opacity" Value="0.6" />
+                                <Setter TargetName="Content" Property="Opacity" Value="0.5" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid ClipToBounds="True">
+        <!-- Geometric detail: faint orbit rings -->
+        <Viewbox Stretch="UniformToFill" IsHitTestVisible="False">
+            <Canvas Width="1600" Height="1000">
+                <Ellipse Canvas.Left="980" Canvas.Top="420" Width="900" Height="900" Stroke="#12FFFFFF" StrokeThickness="1.5" />
+                <Ellipse Canvas.Left="1110" Canvas.Top="550" Width="640" Height="640" Stroke="#0EFFFFFF" StrokeThickness="1.5" />
+                <Ellipse Canvas.Left="1240" Canvas.Top="680" Width="380" Height="380" Stroke="#0AFFFFFF" StrokeThickness="1.5" />
+                <Ellipse Canvas.Left="-320" Canvas.Top="-420" Width="760" Height="760" Stroke="#0CFFFFFF" StrokeThickness="1.5" />
+                <Ellipse Canvas.Left="-200" Canvas.Top="-300" Width="520" Height="520" Stroke="#08FFFFFF" StrokeThickness="1.5" />
+            </Canvas>
+        </Viewbox>
+
+        <ScrollViewer VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False">
+            <Border HorizontalAlignment="Center" VerticalAlignment="Center" Margin="24" Width="380" Padding="32,30,32,26"
+                    CornerRadius="24" Background="{StaticResource Brush.Glass.Background}" BorderThickness="1">
+                <Border.BorderBrush>
+                    <!-- Glass edge: brighter at the top -->
+                    <LinearGradientBrush StartPoint="0,0" EndPoint="0,1">
+                        <GradientStop Color="#40FFFFFF" Offset="0" />
+                        <GradientStop Color="#12FFFFFF" Offset="1" />
+                    </LinearGradientBrush>
+                </Border.BorderBrush>
+                <StackPanel>
+                    <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="56" Height="56" HorizontalAlignment="Center"
+                                 Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
+                    <TextBlock Text="{loc:Loc App.Name}" FontFamily="{StaticResource Font.Display}" FontSize="22" FontWeight="SemiBold"
+                               Foreground="{StaticResource Brush.OnBrand}" HorizontalAlignment="Center" Margin="0,14,0,4" />
+                    <TextBlock Text="{loc:Loc Lock.Prompt}" FontSize="{StaticResource FontSize.Body}" Foreground="{StaticResource Brush.OnBrand.Secondary}"
+                               HorizontalAlignment="Center" Margin="0,0,0,20" />
+
+                    <PasswordBox x:Name="PinInput" Style="{StaticResource GlassPinBox}"
+                                 c:PinBoxAssist.Pin="{Binding Pin, UpdateSourceTrigger=PropertyChanged}"
+                                 IsEnabled="{Binding IsCoolingDown, Converter={StaticResource InverseBool}}"
+                                 AutomationProperties.Name="{loc:Loc Lock.Pin}">
+                        <PasswordBox.InputBindings>
+                            <KeyBinding Key="Return" Command="{Binding UnlockCommand}" />
+                        </PasswordBox.InputBindings>
+                    </PasswordBox>
+                    <TextBlock Text="{Binding ErrorMessage}" FontSize="{StaticResource FontSize.Caption}" Foreground="{StaticResource Brush.OnBrand.Danger}"
+                               HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,10,0,6" MinHeight="16"
+                               AutomationProperties.LiveSetting="Assertive" />
+
+                    <!-- Keypad: types into the PIN box (see LockView.xaml.cs). Not focusable: the PIN box keeps keyboard focus. -->
+                    <UniformGrid Columns="3" HorizontalAlignment="Center" AutomationProperties.Name="{loc:Loc Lock.Keypad}"
+                                 IsEnabled="{Binding IsCoolingDown, Converter={StaticResource InverseBool}}">
+                        <Button Style="{StaticResource PinKey}" Content="1" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="2" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="3" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="4" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="5" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="6" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="7" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="8" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Content="9" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey}" Click="Delete_Click"
+                                ToolTip="{loc:Loc Lock.Keypad.Delete}" AutomationProperties.Name="{loc:Loc Lock.Keypad.Delete}">
+                            <c:AstraIcon Data="{StaticResource Icon.Delete}" Width="22" Height="22" Foreground="{StaticResource Brush.OnBrand}" />
+                        </Button>
+                        <Button Style="{StaticResource PinKey}" Content="0" Click="Digit_Click" />
+                        <Button Style="{StaticResource PinKey.Unlock}" Command="{Binding UnlockCommand}" c:Assist.IsBusy="{Binding IsBusy}"
+                                ToolTip="{loc:Loc Lock.Unlock}" AutomationProperties.Name="{loc:Loc Lock.Unlock}">
+                            <c:AstraIcon Data="{StaticResource Icon.ArrowRight}" Width="22" Height="22" Foreground="{StaticResource Brush.OnBrand}" />
+                        </Button>
+                    </UniformGrid>
+
+                    <TextBlock Text="{loc:Loc Lock.Note}" FontSize="{StaticResource FontSize.Caption}" Foreground="{StaticResource Brush.OnBrand.Secondary}"
+                               TextAlignment="Center" TextWrapping="Wrap" Margin="0,18,0,0" />
+                </StackPanel>
             </Border>
-            <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Title}" HorizontalAlignment="Center" Margin="0,20,0,4" />
-            <TextBlock Text="{loc:Loc Lock.Prompt}" Style="{StaticResource Text.Secondary}" HorizontalAlignment="Center" Margin="0,0,0,24" />
-
-            <PasswordBox x:Name="PinInput" Style="{StaticResource PinBox}"
-                         c:PinBoxAssist.Pin="{Binding Pin, UpdateSourceTrigger=PropertyChanged}"
-                         IsEnabled="{Binding IsCoolingDown, Converter={StaticResource InverseBool}}"
-                         AutomationProperties.Name="{loc:Loc Lock.Pin}">
-                <PasswordBox.InputBindings>
-                    <KeyBinding Key="Return" Command="{Binding UnlockCommand}" />
-                </PasswordBox.InputBindings>
-            </PasswordBox>
-
-            <TextBlock Text="{Binding ErrorMessage}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Danger}"
-                       HorizontalAlignment="Center" TextAlignment="Center" TextWrapping="Wrap" Margin="0,10,0,0" MinHeight="16"
-                       AutomationProperties.LiveSetting="Assertive" />
-
-            <Button Content="{loc:Loc Lock.Unlock}" Command="{Binding UnlockCommand}" Style="{StaticResource Button.Primary}"
-                    c:Assist.Icon="Icon.Lock" c:Assist.IsBusy="{Binding IsBusy}" HorizontalAlignment="Stretch" Margin="0,14,0,0" MinHeight="44" />
-
-            <TextBlock Text="{loc:Loc Lock.Note}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Text.Tertiary}"
-                       TextAlignment="Center" TextWrapping="Wrap" TextTrimming="None" Margin="0,28,0,0" />
-        </StackPanel>
+        </ScrollViewer>
     </Grid>
 </UserControl>

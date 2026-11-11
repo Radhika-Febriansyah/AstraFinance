@@ -68,11 +68,11 @@ public partial class MainWindow : Window
         switch (e.PropertyName)
         {
             case nameof(ShellViewModel.SidebarVisualWidth):
-                Sidebar.BeginAnimation(WidthProperty, new DoubleAnimation(ViewModel.SidebarVisualWidth, AnimationDuration) { EasingFunction = Ease });
+                Sidebar.BeginAnimation(WidthProperty, new DoubleAnimation(ViewModel.SidebarVisualWidth, MotionPreferences.For(AnimationDuration)) { EasingFunction = Ease });
                 Sidebar.Effect = ViewModel.IsSidebarOverlay ? (System.Windows.Media.Effects.Effect)FindResource("Effect.Shadow.Popup") : null;
                 break;
             case nameof(ShellViewModel.SidebarLayoutWidth):
-                ContentHost.BeginAnimation(MarginProperty, new ThicknessAnimation(new Thickness(ViewModel.SidebarLayoutWidth, 0, 0, 0), AnimationDuration) { EasingFunction = Ease });
+                ContentHost.BeginAnimation(MarginProperty, new ThicknessAnimation(new Thickness(ViewModel.SidebarLayoutWidth, 0, 0, 0), MotionPreferences.For(AnimationDuration)) { EasingFunction = Ease });
                 break;
             case nameof(ShellViewModel.IsCompact):
                 ApplyCompactLayout(ViewModel.IsCompact);
@@ -128,10 +128,10 @@ public partial class MainWindow : Window
 
     private void ApplyTitleBar()
     {
+        // The title bar continues the Deep Navy brand sidebar in both themes (light caption buttons).
         var caption = (Color)FindResource("Color.Sidebar");
-        var text = ((SolidColorBrush)FindResource("Brush.Text.Primary")).Color;
-        var border = ((SolidColorBrush)FindResource("Brush.Border")).Color;
-        DwmTitleBar.Apply(this, _theme.CurrentTheme == ResolvedTheme.Dark, caption, text, border);
+        var text = ((SolidColorBrush)FindResource("Brush.Sidebar.Text")).Color;
+        DwmTitleBar.Apply(this, isDark: true, caption, text, border: caption);
     }
 
     private void OnWindowPreviewKeyDown(object sender, KeyEventArgs e)
@@ -191,11 +191,12 @@ public partial class MainWindow : Window
 
     private void PageHost_TargetUpdated(object? sender, DataTransferEventArgs e)
     {
-        // Subtle page entrance: fade + 8px rise.
-        PageHost.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, AnimationDuration) { EasingFunction = Ease });
+        // Subtle page entrance: fade + 8px rise (instant when Windows animations are off).
+        var duration = MotionPreferences.For(AnimationDuration);
+        PageHost.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, duration) { EasingFunction = Ease });
         if (PageHost.RenderTransform is TranslateTransform translate)
         {
-            translate.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(8, 0, AnimationDuration) { EasingFunction = Ease });
+            translate.BeginAnimation(TranslateTransform.YProperty, new DoubleAnimation(8, 0, duration) { EasingFunction = Ease });
         }
     }
 
@@ -277,6 +278,19 @@ public partial class MainWindow : Window
         }
     }
 
+    /// <summary>Dialog entrance: the scrim fades in while the panel fades and scales up from 96 %.</summary>
+    private void AnimateDialogIn()
+    {
+        var duration = MotionPreferences.For(AnimationDuration);
+        DialogScrim.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, duration));
+        DialogPanel.BeginAnimation(OpacityProperty, new DoubleAnimation(0, 1, duration) { EasingFunction = Ease });
+        if (DialogPanel.RenderTransform is ScaleTransform scale)
+        {
+            scale.BeginAnimation(ScaleTransform.ScaleXProperty, new DoubleAnimation(0.96, 1, duration) { EasingFunction = Ease });
+            scale.BeginAnimation(ScaleTransform.ScaleYProperty, new DoubleAnimation(0.96, 1, duration) { EasingFunction = Ease });
+        }
+    }
+
     private void DialogLayer_IsVisibleChanged(object sender, DependencyPropertyChangedEventArgs e)
     {
         var open = (bool)e.NewValue;
@@ -306,6 +320,7 @@ public partial class MainWindow : Window
 
         if (open)
         {
+            AnimateDialogIn();
             _focusBeforeDialog = Keyboard.FocusedElement as UIElement;
             ViewModel.Search.Close();
             ViewModel.Notifications.IsOpen = false;

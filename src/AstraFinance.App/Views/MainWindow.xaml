@@ -139,14 +139,14 @@
                         <ColumnDefinition Width="Auto" />
                     </Grid.ColumnDefinitions>
 
-                    <!-- Breadcrumb / page title -->
+                    <!-- Page title with its section icon (the brand lives in the sidebar) -->
                     <DockPanel VerticalAlignment="Center" LastChildFill="True">
-                        <TextBlock DockPanel.Dock="Left" Text="{loc:Loc App.Name}" Style="{StaticResource Text.Secondary}" VerticalAlignment="Center"
-                                   Visibility="{Binding IsMedium, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
-                        <c:AstraIcon DockPanel.Dock="Left" Data="{StaticResource Icon.ChevronRight}" Width="14" Height="14" Margin="8,0"
-                                     Foreground="{DynamicResource Brush.Text.Tertiary}"
-                                     Visibility="{Binding IsMedium, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
-                        <TextBlock Text="{Binding PageTitle}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center"
+                        <Border DockPanel.Dock="Left" Width="34" Height="34" Margin="0,0,12,0" CornerRadius="{StaticResource Radius.Control}"
+                                Background="{DynamicResource Brush.Accent.Subtle}"
+                                Visibility="{Binding PageIconKey, Converter={StaticResource NullToVisibility}}">
+                            <c:AstraIcon IconKey="{Binding PageIconKey}" Width="18" Height="18" Foreground="{DynamicResource Brush.Accent.Text}" />
+                        </Border>
+                        <TextBlock Text="{Binding PageTitle}" Style="{StaticResource Text.Title}" FontSize="18" VerticalAlignment="Center"
                                    ToolTip="{Binding PageTitle}" />
                     </DockPanel>
 
@@ -309,25 +309,24 @@
         <!-- ===================== Sidebar ===================== -->
         <Border x:Name="Sidebar" HorizontalAlignment="Left" Width="68" ClipToBounds="True"
                 Visibility="{Binding IsGated, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}"
-                Background="{DynamicResource Brush.Sidebar}" BorderBrush="{DynamicResource Brush.Divider}" BorderThickness="0,0,1,0"
+                Background="{DynamicResource Brush.Sidebar.Brand}"
                 AutomationProperties.Name="{loc:Loc Shell.Menu}">
             <DockPanel>
-                <!-- Brand -->
-                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="64" Margin="18,0,0,0">
-                    <Border Width="32" Height="32" CornerRadius="7" Background="{StaticResource Brush.Brand.Navy}" VerticalAlignment="Center">
-                        <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="24" Height="24"
-                                     Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
-                    </Border>
-                    <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Subtitle}" Margin="12,0,0,0" VerticalAlignment="Center"
+                <!-- Brand: symbol + wordmark (wordmark hidden when collapsed) -->
+                <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="64" Margin="20,0,0,0">
+                    <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="30" Height="30" VerticalAlignment="Center"
+                                 Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
+                    <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Subtitle}" FontFamily="{StaticResource Font.Display}" FontSize="17"
+                               Foreground="{DynamicResource Brush.Sidebar.Text}" Margin="10,0,0,0" VerticalAlignment="Center"
                                Visibility="{Binding IsSidebarOpen, Converter={StaticResource BoolToVisibility}}" />
                 </StackPanel>
 
                 <!-- Footer: settings + collapse toggle -->
                 <StackPanel DockPanel.Dock="Bottom" Margin="0,0,0,12">
-                    <Separator Margin="16,8" />
+                    <Border Height="1" Margin="16,8" Background="{DynamicResource Brush.Sidebar.Divider}" />
                     <ListBox Style="{StaticResource SidebarList}" ItemsSource="{Binding FooterItems}"
                              SelectedItem="{Binding SelectedFooterItem, Mode=TwoWay}" />
-                    <Button Style="{StaticResource Button.Icon}" HorizontalAlignment="Left" Margin="16,4,0,0"
+                    <Button Style="{StaticResource Button.Icon.OnBrand}" HorizontalAlignment="Left" Margin="16,4,0,0"
                             c:Assist.Icon="Icon.PanelLeft" Command="{Binding ToggleSidebarCommand}"
                             ToolTip="{Binding SidebarToggleTooltip}" AutomationProperties.Name="{Binding SidebarToggleTooltip}" />
                 </StackPanel>
@@ -377,9 +376,12 @@
               KeyboardNavigation.ControlTabNavigation="Cycle" KeyboardNavigation.DirectionalNavigation="Cycle"
               AutomationProperties.Name="{Binding Title}">
 
-            <Border Background="{DynamicResource Brush.Scrim}" />
-            <Border Style="{StaticResource PopupSurface}" Margin="24" Padding="24" MaxWidth="480" MinWidth="360"
-                    HorizontalAlignment="Center" VerticalAlignment="Center">
+            <Border x:Name="DialogScrim" Background="{DynamicResource Brush.Scrim}" />
+            <Border x:Name="DialogPanel" Style="{StaticResource PopupSurface}" Margin="24" Padding="28,24" MaxWidth="480" MinWidth="360"
+                    HorizontalAlignment="Center" VerticalAlignment="Center" RenderTransformOrigin="0.5,0.5">
+                <Border.RenderTransform>
+                    <ScaleTransform />
+                </Border.RenderTransform>
                 <!-- Dock layout: title and buttons always visible; the form scrolls when the window is short. -->
                 <DockPanel>
                     <StackPanel DockPanel.Dock="Top" Orientation="Horizontal">

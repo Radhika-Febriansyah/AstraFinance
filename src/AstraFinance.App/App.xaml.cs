@@ -22,6 +22,7 @@ public partial class App : Application
     private ServiceProvider? _services;
     private ILogger<App>? _logger;
     private string _logsDirectory = string.Empty;
+    private SplashWindow? _splash;
 
     protected override async void OnStartup(StartupEventArgs e)
     {
@@ -40,7 +41,7 @@ public partial class App : Application
 
         try
         {
-            var paths = new AppPaths();
+            var paths = CreatePaths();
             paths.EnsureCreated();
             _logsDirectory = paths.LogsDirectory;
 
@@ -65,6 +66,12 @@ public partial class App : Application
 
             _services.GetRequiredService<ThemeService>().Initialize(Resources);
 
+            // Brand splash while the database opens and the shell initializes. Until the real main window
+            // exists, shutdown is explicit: the splash (WPF's first window) must not end the app when it closes.
+            ShutdownMode = ShutdownMode.OnExplicitShutdown;
+            _splash = new SplashWindow();
+            _splash.Show();
+
             // Open (create/migrate/verify) the database before any page can read financial data.
             var database = await OpenDatabaseAsync(localization, paths).ConfigureAwait(true);
             if (database is null)
@@ -82,10 +89,13 @@ public partial class App : Application
 
             var window = _services.GetRequiredService<MainWindow>();
             MainWindow = window;
+            ShutdownMode = ShutdownMode.OnMainWindowClose;
             window.Show();
             _instanceGuard.ListenForActivation(() => Dispatcher.BeginInvoke(window.BringToFront));
 
             await window.ViewModel.InitializeAsync().ConfigureAwait(true);
+            await CloseSplashAsync().ConfigureAwait(true);
+            window.Activate();
 
             if (database.PreMigrationBackupPath is not null)
             {
@@ -113,6 +123,7 @@ public partial class App : Application
             {
                 LogStartupFailed(_logger, ex);
             }
+            CloseSplashNow();
             MessageBox.Show(
                 "Astra Finance could not start.\n\n" + ex.Message,
                 "Astra Finance",
@@ -148,6 +159,7 @@ public partial class App : Application
                 LogDatabaseFailed(_logger, ex);
             }
 
+            CloseSplashNow();
             var message = ex switch
             {
                 DatabaseNewerThanApplicationException => localization.GetString("Error.Database.Newer"),
@@ -157,6 +169,36 @@ public partial class App : Application
             MessageBox.Show(message, localization.GetString("Error.Database.Title"), MessageBoxButton.OK, MessageBoxImage.Error);
             return null;
         }
+    }
+
+    private async Task CloseSplashAsync()
+    {
+        if (_splash is { } splash)
+        {
+            _splash = null;
+            await splash.CloseGracefullyAsync().ConfigureAwait(true);
+        }
+    }
+
+    /// <summary>Closes the splash immediately, e.g. before an error message that must not be hidden behind it.</summary>
+    private void CloseSplashNow()
+    {
+        _splash?.Close();
+        _splash = null;
+    }
+
+    private static AppPaths CreatePaths()
+    {
+#if DEBUG
+        // Development only: ASTRA_FINANCE_DATA_DIR points a Debug build at a separate data folder, so
+        // manual testing never touches the real %LOCALAPPDATA%\AstraFinance. Release builds ignore it.
+        var developmentDirectory = Environment.GetEnvironmentVariable("ASTRA_FINANCE_DATA_DIR");
+        if (!string.IsNullOrWhiteSpace(developmentDirectory))
+        {
+            return new AppPaths(developmentDirectory);
+        }
+#endif
+        return new AppPaths();
     }
 
     private static void ApplyUiCulture(ILocalizationService localization)

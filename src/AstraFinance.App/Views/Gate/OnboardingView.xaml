@@ -28,39 +28,40 @@
         </Grid.ColumnDefinitions>
 
         <!-- Progress rail -->
-        <Border x:Name="Rail" Width="280" Background="{DynamicResource Brush.Sidebar}" BorderBrush="{DynamicResource Brush.Divider}" BorderThickness="0,0,1,0">
+        <Border x:Name="Rail" Width="280" Background="{DynamicResource Brush.Sidebar.Brand}">
             <DockPanel Margin="28,28,24,28">
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Margin="0,0,0,36">
-                    <Border Width="32" Height="32" CornerRadius="7" Background="{StaticResource Brush.Brand.Navy}">
-                        <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="24" Height="24" Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
-                    </Border>
-                    <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Subtitle}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                    <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="30" Height="30" Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
+                    <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Subtitle}" FontFamily="{StaticResource Font.Display}" FontSize="17"
+                               Foreground="{DynamicResource Brush.Sidebar.Text}" Margin="10,0,0,0" VerticalAlignment="Center" />
                 </StackPanel>
-                <TextBlock DockPanel.Dock="Bottom" Text="{loc:Loc Onboarding.Resume}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" TextTrimming="None" />
+                <TextBlock DockPanel.Dock="Bottom" Text="{loc:Loc Onboarding.Resume}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" TextTrimming="None"
+                           Foreground="{DynamicResource Brush.Sidebar.Text.Secondary}" />
                 <ItemsControl ItemsSource="{Binding Steps}" Focusable="False" AutomationProperties.Name="{loc:Loc Onboarding.Progress}">
                     <ItemsControl.ItemTemplate>
                         <DataTemplate DataType="{x:Type gate:OnboardingStepItem}">
                             <StackPanel Orientation="Horizontal" Margin="0,0,0,18">
                                 <Grid Width="28" Height="28">
-                                    <Ellipse x:Name="Dot" Fill="{DynamicResource Brush.Surface.Raised}" Stroke="{DynamicResource Brush.Border.Strong}" StrokeThickness="1.5" />
+                                    <Ellipse x:Name="Dot" Fill="{DynamicResource Brush.Sidebar.Hover}" Stroke="#40FFFFFF" StrokeThickness="1.5" />
                                     <TextBlock x:Name="Num" Text="{Binding Number}" FontSize="12" FontWeight="SemiBold" HorizontalAlignment="Center" VerticalAlignment="Center"
-                                               Foreground="{DynamicResource Brush.Text.Secondary}" />
+                                               Foreground="{DynamicResource Brush.Sidebar.Text.Secondary}" />
                                     <c:AstraIcon x:Name="Check" Data="{StaticResource Icon.Check}" Width="14" Height="14" StrokeThickness="3"
-                                                 Foreground="{DynamicResource Brush.Accent.Foreground}" Visibility="Collapsed" />
+                                                 Foreground="{StaticResource Brush.Brand.Navy}" Visibility="Collapsed" />
                                 </Grid>
-                                <TextBlock x:Name="Label" Text="{Binding Title}" Style="{StaticResource Text.Secondary}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                                <TextBlock x:Name="Label" Text="{Binding Title}" Style="{StaticResource Text.Base}" Margin="12,0,0,0" VerticalAlignment="Center"
+                                           Foreground="{DynamicResource Brush.Sidebar.Text.Secondary}" />
                             </StackPanel>
                             <DataTemplate.Triggers>
                                 <DataTrigger Binding="{Binding IsDone}" Value="True">
-                                    <Setter TargetName="Dot" Property="Fill" Value="{DynamicResource Brush.Accent}" />
-                                    <Setter TargetName="Dot" Property="Stroke" Value="{DynamicResource Brush.Accent}" />
+                                    <Setter TargetName="Dot" Property="Fill" Value="{DynamicResource Brush.Sidebar.Indicator}" />
+                                    <Setter TargetName="Dot" Property="Stroke" Value="{DynamicResource Brush.Sidebar.Indicator}" />
                                     <Setter TargetName="Num" Property="Visibility" Value="Collapsed" />
                                     <Setter TargetName="Check" Property="Visibility" Value="Visible" />
                                 </DataTrigger>
                                 <DataTrigger Binding="{Binding IsCurrent}" Value="True">
-                                    <Setter TargetName="Dot" Property="Stroke" Value="{DynamicResource Brush.Accent}" />
-                                    <Setter TargetName="Num" Property="Foreground" Value="{DynamicResource Brush.Accent.Text}" />
-                                    <Setter TargetName="Label" Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
+                                    <Setter TargetName="Dot" Property="Stroke" Value="{DynamicResource Brush.Sidebar.Indicator}" />
+                                    <Setter TargetName="Num" Property="Foreground" Value="{DynamicResource Brush.Sidebar.Text}" />
+                                    <Setter TargetName="Label" Property="Foreground" Value="{DynamicResource Brush.Sidebar.Text}" />
                                     <Setter TargetName="Label" Property="FontWeight" Value="SemiBold" />
                                 </DataTrigger>
                             </DataTemplate.Triggers>

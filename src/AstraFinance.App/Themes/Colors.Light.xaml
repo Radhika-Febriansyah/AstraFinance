@@ -6,10 +6,11 @@
         Keys must match Colors.Dark.xaml exactly (verified by unit test).
     -->
     <Color x:Key="Color.Background">#FFFFFFFF</Color>
-    <Color x:Key="Color.Sidebar">#FFF5F7FB</Color>
+    <!-- Sidebar and title bar are the Deep Navy brand chrome in both themes. -->
+    <Color x:Key="Color.Sidebar">#FF172554</Color>
 
     <SolidColorBrush x:Key="Brush.Background" Color="#FFFFFFFF" />
-    <SolidColorBrush x:Key="Brush.Sidebar" Color="#FFF5F7FB" />
+    <SolidColorBrush x:Key="Brush.Sidebar" Color="#FF172554" />
     <SolidColorBrush x:Key="Brush.Surface" Color="#FFF5F7FB" />
     <SolidColorBrush x:Key="Brush.Surface.Raised" Color="#FFFFFFFF" />
     <SolidColorBrush x:Key="Brush.Surface.Sunken" Color="#FFEEF1F7" />
@@ -46,7 +47,7 @@
     <SolidColorBrush x:Key="Brush.Info" Color="#FF1D4ED8" />
     <SolidColorBrush x:Key="Brush.Info.Subtle" Color="#1F2563EB" />
 
-    <!-- Brand sidebar: Deep Navy with a subtle blue gradient (used by the shell from Phase 3). -->
+    <!-- Brand sidebar: Deep Navy with a subtle blue gradient. -->
     <LinearGradientBrush x:Key="Brush.Sidebar.Brand" StartPoint="0,0" EndPoint="1,1">
         <GradientStop Color="#FF172554" Offset="0" />
         <GradientStop Color="#FF1E3A8A" Offset="1" />
