@@ -724,3 +724,50 @@ The user's own data folder was set aside during the clean-install test and resto
 1. **Inno Setup, per-user** (user's choice): no admin rights, data outside the install folder, uninstall keeps data by default.
 2. **Self-contained publish** (no separate .NET runtime install needed), folder-based (not single-file) so native SQLite/Skia libraries load reliably.
 3. Inno Setup 6.7.3 was installed for the current user only via winget (official jrsoftware release, SHA-256 verified) after the user's approval.
+
+---
+
+# Version 1.1 — Visual rebranding (branch `rebrand-v1.1`)
+
+Specification: `docs/ASTRA_FINANCE_REBRANDING.md`. Phases below are the rebranding phases, not the original 1–10.
+
+## Rebrand Phase 1 — Audit ✅
+
+Audit reported and approved. Decisions: version **1.1.0** on branch `rebrand-v1.1`; Calendar as a read-only page over
+existing transactions; Financial Overview delivered through Dashboard + Accounts; Insights = Analytics; Reports gets
+summary cards and a preview table (no duplicate charts); accounts keep **deactivate** (no hard delete); sounds generated
+in code (no audio dependency), off by default; installer gains an Indonesian translation.
+
+## Rebrand Phase 2 — Design system and assets ✅
+
+### Completed tasks
+- Light/Dark palettes rebuilt on Deep Navy `#172554`, Royal Blue `#2563EB`, White; functional green/red/amber/blue kept.
+- "Blue" accent = Royal Blue, the default (listed first as "Royal Blue (Astra)"); other presets kept.
+- Accent gradient (Deep Navy → Royal Blue) for primary buttons; text on fills chosen by contrast; on-fill hover/pressed overlays.
+- Tokens for brand sidebar, hero cards, glass PIN panel, splash backdrop, status badges (`Badge.Success/Danger/Warning/Info/Neutral`),
+  `Card.Hero`, `Text.OnHero*`, `Motion.Slow`; radii 6/8/14/16.
+- Logo: "Winged Star" chosen by the user from three concepts. Vector master `assets/branding/source/astra-symbol.svg`;
+  generator `assets/branding/build-brand-assets.ps1` (WPF only) produces SVG/PNG variants and lockups, the 16–256 px `.ico`
+  and Inno Setup wizard bitmaps. See `assets/branding/README.md`.
+- In-app `Brand.Symbol` replaces `Brand.Star`; brand tiles use the Deep Navy app-icon look.
+- Cached Windows notification icon is refreshed when the app icon changes (previously kept forever).
+- New records default to Royal Blue; existing records keep their colors (no data change).
+
+### Build status
+Build succeeded (warnings as errors).
+
+### Test status
+327/327 passed (new: brand default and gradient contrast, Tokens keys resolvable, in-app symbol matches master,
+icon sizes, asset set, notification icon refresh).
+
+### Known issues / notes
+- Not yet checked in the running app: the visual pass happens at the start of Phase 3 on a separate test data folder
+  (launching now would create a database in the real data folder).
+- The wordmark uses Segoe UI Variable Display Semibold, whose licence doesn't explicitly cover logo use; the generator
+  can switch to an open-licence font (e.g. Inter) once installed.
+- The sidebar is still the light surface in Light mode until Phase 3 applies the navy brand sidebar.
+
+### Important decisions
+1. Royal Blue on Deep Navy is unreadable as navy → navy, so symbols on navy use Royal Blue → Sky (`#60A5FA`, a Royal Blue tint).
+2. Accent presets other than Blue stay available (existing user preference); a saved accent is respected.
+3. No database, migration, financial-logic or PIN changes.
