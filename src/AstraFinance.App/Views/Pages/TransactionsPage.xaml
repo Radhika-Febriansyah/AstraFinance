@@ -78,7 +78,9 @@
         </Style>
     </UserControl.Resources>
 
-    <Grid Margin="{DynamicResource Padding.Page.Current}" SizeChanged="Root_SizeChanged">
+    <!-- On very short windows the page scrolls so the table keeps room for several rows (see code-behind). -->
+    <ScrollViewer x:Name="PageScroll" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled" Focusable="False" SizeChanged="Root_SizeChanged">
+    <Grid x:Name="RootGrid" Margin="{DynamicResource Padding.Page.Current}" VerticalAlignment="Top">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
@@ -185,7 +187,13 @@
                       AutomationProperties.Name="{loc:Loc Transactions.Field.Account}" />
         </WrapPanel>
 
-        <Grid Margin="0,0,0,4">
+        <!-- Toggle docked right so the type chips wrap instead of sliding under it in narrow windows -->
+        <DockPanel Margin="0,0,0,4" LastChildFill="True">
+            <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" VerticalAlignment="Top" Margin="12,0,0,0">
+                <Button Style="{StaticResource Button.Link}" Content="{loc:Loc Transactions.Filter.Clear}" Command="{Binding ClearFiltersCommand}"
+                        Margin="0,8,16,0" Visibility="{Binding HasActiveFilters, Converter={StaticResource BoolToVisibility}}" />
+                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowDeleted}" Content="{loc:Loc Transactions.ShowDeleted}" Margin="0,6,0,0" />
+            </StackPanel>
             <c:ChoiceGroup ItemsSource="{Binding TypeOptions}" Focusable="False" HorizontalAlignment="Left"
                           AutomationProperties.Name="{loc:Loc Transactions.Field.Type}">
                 <c:ChoiceGroup.ItemsPanel>
@@ -200,17 +208,12 @@
                     </DataTemplate>
                 </c:ChoiceGroup.ItemTemplate>
             </c:ChoiceGroup>
-            <StackPanel Orientation="Horizontal" HorizontalAlignment="Right" VerticalAlignment="Top">
-                <Button Style="{StaticResource Button.Link}" Content="{loc:Loc Transactions.Filter.Clear}" Command="{Binding ClearFiltersCommand}"
-                        Margin="0,8,16,0" Visibility="{Binding HasActiveFilters, Converter={StaticResource BoolToVisibility}}" />
-                <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding ShowDeleted}" Content="{loc:Loc Transactions.ShowDeleted}" Margin="0,6,0,0" />
-            </StackPanel>
-        </Grid>
+        </DockPanel>
         </StackPanel>
         </Border>
 
         <!-- Table / empty states -->
-        <Border Grid.Row="3" Style="{StaticResource Card}" Padding="8">
+        <Border x:Name="TableCard" Grid.Row="3" Style="{StaticResource Card}" Padding="8" SizeChanged="TableCard_SizeChanged">
             <Grid>
                 <DataGrid x:Name="Grid" ItemsSource="{Binding Rows}" SelectedItem="{Binding Selected, Mode=TwoWay}"
                           ScrollViewer.HorizontalScrollBarVisibility="Disabled"
@@ -384,4 +387,5 @@
             </StackPanel>
         </Grid>
     </Grid>
+    </ScrollViewer>
 </UserControl>

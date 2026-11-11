@@ -912,3 +912,49 @@ and a copy of the test data in its place:
   changing the app language, the next upgrade brings the uninstaller in line.
 - The installer is still not code-signed (SmartScreen may ask for confirmation).
 - The installer still reports version 1.0.0 until the Phase 8 version bump.
+
+## Rebrand Phase 7 — Quality assurance ✅
+
+### Completed tasks
+- **Data-safety review:** `AstraFinance.Infrastructure` (database, migrations, backup/restore, exports) is unchanged
+  since `v1.0.0` apart from the PDF brand colour below; Core changes are UI-only (accent palette, calendar summary,
+  feedback rules, strings) plus Royal Blue as the default colour offered for new records. No schema change, no
+  migration, no change to PIN hashing or balance rules.
+- **Manual QA on the test data folder** (debug override, never the real folder), at the display's 125% scaling:
+  every page in English/Light, Indonesian/Dark, Indonesian at the minimum window (640×520) and Follow System
+  (Windows in dark mode → app dark); PIN wrong/right; Quick Add validation and save with exact balance, expense,
+  net and budget-warning changes; delete → totals restored → Show deleted → restore; manual backup → data changed →
+  restore from Backup history (safety copy, lock, PIN, data back); Expense Report exported as PDF, Excel and CSV
+  with matching totals; keyboard: PIN + Enter, Tab focus ring, Ctrl+K search with arrow/Enter to open a result,
+  Ctrl+B, Ctrl+N, Esc, Ctrl+L; shell icons of the app, Setup and `astra.ico` at 16–256 px on light and dark.
+- **Regressions fixed:**
+  - Analytics KPI labels (icon tile beside the label) were clipped in Indonesian ("Bersih (pemasukan - pengel…") —
+    the header is now a DockPanel and the label wraps.
+  - Transactions: at small widths the type chips slid under the "Show deleted" switch — the switch is docked right
+    and the chips wrap.
+  - Transactions: at the minimum window height the table showed only its header — the page now scrolls below a
+    minimum content height, so several rows stay visible; larger windows are unchanged.
+  - Transactions: with the details panel docked, the new type badges were clipped — columns now follow the table's
+    own width (Type/Account step aside first).
+  - Transactions: the new summary cards totalled deleted records under the normal Income/Expenses/Net labels while
+    "Show deleted" was on — they are hidden in that view (deleted records never count).
+  - PDF reports still printed the "Astra Finance" line in the 1.0 coral — now Royal Blue.
+  - `AccentColor` documentation still called Coral the brand default.
+- Real data folder verified identical by hash (4 files); the app is not installed.
+
+### Build status
+Debug and Release builds succeed with 0 warnings.
+
+### Test status
+353/353 passed after the fixes.
+
+### Known issues / notes
+- Pre-existing (unchanged 1.0 code, not introduced by the rebrand): report category shares are truncated (91% + 8%);
+  the pre-restore safety copy is named with a UTC time while manual backups use local time; data-grid rows expose
+  their type name to screen readers instead of their content.
+- A saved accent is respected (decision from Phase 1): a 1.0 user whose preferences say Coral keeps Coral until
+  choosing Blue in Settings → Appearance.
+- Only 125% scaling was exercised (the app is Per-Monitor V2 aware); other scale factors and live switching of the
+  Windows theme were not tested because they would change system settings.
+- UI sounds were verified by tests (valid short WAV, volume scaling) but not listened to.
+- Dialogs have no exit animation; the installer is not code-signed; versions still read 1.0.0 until Phase 8.

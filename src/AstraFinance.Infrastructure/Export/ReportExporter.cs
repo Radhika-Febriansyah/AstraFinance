@@ -304,7 +304,7 @@ public sealed class ReportExporter : IReportExporter
 
         var brand = section.AddParagraph(report.AppName);
         brand.Format.Font.Size = 9;
-        brand.Format.Font.Color = Color.FromRgb(0xE8, 0x6F, 0x58);
+        brand.Format.Font.Color = Color.FromRgb(0x25, 0x63, 0xEB); // brand Royal Blue #2563EB
         brand.Format.Font.Bold = true;
         var title = section.AddParagraph(report.Title);
         title.Format.Font.Size = 18;

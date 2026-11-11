@@ -12,7 +12,9 @@
              d:DataContext="{d:DesignInstance Type=pages:AnalyticsViewModel}">
     <UserControl.Resources>
         <conv:DateOnlyToDateTimeConverter x:Key="DateOnlyToDateTime" />
-        <Style x:Key="KpiLabel" TargetType="TextBlock" BasedOn="{StaticResource Text.Caption}" />
+        <Style x:Key="KpiLabel" TargetType="TextBlock" BasedOn="{StaticResource Text.Caption}">
+            <Setter Property="TextWrapping" Value="Wrap" />
+        </Style>
         <Style x:Key="KpiValue" TargetType="TextBlock" BasedOn="{StaticResource Text.Title}">
             <Setter Property="FontSize" Value="24" />
             <Setter Property="Margin" Value="0,12,0,2" />
@@ -115,24 +117,24 @@
                 <UniformGrid x:Name="KpiGrid" Columns="4" Margin="0,0,-16,0">
                     <Border Style="{StaticResource Card}" Margin="0,0,16,16">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Style="{StaticResource IconTile.Success}" Width="32" Height="32" CornerRadius="9">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Left" VerticalAlignment="Center" Style="{StaticResource IconTile.Success}" Width="32" Height="32" CornerRadius="9">
                                     <c:AstraIcon Data="{StaticResource Icon.ArrowDownLeft}" Width="16" Height="16" />
                                 </Border>
                                 <TextBlock Text="{loc:Loc TransactionType.Income}" Style="{StaticResource KpiLabel}" Margin="10,0,0,0" VerticalAlignment="Center" />
-                            </StackPanel>
+                            </DockPanel>
                             <TextBlock Text="{Binding IncomeText}" Style="{StaticResource KpiValue}" Foreground="{DynamicResource Brush.Success}" />
                             <TextBlock Text="{Binding CountsText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" />
                         </StackPanel>
                     </Border>
                     <Border Style="{StaticResource Card}" Margin="0,0,16,16">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Style="{StaticResource IconTile.Danger}" Width="32" Height="32" CornerRadius="9">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Left" VerticalAlignment="Center" Style="{StaticResource IconTile.Danger}" Width="32" Height="32" CornerRadius="9">
                                     <c:AstraIcon Data="{StaticResource Icon.ArrowUpRight}" Width="16" Height="16" />
                                 </Border>
                                 <TextBlock Text="{loc:Loc Dashboard.Expenses}" Style="{StaticResource KpiLabel}" Margin="10,0,0,0" VerticalAlignment="Center" />
-                            </StackPanel>
+                            </DockPanel>
                             <TextBlock Text="{Binding ExpenseText}" Style="{StaticResource KpiValue}" Foreground="{DynamicResource Brush.Danger}" />
                             <TextBlock Style="{StaticResource Text.Caption}" TextWrapping="Wrap">
                                 <Run Text="{loc:Loc Analytics.AverageDaily}" /><Run Text=" " /><Run Text="{Binding AverageDailyText, Mode=OneWay}" />
@@ -141,12 +143,12 @@
                     </Border>
                     <Border Style="{StaticResource Card}" Margin="0,0,16,16">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Style="{StaticResource IconTile.Small}" Width="32" Height="32" CornerRadius="9">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Left" VerticalAlignment="Center" Style="{StaticResource IconTile.Small}" Width="32" Height="32" CornerRadius="9">
                                     <c:AstraIcon Data="{StaticResource Icon.Scale}" Width="16" Height="16" />
                                 </Border>
                                 <TextBlock Text="{loc:Loc Analytics.Net}" Style="{StaticResource KpiLabel}" Margin="10,0,0,0" VerticalAlignment="Center" />
-                            </StackPanel>
+                            </DockPanel>
                             <TextBlock x:Name="NetValue" Text="{Binding NetText}">
                                 <TextBlock.Style>
                                     <Style TargetType="TextBlock" BasedOn="{StaticResource KpiValue}">
@@ -163,12 +165,12 @@
                     </Border>
                     <Border Style="{StaticResource Card}" Margin="0,0,16,16">
                         <StackPanel>
-                            <StackPanel Orientation="Horizontal">
-                                <Border Style="{StaticResource IconTile.Warning}" Width="32" Height="32" CornerRadius="9">
+                            <DockPanel>
+                                <Border DockPanel.Dock="Left" VerticalAlignment="Center" Style="{StaticResource IconTile.Warning}" Width="32" Height="32" CornerRadius="9">
                                     <c:AstraIcon Data="{StaticResource Icon.AlertTriangle}" Width="16" Height="16" />
                                 </Border>
                                 <TextBlock Text="{loc:Loc Analytics.LargestExpense}" Style="{StaticResource KpiLabel}" Margin="10,0,0,0" VerticalAlignment="Center" />
-                            </StackPanel>
+                            </DockPanel>
                             <TextBlock Text="{Binding LargestExpenseText}" Style="{StaticResource Text.BodyStrong}" TextWrapping="Wrap" Margin="0,8,0,0"
                                        Visibility="{Binding LargestExpenseText, Converter={StaticResource NullToVisibility}}" />
                             <TextBlock Text="{loc:Loc Analytics.NoExpenses}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" Margin="0,8,0,0"
