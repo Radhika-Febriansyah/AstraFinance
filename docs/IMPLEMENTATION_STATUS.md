@@ -958,3 +958,25 @@ Debug and Release builds succeed with 0 warnings.
   Windows theme were not tested because they would change system settings.
 - UI sounds were verified by tests (valid short WAV, volume scaling) but not listened to.
 - Dialogs have no exit animation; the installer is not code-signed; versions still read 1.0.0 until Phase 8.
+
+## Rebrand Phase 8 — Version 1.1.0 ✅
+
+### Completed tasks
+- Version **1.1.0** (minor: new Calendar page, Backup Center, optional sounds, Indonesian installer; no data-format
+  change). Single source `Directory.Build.props`; app manifest identity 1.1.0.0; Setup, Apps entry, splash and
+  About read it from the build.
+- `docs/RELEASE_NOTES.md`: new 1.1.0 section (what's new, fixes, upgrading, new limitations) above the unchanged 1.0.0
+  notes. README status and install text updated.
+- `v1.0.0` tag and history untouched; nothing pushed, no tag created for 1.1.0 yet (awaiting approval).
+
+### Build status
+`installer/build-release.ps1`: tests → self-contained publish → `AstraFinance-Setup-1.1.0.exe` (57.2 MB).
+Dependency audit: no vulnerable packages.
+
+### Test status
+353/353 passed (Release). Published exe: ProductVersion 1.1.0, FileVersion 1.1.0.0; Setup reports 1.1.0; splash and
+About show "Version 1.1.0" (Debug build on test data).
+
+### Known issues / notes
+- The 1.0.0 → 1.1.0 upgrade path was verified in rebrand phase 6 with this installer script; it was not repeated
+  after the version bump.

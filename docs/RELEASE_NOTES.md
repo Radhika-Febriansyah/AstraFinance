@@ -1,10 +1,65 @@
-# Astra Finance 1.0.0 — Release Notes
+# Astra Finance — Release Notes
+
+## 1.1.0 — Visual rebrand
+
+Release date: 2026-11-11 · Developer: Aprotoos · Windows 10 (2004) or later, 64-bit
+
+Astra Finance 1.1.0 gives the app a new look and a few new conveniences. **Your data is not changed:** the database
+format, calculations, PIN protection, backups and exports work exactly as in 1.0.0, and installing 1.1.0 over 1.0.0
+keeps everything you have entered.
+
+### What's new
+
+- **New brand** — Deep Navy and Royal Blue with the new "Winged Star" logo: app icon, title bar, navy sidebar, splash
+  screen, notification icon and installer. Royal Blue is the default accent; the other accent colours are still
+  available in Settings → Appearance (a colour you chose in 1.0.0 is kept).
+- **Redesigned pages** — hero balance cards, cards with icon tiles, coloured status badges and clearer progress bars
+  on Dashboard, Accounts, Transactions, Budgets, Savings Goals, Bills, Analytics and Reports.
+- **Calendar (new)** — a month view of your income and expenses with daily markers, month totals and a day panel.
+- **Transactions** — summary cards (count, income, expenses, net) for whatever matches the current filters.
+- **Accounts** — edit or deactivate/reactivate an account directly on its card.
+- **Backup Center** — backup health at a glance, last backup, location, Back up now / Restore, and a history table
+  with restore per backup.
+- **New PIN screen** — a glass panel with an on-screen keypad (the keyboard still works).
+- **Floating notifications** — newest first, up to three; they stay longer for longer messages, errors stay until you
+  close them, and hovering pauses the countdown.
+- **Optional sounds** — short tones for PIN, important notifications and saved transactions. Off by default; turn
+  them on and set the volume in Settings → Notifications → Sounds.
+- **Motion** — subtle transitions and press feedback; all of it follows Windows "Animation effects".
+- **Installer in Indonesian** — Setup and the uninstaller now speak Indonesian or English, follow Windows light/dark
+  mode and carry the new navy banner. Uninstalling still keeps your data unless you confirm twice.
+- **PDF reports** use the new brand colour.
+
+### Fixes
+
+- The backup reminder choice in Settings is no longer cut off.
+- In narrow windows the transaction type filters no longer slide under the "Show deleted" switch.
+- The Transactions page scrolls in very short windows, so the list always shows several rows.
+
+### Upgrading
+
+Run `AstraFinance-Setup-1.1.0.exe`. It upgrades an existing installation in place (no administrator rights) and
+uses the language Setup remembered for your installation. Your data folder (`%LOCALAPPDATA%\AstraFinance`) is not
+touched by the upgrade.
+
+### Known limitations (new in 1.1.0)
+
+- The uninstaller uses the language of the most recent installation or upgrade.
+- If you picked the Coral accent in 1.0.0 (or kept 1.0.0's default), the app stays Coral until you choose Royal Blue
+  in Settings → Appearance.
+- Dialogs open with an animation but close instantly.
+
+All limitations listed for 1.0.0 below still apply, except that the installer is no longer English-only.
+
+---
+
+## 1.0.0
 
 Release date: 2026-11-11 · Developer: Aprotoos · Windows 10 (2004) or later, 64-bit
 
 Astra Finance is a personal finance manager for Windows. It works completely offline and keeps your data on your own computer.
 
-## What's in 1.0.0
+### What's in 1.0.0
 
 - **Accounts** — cash, bank, e-wallet, savings and custom accounts; opening balances; documented balance adjustments; deactivate without losing history.
 - **Transactions** — income, expenses and transfers (with optional transfer fees); Quick Add (Ctrl+N) and full form; search, filters, sorting, paging; delete and restore; CSV export.
@@ -17,13 +72,13 @@ Astra Finance is a personal finance manager for Windows. It works completely off
 - **Settings** — language (Indonesian/English), number and date formats, light/dark/follow-system theme and accent colour, categories, notifications (in-app and Windows), PIN and wrong-PIN cooldown, backups (automatic and manual), safe restore, full JSON export, CSV import of transactions.
 - **Security & privacy** — PIN lock (PBKDF2 hash, never stored in plain text), no account, no cloud, no network access.
 
-## Installing
+### Installing
 
 Run `AstraFinance-Setup-1.0.0.exe`. No administrator rights are needed: Astra Finance installs for your Windows user only (`%LOCALAPPDATA%\Programs\Astra Finance`). A Start Menu shortcut is created; a Desktop shortcut is optional.
 
 The installer is not code-signed yet, so Windows SmartScreen may ask for confirmation ("More info" → "Run anyway").
 
-## Your data
+### Your data
 
 All data is stored in `%LOCALAPPDATA%\AstraFinance` (database, settings, backups, logs) — never in the installation folder.
 
@@ -31,7 +86,7 @@ All data is stored in `%LOCALAPPDATA%\AstraFinance` (database, settings, backups
 - Reinstalling (or installing a newer version) picks up the existing data. Before a newer version changes the database, it saves a safety copy in the Backups folder.
 - For silent/IT uninstalls: data is kept unless `/DELETEUSERDATA` is passed.
 
-## Release verification (2026-11-11)
+### Release verification (2026-11-11)
 
 Verified on Windows 11 (125 % scaling) with the installer built from `master` at commit `a735ed6`:
 
@@ -49,7 +104,7 @@ Verified on Windows 11 (125 % scaling) with the installer built from `master` at
 | Silent uninstall | Data kept |
 | Logs | No errors or warnings |
 
-## Known limitations
+### Known limitations
 
 - **The PIN is access control, not encryption.** The data file is protected by your Windows account; keep your Windows sign-in secure and store backups in a safe place.
 - One currency for the whole app (chosen during setup; it can't be changed once accounts exist).
@@ -60,6 +115,6 @@ Verified on Windows 11 (125 % scaling) with the installer built from `master` at
 - Transactions entered with Quick Add have no description; reports show an empty description for them (the app's lists show the category name instead).
 - Category shares in reports are rounded down, so they can add up to slightly less than 100 %.
 
-## Third-party components
+### Third-party components
 
 See `THIRD_PARTY_NOTICES.md` (installed next to the app) and Settings → About. All components are under permissive licences (MIT, Apache-2.0, ISC); PDFsharp/MigraDoc is pinned to 6.2.4, its last MIT-licensed release.

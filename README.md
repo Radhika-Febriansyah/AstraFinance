@@ -2,13 +2,13 @@
 
 A local-first, offline personal finance app for Windows (WPF, .NET 10). Developed by **Aprotoos**.
 
-> Status: **version 1.0.0** — all ten roadmap phases complete. See [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md) and [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md).
+> Status: **version 1.1.0** — the visual rebrand (Deep Navy and Royal Blue, the Winged Star logo, a new Calendar page, optional UI sounds and an Indonesian installer) on top of the complete 1.0 feature set. See [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md) and [docs/IMPLEMENTATION_STATUS.md](docs/IMPLEMENTATION_STATUS.md).
 
 Astra Finance keeps your data on your device. It does not connect to or control any bank account.
 
 ## Install
 
-Run `AstraFinance-Setup-1.0.0.exe`. No administrator rights are needed — it installs for the current Windows user only (`%LOCALAPPDATA%\Programs\Astra Finance`), adds a Start Menu shortcut (Desktop shortcut optional) and registers a normal Windows uninstaller (Settings → Apps).
+Run `AstraFinance-Setup-1.1.0.exe` (it also upgrades an existing 1.0.0 installation in place, keeping your data). No administrator rights are needed — it installs for the current Windows user only (`%LOCALAPPDATA%\Programs\Astra Finance`), adds a Start Menu shortcut (Desktop shortcut optional) and registers a normal Windows uninstaller (Settings → Apps).
 
 Uninstalling **keeps your data** unless you explicitly choose to delete it (two confirmations; the default answer is No). Silent uninstalls keep data unless `/DELETEUSERDATA` is passed.
 
