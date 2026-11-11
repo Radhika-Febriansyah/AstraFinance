@@ -10,28 +10,8 @@
              d:DataContext="{d:DesignInstance Type=pages:BillsViewModel}">
     <UserControl.Resources>
         <!-- Whole row selects the bill; the Pay button inside stays its own control. -->
-        <Style x:Key="BillRow" TargetType="Button">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
+        <Style x:Key="BillRow" TargetType="Button" BasedOn="{StaticResource Card.Button}">
             <Setter Property="Margin" Value="0,0,0,10" />
-            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
-            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Astra}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Root" Style="{StaticResource Card}" Padding="16,14">
-                            <ContentPresenter HorizontalAlignment="Stretch" />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource Brush.Border.Strong}" />
-                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Surface.Raised}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
         </Style>
     </UserControl.Resources>
 
@@ -57,30 +37,43 @@
                 </Grid>
 
                 <!-- Summary -->
-                <Border Style="{StaticResource Card}" Padding="20,16" Margin="0,0,0,12"
-                        Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="*" />
-                            <ColumnDefinition Width="*" />
-                        </Grid.ColumnDefinitions>
-                        <StackPanel Margin="0,0,16,0">
-                            <TextBlock Text="{loc:Loc Bills.Upcoming}" Style="{StaticResource Text.Caption}" />
-                            <TextBlock Text="{Binding UpcomingTotalText}" Style="{StaticResource Text.Title}" Margin="0,4,0,2" />
-                            <TextBlock Text="{Binding UpcomingCountText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" />
-                        </StackPanel>
-                        <StackPanel Grid.Column="1">
-                            <TextBlock Text="{loc:Loc BillStatus.Overdue}" Style="{StaticResource Text.Caption}" />
-                            <StackPanel Orientation="Horizontal" Margin="0,6,0,0">
-                                <c:AstraIcon Data="{StaticResource Icon.CircleCheck}" Width="18" Height="18" Foreground="{DynamicResource Brush.Success}" Margin="0,0,8,0"
-                                             Visibility="{Binding HasOverdue, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
-                                <c:AstraIcon Data="{StaticResource Icon.AlertTriangle}" Width="18" Height="18" Foreground="{DynamicResource Brush.Danger}" Margin="0,0,8,0"
-                                             Visibility="{Binding HasOverdue, Converter={StaticResource BoolToVisibility}}" />
-                                <TextBlock Text="{Binding OverdueText}" Style="{StaticResource Text.BodyStrong}" TextWrapping="Wrap" VerticalAlignment="Center" />
+                <Grid Margin="0,0,0,12" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="12" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+                    <Border Style="{StaticResource Card}" Padding="18,16">
+                        <DockPanel>
+                            <Border DockPanel.Dock="Left" Style="{StaticResource IconTile.Info}" VerticalAlignment="Top">
+                                <c:AstraIcon Data="{StaticResource Icon.Calendar}" Style="{StaticResource IconTile.Icon}" />
+                            </Border>
+                            <StackPanel Margin="14,0,0,0">
+                                <TextBlock Text="{loc:Loc Bills.Upcoming}" Style="{StaticResource Text.Caption}" />
+                                <TextBlock Text="{Binding UpcomingTotalText}" Style="{StaticResource Text.Stat.Value.Small}" Margin="0,2,0,2" />
+                                <TextBlock Text="{Binding UpcomingCountText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" />
                             </StackPanel>
-                        </StackPanel>
-                    </Grid>
-                </Border>
+                        </DockPanel>
+                    </Border>
+                    <Border Grid.Column="2" Style="{StaticResource Card}" Padding="18,16">
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Left" VerticalAlignment="Top">
+                                <Border Style="{StaticResource IconTile.Success}"
+                                        Visibility="{Binding HasOverdue, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+                                    <c:AstraIcon Data="{StaticResource Icon.CircleCheck}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <Border Style="{StaticResource IconTile.Danger}"
+                                        Visibility="{Binding HasOverdue, Converter={StaticResource BoolToVisibility}}">
+                                    <c:AstraIcon Data="{StaticResource Icon.AlertTriangle}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                            </Grid>
+                            <StackPanel Margin="14,0,0,0">
+                                <TextBlock Text="{loc:Loc BillStatus.Overdue}" Style="{StaticResource Text.Caption}" />
+                                <TextBlock Text="{Binding OverdueText}" Style="{StaticResource Text.BodyStrong}" TextWrapping="Wrap" TextTrimming="None" Margin="0,6,0,0" />
+                            </StackPanel>
+                        </DockPanel>
+                    </Border>
+                </Grid>
 
                 <TextBlock Text="{loc:Loc Bills.Explainer}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" Margin="0,0,0,12"
                            Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
@@ -109,22 +102,22 @@
                                         <ColumnDefinition Width="*" />
                                         <ColumnDefinition Width="Auto" />
                                     </Grid.ColumnDefinitions>
-                                    <Grid Width="40" Height="40" VerticalAlignment="Top">
-                                        <Ellipse Fill="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.18" />
+                                    <Grid Width="42" Height="42" VerticalAlignment="Top">
+                                        <Border CornerRadius="12" Background="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.16" />
                                         <c:AstraIcon IconKey="{Binding IconKey}" Width="20" Height="20" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
                                     </Grid>
                                     <StackPanel Grid.Column="1" Margin="14,0,16,0">
                                         <WrapPanel>
                                             <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" VerticalAlignment="Center" Margin="0,0,10,0" />
-                                            <Border x:Name="StatusBadge" Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}">
-                                                <TextBlock x:Name="StatusText" Text="{Binding StatusText}" Style="{StaticResource Text.Caption}" FontWeight="SemiBold" />
+                                            <Border x:Name="StatusBadge" Style="{StaticResource Badge.Neutral}">
+                                                <TextBlock x:Name="StatusText" Text="{Binding StatusText}" Style="{StaticResource Badge.Neutral.Text}" />
                                             </Border>
                                         </WrapPanel>
                                         <TextBlock x:Name="Due" Text="{Binding DueText}" Style="{StaticResource Text.Secondary}" TextWrapping="Wrap" Margin="0,4,0,0" />
                                         <TextBlock Text="{Binding ScheduleText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" Margin="0,2,0,0" />
                                     </StackPanel>
                                     <StackPanel Grid.Column="2" VerticalAlignment="Center">
-                                        <TextBlock Text="{Binding AmountText}" Style="{StaticResource Text.BodyStrong}" HorizontalAlignment="Right" />
+                                        <TextBlock Text="{Binding AmountText}" Style="{StaticResource Text.Title}" FontSize="18" HorizontalAlignment="Right" />
                                         <!-- Pay: prominent when the bill is due soon, due today or overdue. -->
                                         <Button Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.Check" Content="{loc:Loc Bills.Pay}"
                                                 AutomationProperties.Name="{Binding PayAutomationName}" ToolTip="{Binding PayAutomationName}" Margin="0,8,0,0" HorizontalAlignment="Right"

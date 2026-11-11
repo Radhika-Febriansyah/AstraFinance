@@ -9,28 +9,25 @@
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=pages:SavingsGoalsViewModel}">
     <UserControl.Resources>
-        <Style x:Key="GoalCard" TargetType="Button">
-            <Setter Property="OverridesDefaultStyle" Value="True" />
-            <Setter Property="Cursor" Value="Hand" />
+        <Style x:Key="GoalCard" TargetType="Button" BasedOn="{StaticResource Card.Button}">
             <Setter Property="Width" Value="320" />
             <Setter Property="Margin" Value="0,0,16,16" />
-            <Setter Property="Foreground" Value="{DynamicResource Brush.Text.Primary}" />
-            <Setter Property="FocusVisualStyle" Value="{StaticResource FocusVisual.Astra}" />
-            <Setter Property="Template">
-                <Setter.Value>
-                    <ControlTemplate TargetType="Button">
-                        <Border x:Name="Root" Style="{StaticResource Card}" Padding="18">
-                            <ContentPresenter />
-                        </Border>
-                        <ControlTemplate.Triggers>
-                            <Trigger Property="IsMouseOver" Value="True">
-                                <Setter TargetName="Root" Property="BorderBrush" Value="{DynamicResource Brush.Border.Strong}" />
-                                <Setter TargetName="Root" Property="Background" Value="{DynamicResource Brush.Surface.Raised}" />
-                            </Trigger>
-                        </ControlTemplate.Triggers>
-                    </ControlTemplate>
-                </Setter.Value>
-            </Setter>
+        </Style>
+
+        <!-- Goal status badge: completed = green, archived = neutral (active goals show none) -->
+        <Style x:Key="GoalStatusBadge" TargetType="Border" BasedOn="{StaticResource Badge.Neutral}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                    <Setter Property="Background" Value="{DynamicResource Brush.Success.Subtle}" />
+                </DataTrigger>
+            </Style.Triggers>
+        </Style>
+        <Style x:Key="GoalStatusText" TargetType="TextBlock" BasedOn="{StaticResource Badge.Neutral.Text}">
+            <Style.Triggers>
+                <DataTrigger Binding="{Binding IsCompleted}" Value="True">
+                    <Setter Property="Foreground" Value="{DynamicResource Brush.Success}" />
+                </DataTrigger>
+            </Style.Triggers>
         </Style>
     </UserControl.Resources>
 
@@ -52,7 +49,8 @@
                 </Grid>
 
                 <!-- How allocation works -->
-                <Border Style="{StaticResource Card}" Padding="16" Margin="0,0,0,12" MaxWidth="820" HorizontalAlignment="Left">
+                <Border Style="{StaticResource Card}" Padding="16" Margin="0,0,0,12" MaxWidth="820" HorizontalAlignment="Left"
+                        Background="{DynamicResource Brush.Info.Subtle}" BorderThickness="0">
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto" />
@@ -104,32 +102,33 @@
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="Auto" />
                                             <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
                                         </Grid.ColumnDefinitions>
-                                        <Grid Width="40" Height="40">
-                                            <Ellipse Fill="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.18" />
+                                        <Grid Width="42" Height="42">
+                                            <Border CornerRadius="12" Background="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.16" />
                                             <c:AstraIcon IconKey="{Binding IconKey}" Width="20" Height="20" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
                                         </Grid>
-                                        <StackPanel Grid.Column="1" Margin="12,0,0,0" VerticalAlignment="Center">
-                                            <StackPanel Orientation="Horizontal">
-                                                <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" MaxWidth="170" />
-                                                <Border x:Name="StatusBadge" Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}" Margin="8,0,0,0" Padding="6,0"
-                                                        Visibility="{Binding IsActive, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
-                                                    <TextBlock Text="{Binding StatusText}" Style="{StaticResource Text.Caption}" FontSize="11" />
-                                                </Border>
-                                            </StackPanel>
-                                            <TextBlock Text="{Binding TargetDateText}" Style="{StaticResource Text.Caption}"
-                                                       Visibility="{Binding TargetDateText, Converter={StaticResource NullToVisibility}}" />
+                                        <StackPanel Grid.Column="1" Margin="12,0,8,0" VerticalAlignment="Center">
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" />
+                                            <Border Style="{StaticResource GoalStatusBadge}" Margin="0,4,0,0"
+                                                    Visibility="{Binding IsActive, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+                                                <TextBlock Text="{Binding StatusText}" Style="{StaticResource GoalStatusText}" />
+                                            </Border>
                                         </StackPanel>
+                                        <TextBlock Grid.Column="2" Text="{Binding PercentText}" Style="{StaticResource Text.Title}" FontSize="18" VerticalAlignment="Top"
+                                                   Foreground="{DynamicResource Brush.Accent.Text}" />
                                     </Grid>
-                                    <TextBlock Style="{StaticResource Text.Secondary}" Margin="0,14,0,0">
-                                        <Run Text="{Binding AllocatedText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Primary}" FontWeight="SemiBold" FontSize="18" /><Run Text=" / " /><Run Text="{Binding TargetText, Mode=OneWay}" />
+                                    <TextBlock Style="{StaticResource Text.Secondary}" Margin="0,16,0,0">
+                                        <Run Text="{Binding AllocatedText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Primary}" FontFamily="{StaticResource Font.Display}" FontWeight="SemiBold" FontSize="20" /><Run Text="  /  " /><Run Text="{Binding TargetText, Mode=OneWay}" />
                                     </TextBlock>
-                                    <ProgressBar Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Height="8" Margin="0,8,0,6"
+                                    <ProgressBar Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Margin="0,10,0,8"
                                                  Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
-                                    <Grid>
-                                        <TextBlock Text="{Binding RemainingText}" Style="{StaticResource Text.Caption}" />
-                                        <TextBlock Text="{Binding PercentText}" Style="{StaticResource Text.Caption}" HorizontalAlignment="Right" />
-                                    </Grid>
+                                    <TextBlock Text="{Binding RemainingText}" Style="{StaticResource Text.Caption}" />
+                                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0"
+                                                Visibility="{Binding TargetDateText, Converter={StaticResource NullToVisibility}}">
+                                        <c:AstraIcon Data="{StaticResource Icon.Calendar}" Width="14" Height="14" Margin="0,0,6,0" Foreground="{DynamicResource Brush.Text.Tertiary}" VerticalAlignment="Center" />
+                                        <TextBlock Text="{Binding TargetDateText}" Style="{StaticResource Text.Caption}" VerticalAlignment="Center" />
+                                    </StackPanel>
                                     <TextBlock Text="{Binding PaceText}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Accent.Text}" Margin="0,6,0,0"
                                                Visibility="{Binding PaceText, Converter={StaticResource NullToVisibility}}" />
                                 </StackPanel>
@@ -155,7 +154,7 @@
                     <TextBlock Style="{StaticResource Text.Secondary}">
                         <Run Text="{Binding Selected.AllocatedText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Primary}" FontWeight="SemiBold" /><Run Text=" / " /><Run Text="{Binding Selected.TargetText, Mode=OneWay}" />
                     </TextBlock>
-                    <ProgressBar Value="{Binding Selected.BarPercent, Mode=OneWay}" Maximum="100" Height="8" Margin="0,8,0,4"
+                    <ProgressBar Value="{Binding Selected.BarPercent, Mode=OneWay}" Maximum="100" Margin="0,8,0,4"
                                  Foreground="{Binding Selected.ColorHex, Converter={StaticResource HexToBrush}}" />
                     <TextBlock Text="{Binding Selected.RemainingText}" Style="{StaticResource Text.Caption}" />
 

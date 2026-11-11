@@ -22,39 +22,51 @@
 
             <!-- Month selector -->
             <StackPanel Orientation="Horizontal" Margin="0,0,0,16">
-                <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.ChevronLeft" Command="{Binding PreviousMonthCommand}"
-                        ToolTip="{loc:Loc Budgets.PrevMonth}" AutomationProperties.Name="{loc:Loc Budgets.PrevMonth}" />
-                <TextBlock Text="{Binding MonthText}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center" MinWidth="160" TextAlignment="Center" />
-                <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.ChevronRight" Command="{Binding NextMonthCommand}"
-                        ToolTip="{loc:Loc Budgets.NextMonth}" AutomationProperties.Name="{loc:Loc Budgets.NextMonth}" />
-                <Button Style="{StaticResource Button.Link}" Content="{loc:Loc Budgets.ThisMonth}" Command="{Binding ThisMonthCommand}" Margin="12,0,0,0"
+                <Border Style="{StaticResource Toolbar}" Padding="4">
+                    <StackPanel Orientation="Horizontal">
+                        <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.ChevronLeft" Command="{Binding PreviousMonthCommand}"
+                                ToolTip="{loc:Loc Budgets.PrevMonth}" AutomationProperties.Name="{loc:Loc Budgets.PrevMonth}" />
+                        <c:AstraIcon Data="{StaticResource Icon.Calendar}" Width="16" Height="16" Margin="8,0,8,0" Foreground="{DynamicResource Brush.Accent.Text}" />
+                        <TextBlock Text="{Binding MonthText}" Style="{StaticResource Text.Subtitle}" VerticalAlignment="Center" MinWidth="140" />
+                        <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.ChevronRight" Command="{Binding NextMonthCommand}"
+                                ToolTip="{loc:Loc Budgets.NextMonth}" AutomationProperties.Name="{loc:Loc Budgets.NextMonth}" />
+                    </StackPanel>
+                </Border>
+                <Button Style="{StaticResource Button.Link}" Content="{loc:Loc Budgets.ThisMonth}" Command="{Binding ThisMonthCommand}" Margin="16,0,0,0"
                         Visibility="{Binding IsCurrentMonth, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}" />
             </StackPanel>
 
             <!-- Totals -->
-            <Border Style="{StaticResource Card}" Margin="0,0,0,20" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+            <Border Style="{StaticResource Card.Hero}" Margin="0,0,0,20" Padding="24,20" Visibility="{Binding IsEmpty, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
                 <StackPanel>
                     <Grid>
-                        <StackPanel>
-                            <TextBlock Text="{loc:Loc Budgets.TotalSpent}" Style="{StaticResource Text.Caption}" />
-                            <TextBlock Style="{StaticResource Text.Title}" Margin="0,4,0,0">
-                                <Run Text="{Binding TotalSpentText, Mode=OneWay}" /><Run Text=" / " Foreground="{DynamicResource Brush.Text.Tertiary}" /><Run Text="{Binding TotalLimitText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Secondary}" />
-                            </TextBlock>
+                        <StackPanel Orientation="Horizontal">
+                            <Border Style="{StaticResource IconTile.OnHero}">
+                                <c:AstraIcon Data="{StaticResource Icon.Budgets}" Style="{StaticResource IconTile.Icon}" />
+                            </Border>
+                            <StackPanel Margin="12,0,0,0" VerticalAlignment="Center">
+                                <TextBlock Text="{loc:Loc Budgets.TotalSpent}" Style="{StaticResource Text.OnHero.Secondary}" FontSize="{StaticResource FontSize.Caption}" />
+                                <TextBlock Style="{StaticResource Text.OnHero}" FontFamily="{StaticResource Font.Display}" FontSize="24" FontWeight="SemiBold" Margin="0,2,0,0">
+                                    <Run Text="{Binding TotalSpentText, Mode=OneWay}" /><Run Text=" / " Foreground="{DynamicResource Brush.Hero.Text.Secondary}" /><Run Text="{Binding TotalLimitText, Mode=OneWay}" Foreground="{DynamicResource Brush.Hero.Text.Secondary}" FontSize="18" />
+                                </TextBlock>
+                            </StackPanel>
                         </StackPanel>
                         <TextBlock Text="{Binding TotalRemainingText}" HorizontalAlignment="Right" VerticalAlignment="Bottom">
                             <TextBlock.Style>
-                                <Style TargetType="TextBlock" BasedOn="{StaticResource Text.BodyStrong}">
+                                <Style TargetType="TextBlock" BasedOn="{StaticResource Text.OnHero}">
+                                    <Setter Property="FontWeight" Value="SemiBold" />
                                     <Style.Triggers>
                                         <DataTrigger Binding="{Binding IsTotalOver}" Value="True">
-                                            <Setter Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                            <Setter Property="Foreground" Value="{StaticResource Brush.OnBrand.Danger}" />
                                         </DataTrigger>
                                     </Style.Triggers>
                                 </Style>
                             </TextBlock.Style>
                         </TextBlock>
                     </Grid>
-                    <ProgressBar Value="{Binding TotalBarPercent, Mode=OneWay}" Maximum="100" Margin="0,12,0,8" Height="8" />
-                    <TextBlock Text="{Binding DefaultThresholdText}" Style="{StaticResource Text.Caption}" Foreground="{DynamicResource Brush.Text.Tertiary}" />
+                    <ProgressBar Value="{Binding TotalBarPercent, Mode=OneWay}" Maximum="100" Margin="0,16,0,10"
+                                 Background="#33FFFFFF" Foreground="{DynamicResource Brush.Hero.Text}" />
+                    <TextBlock Text="{Binding DefaultThresholdText}" Style="{StaticResource Text.OnHero.Secondary}" FontSize="{StaticResource FontSize.Caption}" TextWrapping="Wrap" />
                 </StackPanel>
             </Border>
 
@@ -70,63 +82,83 @@
             </Border>
 
             <!-- Budgets -->
-            <ItemsControl ItemsSource="{Binding Items}" Focusable="False">
+            <ItemsControl ItemsSource="{Binding Items}" Focusable="False" Margin="0,0,-16,0">
+                <ItemsControl.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel />
+                    </ItemsPanelTemplate>
+                </ItemsControl.ItemsPanel>
                 <ItemsControl.ItemTemplate>
                     <DataTemplate DataType="{x:Type pages:BudgetRowViewModel}">
-                        <Border Style="{StaticResource Card}" Margin="0,0,0,12" Padding="18,16">
-                            <Grid>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="Auto" />
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="Auto" />
-                                </Grid.ColumnDefinitions>
-                                <Grid Width="40" Height="40" VerticalAlignment="Top">
-                                    <Ellipse Fill="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.18" />
-                                    <c:AstraIcon IconKey="{Binding IconKey}" Width="20" Height="20" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
+                        <Border Style="{StaticResource Card}" Width="340" Margin="0,0,16,16" Padding="20,18,20,12">
+                            <StackPanel>
+                                <!-- Category + status -->
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="Auto" />
+                                        <ColumnDefinition Width="*" />
+                                        <ColumnDefinition Width="Auto" />
+                                    </Grid.ColumnDefinitions>
+                                    <Grid Width="40" Height="40">
+                                        <Border CornerRadius="11" Background="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.16" />
+                                        <c:AstraIcon IconKey="{Binding IconKey}" Width="20" Height="20" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
+                                    </Grid>
+                                    <StackPanel Grid.Column="1" Margin="12,0,8,0" VerticalAlignment="Center">
+                                        <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" />
+                                        <Border x:Name="StatusBadge" Style="{StaticResource Badge.Info}" Margin="0,4,0,0">
+                                            <TextBlock x:Name="StatusText" Text="{Binding StatusText}" Style="{StaticResource Badge.Info.Text}" />
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock x:Name="Percent" Grid.Column="2" Text="{Binding PercentText}" Style="{StaticResource Text.Title}" FontSize="18"
+                                               VerticalAlignment="Top" Foreground="{DynamicResource Brush.Info}" />
                                 </Grid>
-                                <StackPanel Grid.Column="1" Margin="14,0,16,0">
-                                    <Grid>
-                                        <StackPanel Orientation="Horizontal">
-                                            <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" VerticalAlignment="Center" />
-                                            <Border x:Name="StatusBadge" Style="{StaticResource Badge}" Margin="10,0,0,0" Background="{DynamicResource Brush.Success.Subtle}">
-                                                <TextBlock x:Name="StatusText" Text="{Binding StatusText}" Style="{StaticResource Text.Caption}" FontWeight="SemiBold"
-                                                           Foreground="{DynamicResource Brush.Success}" />
-                                            </Border>
-                                        </StackPanel>
-                                        <TextBlock HorizontalAlignment="Right" Style="{StaticResource Text.Secondary}">
-                                            <Run Text="{Binding SpentText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Primary}" FontWeight="SemiBold" /><Run Text=" / " /><Run Text="{Binding LimitText, Mode=OneWay}" />
-                                        </TextBlock>
-                                    </Grid>
-                                    <ProgressBar x:Name="Bar" Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Margin="0,10,0,6" Height="8"
-                                                 Foreground="{DynamicResource Brush.Success}" />
-                                    <Grid>
-                                        <TextBlock x:Name="Remaining" Text="{Binding RemainingText}" Style="{StaticResource Text.Caption}" />
-                                        <TextBlock Text="{Binding PercentText}" Style="{StaticResource Text.Caption}" HorizontalAlignment="Right" />
-                                    </Grid>
+
+                                <!-- Spent / limit -->
+                                <TextBlock Style="{StaticResource Text.Secondary}" Margin="0,16,0,0">
+                                    <Run Text="{Binding SpentText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Primary}" FontFamily="{StaticResource Font.Display}" FontWeight="SemiBold" FontSize="20" /><Run Text="  /  " /><Run Text="{Binding LimitText, Mode=OneWay}" />
+                                </TextBlock>
+                                <ProgressBar x:Name="Bar" Value="{Binding BarPercent, Mode=OneWay}" Maximum="100" Margin="0,10,0,8"
+                                             Foreground="{DynamicResource Brush.Info}" />
+                                <StackPanel Orientation="Horizontal">
+                                    <c:AstraIcon x:Name="AlertIcon" Data="{StaticResource Icon.AlertTriangle}" Width="14" Height="14" Margin="0,0,6,0"
+                                                 Visibility="Collapsed" VerticalAlignment="Center" />
+                                    <TextBlock x:Name="Remaining" Text="{Binding RemainingText}" Style="{StaticResource Text.Caption}" VerticalAlignment="Center" />
                                 </StackPanel>
-                                <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Top">
-                                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.Transactions" ToolTip="{loc:Loc Budgets.ShowExpenses}"
+
+                                <!-- Actions -->
+                                <Border Height="1" Background="{DynamicResource Brush.Divider}" Margin="0,14,0,6" />
+                                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                                    <Button Style="{StaticResource Button.Icon}" Width="32" Height="32" c:Assist.Icon="Icon.Transactions" ToolTip="{loc:Loc Budgets.ShowExpenses}"
                                             AutomationProperties.Name="{loc:Loc Budgets.ShowExpenses}"
                                             Command="{Binding DataContext.OpenTransactionsCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
-                                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.Pencil" ToolTip="{loc:Loc Budgets.Edit.Title}"
+                                    <Button Style="{StaticResource Button.Icon}" Width="32" Height="32" Margin="4,0,0,0" c:Assist.Icon="Icon.Pencil" ToolTip="{loc:Loc Budgets.Edit.Title}"
                                             AutomationProperties.Name="{loc:Loc Budgets.Edit.Title}"
                                             Command="{Binding DataContext.EditCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
-                                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.X" ToolTip="{loc:Loc Budgets.Delete.Title}"
+                                    <Button Style="{StaticResource Button.Icon}" Width="32" Height="32" Margin="4,0,0,0" c:Assist.Icon="Icon.Trash" ToolTip="{loc:Loc Budgets.Delete.Title}"
                                             AutomationProperties.Name="{loc:Loc Budgets.Delete.Title}"
                                             Command="{Binding DataContext.DeleteCommand, RelativeSource={RelativeSource AncestorType=ItemsControl}}" CommandParameter="{Binding}" />
                                 </StackPanel>
-                            </Grid>
+                            </StackPanel>
                         </Border>
+                        <!-- Normal = blue, approaching the limit = amber, exceeded = red -->
                         <DataTemplate.Triggers>
                             <DataTrigger Binding="{Binding Status}" Value="Warning">
                                 <Setter TargetName="Bar" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                <Setter TargetName="Percent" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
                                 <Setter TargetName="StatusBadge" Property="Background" Value="{DynamicResource Brush.Warning.Subtle}" />
                                 <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                <Setter TargetName="AlertIcon" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="AlertIcon" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
+                                <Setter TargetName="Remaining" Property="Foreground" Value="{DynamicResource Brush.Warning}" />
                             </DataTrigger>
                             <DataTrigger Binding="{Binding Status}" Value="Exceeded">
                                 <Setter TargetName="Bar" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                <Setter TargetName="Percent" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
                                 <Setter TargetName="StatusBadge" Property="Background" Value="{DynamicResource Brush.Danger.Subtle}" />
                                 <Setter TargetName="StatusText" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
+                                <Setter TargetName="AlertIcon" Property="Visibility" Value="Visible" />
+                                <Setter TargetName="AlertIcon" Property="Data" Value="{StaticResource Icon.AlertCircle}" />
+                                <Setter TargetName="AlertIcon" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
                                 <Setter TargetName="Remaining" Property="Foreground" Value="{DynamicResource Brush.Danger}" />
                             </DataTrigger>
                         </DataTemplate.Triggers>
