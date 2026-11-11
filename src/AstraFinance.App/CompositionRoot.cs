@@ -139,6 +139,7 @@ public static class CompositionRoot
             .Register(AppPage.Settings, sp => ActivatorUtilities.CreateInstance<SettingsViewModel>(sp))
             .Register(AppPage.Accounts, sp => ActivatorUtilities.CreateInstance<AccountsViewModel>(sp))
             .Register(AppPage.Transactions, sp => ActivatorUtilities.CreateInstance<TransactionsViewModel>(sp))
+            .Register(AppPage.Calendar, sp => ActivatorUtilities.CreateInstance<CalendarViewModel>(sp))
             .Register(AppPage.Budgets, sp => ActivatorUtilities.CreateInstance<BudgetsViewModel>(sp))
             .Register(AppPage.SavingsGoals, sp => ActivatorUtilities.CreateInstance<SavingsGoalsViewModel>(sp))
             .Register(AppPage.Bills, sp => ActivatorUtilities.CreateInstance<BillsViewModel>(sp))

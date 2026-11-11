@@ -2484,4 +2484,40 @@
   <data name="Transactions.Summary.Hint" xml:space="preserve">
     <value>Sesuai filter saat ini</value>
   </data>
+  <data name="Nav.Calendar" xml:space="preserve">
+    <value>Kalender</value>
+  </data>
+  <data name="Page.Calendar.Description" xml:space="preserve">
+    <value>Lihat pemasukan dan pengeluaran Anda per hari.</value>
+  </data>
+  <data name="Calendar.PrevMonth" xml:space="preserve">
+    <value>Bulan sebelumnya</value>
+  </data>
+  <data name="Calendar.NextMonth" xml:space="preserve">
+    <value>Bulan berikutnya</value>
+  </data>
+  <data name="Calendar.Today" xml:space="preserve">
+    <value>Hari ini</value>
+  </data>
+  <data name="Calendar.MonthIncome" xml:space="preserve">
+    <value>Pemasukan bulan ini</value>
+  </data>
+  <data name="Calendar.MonthExpense" xml:space="preserve">
+    <value>Pengeluaran bulan ini</value>
+  </data>
+  <data name="Calendar.Net" xml:space="preserve">
+    <value>Selisih bersih</value>
+  </data>
+  <data name="Calendar.SelectedDay" xml:space="preserve">
+    <value>Hari terpilih</value>
+  </data>
+  <data name="Calendar.DayTransactions" xml:space="preserve">
+    <value>Transaksi</value>
+  </data>
+  <data name="Calendar.Day.Empty" xml:space="preserve">
+    <value>Tidak ada transaksi pada hari ini.</value>
+  </data>
+  <data name="Calendar.Day.Automation" xml:space="preserve">
+    <value>{0}: pemasukan {1}, pengeluaran {2}</value>
+  </data>
 </root>

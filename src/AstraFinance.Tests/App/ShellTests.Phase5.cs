@@ -45,6 +45,49 @@ public sealed partial class ShellTests
     }
 
     [Fact]
+    public async Task Calendar_shows_real_day_totals_and_opens_transactions()
+    {
+        await StartUnlockedAsync();
+        var (food, salary, cash, bank) = await SeedAsync();
+        await AddAsync(TransactionType.Income, 8_000_000, bank, salary, "November salary", new DateOnly(2026, 11, 1));
+        await AddAsync(TransactionType.Expense, 45_000, cash, food, "Lunch", new DateOnly(2026, 11, 9));
+        await AddAsync(TransactionType.Transfer, 500_000, bank, null, destination: cash, fee: 2_500, date: new DateOnly(2026, 11, 9));
+        await AddAsync(TransactionType.Expense, 120_000, bank, food, "Groceries", new DateOnly(2026, 10, 20));
+
+        await Shell.NavigateAsync(AppPage.Calendar);
+        var calendar = Assert.IsType<CalendarViewModel>(Shell.CurrentPage);
+
+        // Month totals: income 8.000.000; expenses 45.000 + 2.500 fee; the transfer itself is neither.
+        Assert.Equal("Rp8.000.000", calendar.MonthIncomeText);
+        Assert.Equal("Rp47.500", calendar.MonthExpenseText);
+        Assert.Equal(42, calendar.Days.Count);
+
+        // Today (9 Nov, from the test clock) is selected and highlighted.
+        var today = calendar.Days.Single(d => d.IsToday);
+        Assert.Equal(new DateOnly(2026, 11, 9), today.Date);
+        Assert.True(today.IsSelected);
+        Assert.True(today.HasExpense);
+        Assert.False(today.HasIncome);
+        Assert.Equal("Rp47.500", calendar.SelectedExpenseText);
+        Assert.Equal(3, calendar.SelectedRows.Count); // lunch, transfer, fee
+
+        // Selecting another day shows that day only.
+        await calendar.SelectDayCommand.ExecuteAsync(calendar.Days.Single(d => d.Date == new DateOnly(2026, 11, 1)));
+        Assert.Equal("Rp8.000.000", calendar.SelectedIncomeText);
+        Assert.Single(calendar.SelectedRows);
+
+        // Previous month has October's expense.
+        await calendar.PreviousMonthCommand.ExecuteAsync(null);
+        Assert.Equal("Rp120.000", calendar.MonthExpenseText);
+        Assert.False(calendar.IsCurrentMonth);
+
+        // A row opens the transaction on the Transactions page.
+        await calendar.TodayCommand.ExecuteAsync(null);
+        await calendar.OpenTransactionCommand.ExecuteAsync(calendar.SelectedRows[0]);
+        Assert.IsType<TransactionsViewModel>(Shell.CurrentPage);
+    }
+
+    [Fact]
     public async Task Dashboard_without_activity_shows_empty_states_not_fake_data()
     {
         await StartUnlockedAsync();

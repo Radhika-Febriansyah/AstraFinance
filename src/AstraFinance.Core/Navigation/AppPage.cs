@@ -1,6 +1,6 @@
 namespace AstraFinance.Core.Navigation;
 
-/// <summary>Top-level destinations in the main navigation, in sidebar order.</summary>
+/// <summary>Top-level destinations in the main navigation (sidebar order is defined by <see cref="PageCatalog"/>).</summary>
 public enum AppPage
 {
     Dashboard = 0,
@@ -12,4 +12,5 @@ public enum AppPage
     Analytics = 6,
     Reports = 7,
     Settings = 8,
+    Calendar = 9,
 }

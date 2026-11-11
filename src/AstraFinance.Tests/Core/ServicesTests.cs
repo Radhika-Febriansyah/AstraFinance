@@ -20,10 +20,11 @@ public class ServicesTests
         Assert.Equal(expected, GreetingProvider.GetGreetingKey(new TimeOnly(hour, minute)));
 
     [Fact]
-    public void Page_catalog_has_nine_pages_in_spec_order_with_dashboard_first()
+    public void Page_catalog_has_ten_pages_in_spec_order_with_dashboard_first()
     {
+        // The nine pages of the original specification, plus the 1.1 read-only Calendar after Transactions.
         Assert.Equal(
-            [AppPage.Dashboard, AppPage.Transactions, AppPage.Accounts, AppPage.Budgets, AppPage.SavingsGoals,
+            [AppPage.Dashboard, AppPage.Transactions, AppPage.Calendar, AppPage.Accounts, AppPage.Budgets, AppPage.SavingsGoals,
              AppPage.Bills, AppPage.Analytics, AppPage.Reports, AppPage.Settings],
             PageCatalog.All.Select(p => p.Page));
         Assert.Equal(AppPage.Dashboard, PageCatalog.StartupPage);

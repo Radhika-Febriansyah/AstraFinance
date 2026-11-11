@@ -7,6 +7,7 @@ public static class PageCatalog
     [
         new(AppPage.Dashboard, "Nav.Dashboard", "Page.Dashboard.Description", "Icon.Dashboard", 5),
         new(AppPage.Transactions, "Nav.Transactions", "Page.Transactions.Description", "Icon.Transactions", 4),
+        new(AppPage.Calendar, "Nav.Calendar", "Page.Calendar.Description", "Icon.Calendar", 4),
         new(AppPage.Accounts, "Nav.Accounts", "Page.Accounts.Description", "Icon.Accounts", 3),
         new(AppPage.Budgets, "Nav.Budgets", "Page.Budgets.Description", "Icon.Budgets", 6),
         new(AppPage.SavingsGoals, "Nav.SavingsGoals", "Page.SavingsGoals.Description", "Icon.SavingsGoals", 6),
