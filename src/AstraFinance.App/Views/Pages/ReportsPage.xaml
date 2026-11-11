@@ -100,7 +100,7 @@
                             <Grid>
                                 <StackPanel Margin="0,0,16,0">
                                     <TextBlock Text="{loc:Loc Reports.Preview}" Style="{StaticResource Text.Overline}" />
-                                    <TextBlock Text="{Binding PreviewTitle}" Style="{StaticResource Text.Subtitle}" Margin="0,4,0,0" />
+                                    <TextBlock Text="{Binding PreviewTitle}" Style="{StaticResource Text.Title}" Margin="0,4,0,2" />
                                     <TextBlock Text="{Binding PreviewPeriod}" Style="{StaticResource Text.Caption}" />
                                 </StackPanel>
                                 <Button Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.HardDriveDownload" Content="{loc:Loc Reports.Export.Button}"
@@ -108,31 +108,52 @@
                                         HorizontalAlignment="Right" VerticalAlignment="Top" />
                             </Grid>
 
-                            <ItemsControl ItemsSource="{Binding PreviewSummary}" Focusable="False" Margin="0,16,0,0">
+                            <!-- Summary cards -->
+                            <ItemsControl ItemsSource="{Binding PreviewSummary}" Focusable="False" Margin="0,16,-12,0">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
                                 <ItemsControl.ItemTemplate>
                                     <DataTemplate DataType="{x:Type pages:ReportPreviewLine}">
-                                        <Grid Margin="0,3">
-                                            <TextBlock Text="{Binding Label}" Style="{StaticResource Text.Secondary}" Margin="0,0,120,0" TextWrapping="Wrap" />
-                                            <TextBlock Text="{Binding Value}" Style="{StaticResource Text.BodyStrong}" HorizontalAlignment="Right" />
-                                        </Grid>
+                                        <Border Style="{StaticResource Card}" Background="{DynamicResource Brush.Surface.Raised}" Padding="14,12" Margin="0,0,12,12"
+                                                MinWidth="170" MaxWidth="260">
+                                            <StackPanel>
+                                                <TextBlock Text="{Binding Label}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" TextTrimming="None" />
+                                                <TextBlock Text="{Binding Value}" Style="{StaticResource Text.Title}" FontSize="18" Margin="0,4,0,0" TextWrapping="Wrap" />
+                                            </StackPanel>
+                                        </Border>
                                     </DataTemplate>
                                 </ItemsControl.ItemTemplate>
                             </ItemsControl>
 
-                            <Separator Margin="0,12" />
-                            <ItemsControl ItemsSource="{Binding PreviewTables}" Focusable="False">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type pages:ReportPreviewLine}">
-                                        <Grid Margin="0,2">
-                                            <StackPanel Orientation="Horizontal">
-                                                <c:AstraIcon Data="{StaticResource Icon.Layers}" Width="14" Height="14" Foreground="{DynamicResource Brush.Text.Tertiary}" Margin="0,0,8,0" />
-                                                <TextBlock Text="{Binding Label}" Style="{StaticResource Text.Body}" />
-                                            </StackPanel>
-                                            <TextBlock Text="{Binding Value}" Style="{StaticResource Text.Caption}" HorizontalAlignment="Right" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            <!-- Contents of the export: one structured table per section -->
+                            <Border CornerRadius="{StaticResource Radius.Control}" BorderThickness="1" BorderBrush="{DynamicResource Brush.Border}" Margin="0,4,0,0">
+                                <StackPanel>
+                                    <Grid Margin="14,10">
+                                        <TextBlock Text="{loc:Loc Reports.Contents}" Style="{StaticResource Text.Overline}" />
+                                        <TextBlock Text="{loc:Loc Reports.Contents.Rows}" Style="{StaticResource Text.Overline}" HorizontalAlignment="Right" />
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding PreviewTables}" Focusable="False">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type pages:ReportPreviewLine}">
+                                                <Border BorderThickness="0,1,0,0" BorderBrush="{DynamicResource Brush.Divider}" Padding="14,10">
+                                                    <Grid>
+                                                        <StackPanel Orientation="Horizontal">
+                                                            <Border Style="{StaticResource IconTile.Neutral}" Width="28" Height="28" CornerRadius="8" Margin="0,0,10,0">
+                                                                <c:AstraIcon Data="{StaticResource Icon.Layers}" Width="14" Height="14" />
+                                                            </Border>
+                                                            <TextBlock Text="{Binding Label}" Style="{StaticResource Text.Body}" VerticalAlignment="Center" />
+                                                        </StackPanel>
+                                                        <TextBlock Text="{Binding Value}" Style="{StaticResource Text.Secondary}" HorizontalAlignment="Right" VerticalAlignment="Center" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
                             <StackPanel Orientation="Horizontal" Margin="0,12,0,0">
                                 <c:AstraIcon Data="{StaticResource Icon.CircleCheck}" Width="16" Height="16" Foreground="{DynamicResource Brush.Success}" Margin="0,0,8,0" />
                                 <TextBlock Text="{Binding PreviewCountText}" Style="{StaticResource Text.Caption}" TextWrapping="Wrap" VerticalAlignment="Center" />

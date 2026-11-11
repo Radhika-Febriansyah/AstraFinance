@@ -2520,4 +2520,10 @@
   <data name="Calendar.Day.Automation" xml:space="preserve">
     <value>{0}: pemasukan {1}, pengeluaran {2}</value>
   </data>
+  <data name="Reports.Contents" xml:space="preserve">
+    <value>Termasuk dalam ekspor</value>
+  </data>
+  <data name="Reports.Contents.Rows" xml:space="preserve">
+    <value>Baris</value>
+  </data>
 </root>

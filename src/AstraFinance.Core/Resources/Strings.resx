@@ -2520,4 +2520,10 @@
   <data name="Calendar.Day.Automation" xml:space="preserve">
     <value>{0}: income {1}, expenses {2}</value>
   </data>
+  <data name="Reports.Contents" xml:space="preserve">
+    <value>Included in the export</value>
+  </data>
+  <data name="Reports.Contents.Rows" xml:space="preserve">
+    <value>Rows</value>
+  </data>
 </root>
