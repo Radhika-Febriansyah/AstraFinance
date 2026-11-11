@@ -56,32 +56,34 @@
 
         <!-- Category list -->
         <DataTemplate x:Key="CategoryRowTemplate" DataType="{x:Type pages:CategoryRow}">
-            <Grid Margin="0,2">
+            <Border Style="{StaticResource Card}" Background="{DynamicResource Brush.Surface.Raised}" Width="226" Padding="12,10" Margin="0,0,10,10">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="Auto" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="Auto" />
                 </Grid.ColumnDefinitions>
-                <Grid Width="32" Height="32">
-                    <Ellipse Fill="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.18" />
-                    <c:AstraIcon IconKey="{Binding IconKey}" Width="16" Height="16" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
+                <Grid Width="36" Height="36">
+                    <Border CornerRadius="10" Background="{Binding ColorHex, Converter={StaticResource HexToBrush}}" Opacity="0.16" />
+                    <c:AstraIcon IconKey="{Binding IconKey}" Width="18" Height="18" Foreground="{Binding ColorHex, Converter={StaticResource HexToBrush}}" />
                 </Grid>
-                <StackPanel x:Name="Labels" Grid.Column="1" Orientation="Horizontal" VerticalAlignment="Center" Margin="12,0,0,0">
-                    <TextBlock Text="{Binding Name}" Style="{StaticResource Text.Body}" />
-                    <Border Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}" Margin="8,0,0,0"
+                <StackPanel x:Name="Labels" Grid.Column="1" VerticalAlignment="Center" Margin="10,0,4,0">
+                    <TextBlock Text="{Binding Name}" Style="{StaticResource Text.BodyStrong}" />
+                    <Border Style="{StaticResource Badge.Neutral}" Margin="0,3,0,0" Padding="6,0"
                             Visibility="{Binding IsActive, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
-                        <TextBlock Text="{loc:Loc Settings.Categories.Inactive}" Style="{StaticResource Text.Caption}" FontSize="11" />
+                        <TextBlock Text="{loc:Loc Settings.Categories.Inactive}" Style="{StaticResource Badge.Neutral.Text}" FontSize="11" />
                     </Border>
                 </StackPanel>
                 <StackPanel Grid.Column="2" Orientation="Horizontal">
-                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.Pencil" ToolTip="{loc:Loc Settings.Categories.Edit}"
+                    <Button Style="{StaticResource Button.Icon}" Width="30" Height="30" c:Assist.Icon="Icon.Pencil" ToolTip="{loc:Loc Settings.Categories.Edit}"
                             AutomationProperties.Name="{Binding Name, StringFormat='{}{0}'}"
                             Command="{Binding DataContext.Categories.EditCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
-                    <Button Style="{StaticResource Button.Icon}" c:Assist.Icon="Icon.Power" ToolTip="{loc:Loc Settings.Categories.Deactivate}"
+                    <Button Style="{StaticResource Button.Icon}" Width="30" Height="30" c:Assist.Icon="Icon.Power" ToolTip="{loc:Loc Settings.Categories.Deactivate}"
                             Command="{Binding DataContext.Categories.ToggleActiveCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}"
                             Visibility="{Binding CanDeactivate, Converter={StaticResource BoolToVisibility}}" />
                 </StackPanel>
             </Grid>
+            </Border>
             <DataTemplate.Triggers>
                 <DataTrigger Binding="{Binding IsActive}" Value="False">
                     <Setter TargetName="Labels" Property="Opacity" Value="0.6" />
@@ -125,8 +127,13 @@
                 <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=General}">
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <TextBlock Text="{loc:Loc Settings.Section.General}" Style="{StaticResource SectionHeader}" />
-                            <Separator Margin="0,8,0,16" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Globe}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Section.General}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Separator Margin="0,14,0,16" />
                             <TextBlock Text="{loc:Loc Settings.Language}" Style="{StaticResource SettingLabel}" />
                             <TextBlock Text="{loc:Loc Settings.Language.Description}" Style="{StaticResource SettingHint}" />
                             <ComboBox ItemsSource="{Binding LanguageOptions}" SelectedItem="{Binding SelectedLanguage, Mode=TwoWay}"
@@ -155,8 +162,13 @@
                 <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Appearance}">
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <TextBlock Text="{loc:Loc Settings.Section.Appearance}" Style="{StaticResource SectionHeader}" />
-                            <Separator Margin="0,8,0,16" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Palette}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Section.Appearance}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Separator Margin="0,14,0,16" />
                             <TextBlock Text="{loc:Loc Settings.Theme}" Style="{StaticResource SettingLabel}" />
                             <TextBlock Text="{loc:Loc Settings.Theme.Description}" Style="{StaticResource SettingHint}" />
                             <c:ChoiceGroup ItemsSource="{Binding ThemeOptions}" AutomationProperties.Name="{loc:Loc Settings.Theme}">
@@ -201,8 +213,14 @@
                                 <TextBlock Text="{loc:Loc Settings.Categories.Expense}" Style="{StaticResource SectionHeader}" VerticalAlignment="Center" />
                                 <Button HorizontalAlignment="Right" c:Assist.Icon="Icon.Plus" Content="{loc:Loc Settings.Categories.AddExpense}" Command="{Binding Categories.AddExpenseCommand}" />
                             </Grid>
-                            <Separator Margin="0,10,0,10" />
-                            <ItemsControl ItemsSource="{Binding Categories.Expense}" ItemTemplate="{StaticResource CategoryRowTemplate}" Focusable="False" />
+                            <Separator Margin="0,10,0,14" />
+                            <ItemsControl ItemsSource="{Binding Categories.Expense}" ItemTemplate="{StaticResource CategoryRowTemplate}" Focusable="False" Margin="0,0,-10,0">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
                         </StackPanel>
                     </Border>
                     <Border Style="{StaticResource SectionCard}">
@@ -211,8 +229,14 @@
                                 <TextBlock Text="{loc:Loc Settings.Categories.Income}" Style="{StaticResource SectionHeader}" VerticalAlignment="Center" />
                                 <Button HorizontalAlignment="Right" c:Assist.Icon="Icon.Plus" Content="{loc:Loc Settings.Categories.AddIncome}" Command="{Binding Categories.AddIncomeCommand}" />
                             </Grid>
-                            <Separator Margin="0,10,0,10" />
-                            <ItemsControl ItemsSource="{Binding Categories.Income}" ItemTemplate="{StaticResource CategoryRowTemplate}" Focusable="False" />
+                            <Separator Margin="0,10,0,14" />
+                            <ItemsControl ItemsSource="{Binding Categories.Income}" ItemTemplate="{StaticResource CategoryRowTemplate}" Focusable="False" Margin="0,0,-10,0">
+                                <ItemsControl.ItemsPanel>
+                                    <ItemsPanelTemplate>
+                                        <WrapPanel />
+                                    </ItemsPanelTemplate>
+                                </ItemsControl.ItemsPanel>
+                            </ItemsControl>
                         </StackPanel>
                     </Border>
                 </StackPanel>
@@ -221,8 +245,13 @@
                 <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Notifications}">
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <TextBlock Text="{loc:Loc Settings.Section.Notifications}" Style="{StaticResource SectionHeader}" />
-                            <Separator Margin="0,8,0,16" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Bell}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Section.Notifications}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Separator Margin="0,14,0,16" />
 
                             <CheckBox Style="{StaticResource Switch}" IsChecked="{Binding NotificationsEnabled}" Content="{loc:Loc Settings.Notifications.Enabled}" />
                             <TextBlock Text="{loc:Loc Settings.Notifications.Enabled.Hint}" Style="{StaticResource SettingHint}" Margin="0,4,0,14" />
@@ -269,8 +298,13 @@
                 <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Security}">
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <TextBlock Text="{loc:Loc Settings.Section.Security}" Style="{StaticResource SectionHeader}" />
-                            <Separator Margin="0,8,0,16" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Shield}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Section.Security}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Separator Margin="0,14,0,16" />
                             <TextBlock Text="{loc:Loc Settings.Security.Pin}" Style="{StaticResource SettingLabel}" />
                             <TextBlock Text="{loc:Loc Settings.Security.Pin.Hint}" Style="{StaticResource SettingHint}" />
                             <WrapPanel>
@@ -308,17 +342,82 @@
 
                 <!-- ============ Data management ============ -->
                 <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=Data}">
-                    <Border Style="{StaticResource SectionCard}">
+                    <!-- Backup Center: status, last backup, location and the main actions -->
+                    <Border Style="{StaticResource Card.Hero}" Margin="0,0,0,16" Padding="24,20">
                         <StackPanel>
                             <Grid>
-                                <StackPanel Margin="0,0,16,0">
-                                    <TextBlock Text="{loc:Loc Settings.Data.Backups}" Style="{StaticResource SectionHeader}" />
-                                    <TextBlock Text="{Binding Data.LastBackupText}" Style="{StaticResource Text.Caption}" />
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Border Style="{StaticResource IconTile.OnHero}" Width="44" Height="44" CornerRadius="12" VerticalAlignment="Top">
+                                    <c:AstraIcon Data="{StaticResource Icon.Shield}" Width="22" Height="22" />
+                                </Border>
+                                <StackPanel Grid.Column="1" Margin="14,0,0,0">
+                                    <StackPanel Orientation="Horizontal">
+                                        <TextBlock Text="{loc:Loc Settings.Data.Center}" Style="{StaticResource Text.OnHero}" FontFamily="{StaticResource Font.Display}"
+                                                   FontSize="20" FontWeight="SemiBold" VerticalAlignment="Center" />
+                                        <Border x:Name="HealthBadge" CornerRadius="{StaticResource Radius.Pill}" Padding="10,2" Margin="12,0,0,0" VerticalAlignment="Center">
+                                            <Border.Style>
+                                                <Style TargetType="Border">
+                                                    <Setter Property="Background" Value="#3334D399" />
+                                                    <Style.Triggers>
+                                                        <DataTrigger Binding="{Binding Data.Health}" Value="Stale">
+                                                            <Setter Property="Background" Value="#33FBBF24" />
+                                                        </DataTrigger>
+                                                        <DataTrigger Binding="{Binding Data.Health}" Value="None">
+                                                            <Setter Property="Background" Value="#33F87171" />
+                                                        </DataTrigger>
+                                                    </Style.Triggers>
+                                                </Style>
+                                            </Border.Style>
+                                            <StackPanel Orientation="Horizontal">
+                                                <Ellipse Width="7" Height="7" Margin="0,0,6,0" VerticalAlignment="Center">
+                                                    <Ellipse.Style>
+                                                        <Style TargetType="Ellipse">
+                                                            <Setter Property="Fill" Value="#FF34D399" />
+                                                            <Style.Triggers>
+                                                                <DataTrigger Binding="{Binding Data.Health}" Value="Stale">
+                                                                    <Setter Property="Fill" Value="#FFFBBF24" />
+                                                                </DataTrigger>
+                                                                <DataTrigger Binding="{Binding Data.Health}" Value="None">
+                                                                    <Setter Property="Fill" Value="#FFF87171" />
+                                                                </DataTrigger>
+                                                            </Style.Triggers>
+                                                        </Style>
+                                                    </Ellipse.Style>
+                                                </Ellipse>
+                                                <TextBlock Text="{Binding Data.HealthText}" Style="{StaticResource Text.OnHero}" FontSize="{StaticResource FontSize.Caption}" FontWeight="SemiBold" />
+                                            </StackPanel>
+                                        </Border>
+                                    </StackPanel>
+                                    <TextBlock Text="{Binding Data.LastBackupText}" Style="{StaticResource Text.OnHero.Secondary}" Margin="0,6,0,0" />
+                                    <TextBlock Text="{Binding Data.BackupDirectory}" Style="{StaticResource Text.OnHero.Secondary}" FontFamily="{StaticResource Font.Mono}"
+                                               FontSize="{StaticResource FontSize.Caption}" Margin="0,2,0,0" TextTrimming="CharacterEllipsis" ToolTip="{Binding Data.BackupDirectory}" />
+                                    <TextBlock Text="{loc:Loc Settings.Data.Center.Hint}" Style="{StaticResource Text.OnHero.Secondary}" FontSize="{StaticResource FontSize.Caption}"
+                                               TextWrapping="Wrap" TextTrimming="None" Margin="0,10,0,0" />
+                                    <WrapPanel Margin="0,16,0,0">
+                                        <Button Style="{StaticResource Button.Base}" Background="{StaticResource Brush.OnBrand}" Foreground="{StaticResource Brush.Brand.Navy}"
+                                                BorderThickness="0" c:Assist.Icon="Icon.HardDriveDownload" Margin="0,0,8,0"
+                                                Content="{loc:Loc Settings.Data.BackUpNow}" Command="{Binding Data.BackUpNowCommand}" c:Assist.IsBusy="{Binding Data.IsBusy}" />
+                                        <Button Style="{StaticResource Button.Base}" Background="#1FFFFFFF" Foreground="{StaticResource Brush.OnBrand}" BorderBrush="#40FFFFFF"
+                                                c:Assist.IsOnFill="True" c:Assist.Icon="Icon.Undo"
+                                                Content="{loc:Loc Settings.Data.RestoreFromFile}" Command="{Binding Data.RestoreFromFileCommand}" />
+                                    </WrapPanel>
                                 </StackPanel>
-                                <Button HorizontalAlignment="Right" VerticalAlignment="Top" Style="{StaticResource Button.Primary}" c:Assist.Icon="Icon.HardDriveDownload"
-                                        Content="{loc:Loc Settings.Data.BackUpNow}" Command="{Binding Data.BackUpNowCommand}" c:Assist.IsBusy="{Binding Data.IsBusy}" />
                             </Grid>
-                            <Separator Margin="0,12,0,16" />
+                        </StackPanel>
+                    </Border>
+
+                    <Border Style="{StaticResource SectionCard}">
+                        <StackPanel>
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Settings}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Data.Backups}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Separator Margin="0,14,0,16" />
 
                             <TextBlock Text="{loc:Loc Settings.Data.Folder}" Style="{StaticResource SettingLabel}" />
                             <Grid Margin="0,6,0,0">
@@ -360,44 +459,71 @@
                     <!-- History & restore -->
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <Grid>
-                                <TextBlock Text="{loc:Loc Settings.Data.History}" Style="{StaticResource SectionHeader}" VerticalAlignment="Center" />
-                                <Button HorizontalAlignment="Right" c:Assist.Icon="Icon.Folder" Content="{loc:Loc Settings.Data.RestoreFromFile}" Command="{Binding Data.RestoreFromFileCommand}" />
-                            </Grid>
-                            <TextBlock Text="{loc:Loc Settings.Data.Restore.Hint}" Style="{StaticResource SettingHint}" Margin="0,6,0,10" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Undo}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Data.History}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <TextBlock Text="{loc:Loc Settings.Data.Restore.Hint}" Style="{StaticResource SettingHint}" Margin="0,10,0,12" />
                             <TextBlock Text="{loc:Loc Settings.Data.History.Empty}" Style="{StaticResource Text.Caption}"
                                        Visibility="{Binding Data.HasNoHistory, Converter={StaticResource BoolToVisibility}}" />
-                            <ItemsControl ItemsSource="{Binding Data.History}" Focusable="False">
-                                <ItemsControl.ItemTemplate>
-                                    <DataTemplate DataType="{x:Type pages:BackupRow}">
-                                        <Grid Margin="0,4">
-                                            <Grid.ColumnDefinitions>
-                                                <ColumnDefinition Width="*" />
-                                                <ColumnDefinition Width="Auto" />
-                                            </Grid.ColumnDefinitions>
-                                            <StackPanel>
-                                                <TextBlock Style="{StaticResource Text.Body}">
-                                                    <Run Text="{Binding DateText, Mode=OneWay}" /><Run Text="  ·  " Foreground="{DynamicResource Brush.Text.Tertiary}" /><Run Text="{Binding KindText, Mode=OneWay}" Foreground="{DynamicResource Brush.Text.Secondary}" />
-                                                </TextBlock>
-                                                <TextBlock Style="{StaticResource Text.Caption}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Path}">
-                                                    <Run Text="{Binding FileName, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding SizeText, Mode=OneWay}" />
-                                                </TextBlock>
-                                            </StackPanel>
-                                            <Button Grid.Column="1" Content="{loc:Loc Settings.Data.Restore}" c:Assist.Icon="Icon.Undo" VerticalAlignment="Center"
-                                                    AutomationProperties.Name="{Binding FileName}"
-                                                    Command="{Binding DataContext.Data.RestoreCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
-                                        </Grid>
-                                    </DataTemplate>
-                                </ItemsControl.ItemTemplate>
-                            </ItemsControl>
+                            <Border CornerRadius="{StaticResource Radius.Control}" BorderThickness="1" BorderBrush="{DynamicResource Brush.Border}"
+                                    Visibility="{Binding Data.HasNoHistory, Converter={StaticResource BoolToVisibility}, ConverterParameter=Invert}">
+                                <StackPanel>
+                                    <Grid Margin="14,10">
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="150" />
+                                            <ColumnDefinition Width="Auto" />
+                                            <ColumnDefinition Width="*" />
+                                            <ColumnDefinition Width="Auto" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{loc:Loc Settings.Data.History.Date}" Style="{StaticResource Text.Overline}" />
+                                        <TextBlock Grid.Column="1" Text="{loc:Loc Settings.Data.History.Type}" Style="{StaticResource Text.Overline}" MinWidth="110" />
+                                        <TextBlock Grid.Column="2" Text="{loc:Loc Settings.Data.History.File}" Style="{StaticResource Text.Overline}" Margin="12,0,0,0" />
+                                    </Grid>
+                                    <ItemsControl ItemsSource="{Binding Data.History}" Focusable="False">
+                                        <ItemsControl.ItemTemplate>
+                                            <DataTemplate DataType="{x:Type pages:BackupRow}">
+                                                <Border BorderThickness="0,1,0,0" BorderBrush="{DynamicResource Brush.Divider}" Padding="14,8">
+                                                    <Grid>
+                                                        <Grid.ColumnDefinitions>
+                                                            <ColumnDefinition Width="150" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                            <ColumnDefinition Width="*" />
+                                                            <ColumnDefinition Width="Auto" />
+                                                        </Grid.ColumnDefinitions>
+                                                        <TextBlock Text="{Binding DateText}" Style="{StaticResource Text.Body}" VerticalAlignment="Center" />
+                                                        <Border Grid.Column="1" Style="{StaticResource Badge.Info}" VerticalAlignment="Center" MinWidth="0" Margin="0,0,8,0">
+                                                            <TextBlock Text="{Binding KindText}" Style="{StaticResource Badge.Info.Text}" />
+                                                        </Border>
+                                                        <TextBlock Grid.Column="2" Style="{StaticResource Text.Caption}" TextTrimming="CharacterEllipsis" ToolTip="{Binding Path}"
+                                                                   VerticalAlignment="Center" Margin="12,0,12,0">
+                                                            <Run Text="{Binding FileName, Mode=OneWay}" /><Run Text="  ·  " /><Run Text="{Binding SizeText, Mode=OneWay}" />
+                                                        </TextBlock>
+                                                        <Button Grid.Column="3" Content="{loc:Loc Settings.Data.Restore}" c:Assist.Icon="Icon.Undo" VerticalAlignment="Center"
+                                                                AutomationProperties.Name="{Binding FileName}"
+                                                                Command="{Binding DataContext.Data.RestoreCommand, RelativeSource={RelativeSource AncestorType=UserControl}}" CommandParameter="{Binding}" />
+                                                    </Grid>
+                                                </Border>
+                                            </DataTemplate>
+                                        </ItemsControl.ItemTemplate>
+                                    </ItemsControl>
+                                </StackPanel>
+                            </Border>
                         </StackPanel>
                     </Border>
 
                     <!-- Import / export -->
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <TextBlock Text="{loc:Loc Settings.Data.ImportExport}" Style="{StaticResource SectionHeader}" />
-                            <Separator Margin="0,8,0,16" />
+                            <StackPanel Orientation="Horizontal">
+                                <Border Style="{StaticResource IconTile}">
+                                    <c:AstraIcon Data="{StaticResource Icon.Receipt}" Style="{StaticResource IconTile.Icon}" />
+                                </Border>
+                                <TextBlock Text="{loc:Loc Settings.Data.ImportExport}" Style="{StaticResource SectionHeader}" Margin="12,0,0,0" VerticalAlignment="Center" />
+                            </StackPanel>
+                            <Separator Margin="0,14,0,16" />
                             <TextBlock Text="{loc:Loc Settings.Data.Export}" Style="{StaticResource SettingLabel}" />
                             <TextBlock Text="{loc:Loc Settings.Data.Export.Hint}" Style="{StaticResource SettingHint}" />
                             <Button HorizontalAlignment="Left" c:Assist.Icon="Icon.HardDriveDownload" Content="{loc:Loc Settings.Data.Export.Button}" Command="{Binding Data.ExportJsonCommand}" />
@@ -411,26 +537,34 @@
 
                 <!-- ============ About ============ -->
                 <StackPanel Visibility="{Binding Section, Converter={StaticResource SectionVisible}, ConverterParameter=About}">
+                    <!-- Brand showcase -->
+                    <Border CornerRadius="{StaticResource Radius.Card}" Background="{StaticResource Brush.Brand.Backdrop}" Margin="0,0,0,16" ClipToBounds="True">
+                        <Grid>
+                            <Canvas IsHitTestVisible="False">
+                                <Ellipse Canvas.Left="430" Canvas.Top="60" Width="420" Height="420" Stroke="#12FFFFFF" StrokeThickness="1.5" />
+                                <Ellipse Canvas.Left="520" Canvas.Top="150" Width="240" Height="240" Stroke="#0CFFFFFF" StrokeThickness="1.5" />
+                            </Canvas>
+                            <StackPanel HorizontalAlignment="Center" Margin="32,40,32,36">
+                                <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="96" Height="96" HorizontalAlignment="Center"
+                                             Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
+                                <TextBlock Text="{Binding AppName}" FontFamily="{StaticResource Font.Display}" FontSize="30" FontWeight="SemiBold"
+                                           Foreground="{StaticResource Brush.OnBrand}" HorizontalAlignment="Center" Margin="0,18,0,4" />
+                                <TextBlock HorizontalAlignment="Center" Foreground="{StaticResource Brush.OnBrand.Secondary}" FontSize="{StaticResource FontSize.Body}">
+                                    <Run Text="{loc:Loc About.Version}" /> <Run Text="{Binding Version, Mode=OneWay}" />
+                                    <Run Text=" · " /><Run Text="{loc:Loc About.Developer}" /><Run Text=": " /><Run Text="{Binding Developer, Mode=OneWay}" />
+                                </TextBlock>
+                                <TextBlock Text="{loc:Loc About.Privacy}" Foreground="{StaticResource Brush.OnBrand.Secondary}" FontSize="{StaticResource FontSize.Body}"
+                                           TextWrapping="Wrap" TextAlignment="Center" MaxWidth="460" Margin="0,16,0,0" LineHeight="21" />
+                            </StackPanel>
+                        </Grid>
+                    </Border>
+
                     <Border Style="{StaticResource SectionCard}">
                         <StackPanel>
-                            <TextBlock Text="{loc:Loc Settings.Section.About}" Style="{StaticResource SectionHeader}" />
-                            <Separator Margin="0,8,0,16" />
-                            <StackPanel Orientation="Horizontal">
-                                <Border Width="44" Height="44" CornerRadius="10" Background="{StaticResource Brush.Brand.Navy}">
-                                    <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="33" Height="33" Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
-                                </Border>
-                                <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
-                                    <TextBlock Text="{Binding AppName}" Style="{StaticResource Text.Subtitle}" />
-                                    <TextBlock Style="{StaticResource Text.Caption}">
-                                        <Run Text="{loc:Loc About.Version}" /> <Run Text="{Binding Version, Mode=OneWay}" />
-                                        <Run Text=" · " /><Run Text="{loc:Loc About.Developer}" /><Run Text=": " /><Run Text="{Binding Developer, Mode=OneWay}" />
-                                    </TextBlock>
-                                </StackPanel>
-                            </StackPanel>
+                            <TextBlock Text="{loc:Loc About.Details}" Style="{StaticResource SectionHeader}" />
+                            <Separator Margin="0,8,0,8" />
 
-                            <TextBlock Text="{loc:Loc About.Privacy}" Style="{StaticResource Text.Paragraph}" Margin="0,16,0,0" />
-
-                            <TextBlock Text="{loc:Loc About.DataLocation}" Style="{StaticResource SettingLabel}" Margin="0,16,0,4" />
+                            <TextBlock Text="{loc:Loc About.DataLocation}" Style="{StaticResource SettingLabel}" Margin="0,8,0,4" />
                             <Grid>
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
@@ -451,8 +585,8 @@
                                                 <ColumnDefinition Width="Auto" />
                                             </Grid.ColumnDefinitions>
                                             <TextBlock Text="{Binding Name}" Style="{StaticResource Text.Body}" />
-                                            <Border Grid.Column="1" Style="{StaticResource Badge}" Background="{DynamicResource Brush.Selected}">
-                                                <TextBlock Text="{Binding License}" Style="{StaticResource Text.Caption}" FontWeight="SemiBold" />
+                                            <Border Grid.Column="1" Style="{StaticResource Badge.Neutral}">
+                                                <TextBlock Text="{Binding License}" Style="{StaticResource Badge.Neutral.Text}" />
                                             </Border>
                                         </Grid>
                                     </DataTemplate>

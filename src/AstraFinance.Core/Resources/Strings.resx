@@ -2526,4 +2526,31 @@
   <data name="Reports.Contents.Rows" xml:space="preserve">
     <value>Rows</value>
   </data>
+  <data name="Settings.Data.Center" xml:space="preserve">
+    <value>Backup Center</value>
+  </data>
+  <data name="Settings.Data.Center.Hint" xml:space="preserve">
+    <value>A backup is a full copy of your data. Restoring always asks for confirmation and first saves a safety copy of your current data.</value>
+  </data>
+  <data name="Settings.Data.Health.Current" xml:space="preserve">
+    <value>Up to date</value>
+  </data>
+  <data name="Settings.Data.Health.Stale" xml:space="preserve">
+    <value>Back up soon</value>
+  </data>
+  <data name="Settings.Data.Health.None" xml:space="preserve">
+    <value>Not backed up yet</value>
+  </data>
+  <data name="Settings.Data.History.Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Settings.Data.History.Type" xml:space="preserve">
+    <value>Type</value>
+  </data>
+  <data name="Settings.Data.History.File" xml:space="preserve">
+    <value>File</value>
+  </data>
+  <data name="About.Details" xml:space="preserve">
+    <value>Details</value>
+  </data>
 </root>

@@ -2526,4 +2526,31 @@
   <data name="Reports.Contents.Rows" xml:space="preserve">
     <value>Baris</value>
   </data>
+  <data name="Settings.Data.Center" xml:space="preserve">
+    <value>Pusat Cadangan</value>
+  </data>
+  <data name="Settings.Data.Center.Hint" xml:space="preserve">
+    <value>Cadangan adalah salinan lengkap data Anda. Pemulihan selalu meminta konfirmasi dan terlebih dahulu menyimpan salinan pengaman data Anda saat ini.</value>
+  </data>
+  <data name="Settings.Data.Health.Current" xml:space="preserve">
+    <value>Terbaru</value>
+  </data>
+  <data name="Settings.Data.Health.Stale" xml:space="preserve">
+    <value>Perlu dicadangkan</value>
+  </data>
+  <data name="Settings.Data.Health.None" xml:space="preserve">
+    <value>Belum dicadangkan</value>
+  </data>
+  <data name="Settings.Data.History.Date" xml:space="preserve">
+    <value>Tanggal</value>
+  </data>
+  <data name="Settings.Data.History.Type" xml:space="preserve">
+    <value>Jenis</value>
+  </data>
+  <data name="Settings.Data.History.File" xml:space="preserve">
+    <value>Berkas</value>
+  </data>
+  <data name="About.Details" xml:space="preserve">
+    <value>Detail</value>
+  </data>
 </root>

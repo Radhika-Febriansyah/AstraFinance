@@ -466,6 +466,19 @@ public sealed partial class ChangePinFormViewModel : ValidatableViewModel, IForm
 /// <summary>A backup in the history list.</summary>
 public sealed record BackupRow(string Path, string FileName, string DateText, string KindText, string SizeText);
 
+/// <summary>How well protected the data is, for the Backup Center status badge.</summary>
+public enum BackupHealth
+{
+    /// <summary>No backup has been made yet.</summary>
+    None = 0,
+
+    /// <summary>The last backup is recent enough for the schedule.</summary>
+    Current = 1,
+
+    /// <summary>The last backup is older than the schedule expects.</summary>
+    Stale = 2,
+}
+
 /// <summary>Backups (settings, history, manual backup, restore) and data import/export.</summary>
 public sealed partial class DataSettingsViewModel : ObservableObject
 {
@@ -735,6 +748,8 @@ public sealed partial class DataSettingsViewModel : ObservableObject
         LastBackupText = last is { } l
             ? _localization.Format("Settings.Data.LastBackup", FormatTime(l))
             : _localization.GetString("Settings.Data.NoBackupYet");
+        Health = EvaluateHealth(last, Schedule, _clock.UtcNow);
+        HealthText = _localization.GetString($"Settings.Data.Health.{Health}");
         History.Clear();
         foreach (var entry in await _restore.ListBackupsAsync().ConfigureAwait(true))
         {
@@ -747,6 +762,33 @@ public sealed partial class DataSettingsViewModel : ObservableObject
         }
 
         HasNoHistory = History.Count == 0;
+    }
+
+    [ObservableProperty]
+    public partial BackupHealth Health { get; private set; }
+
+    [ObservableProperty]
+    public partial string HealthText { get; private set; } = string.Empty;
+
+    /// <summary>
+    /// Current while the last backup is within the schedule's interval (plus a day of slack), or 30 days
+    /// when automatic backups are off; Stale when older; None without any backup.
+    /// </summary>
+    internal static BackupHealth EvaluateHealth(DateTimeOffset? lastBackup, BackupSchedule schedule, DateTimeOffset now)
+    {
+        if (lastBackup is not { } last)
+        {
+            return BackupHealth.None;
+        }
+
+        var allowed = schedule switch
+        {
+            BackupSchedule.Daily => TimeSpan.FromDays(2),
+            BackupSchedule.Weekly => TimeSpan.FromDays(8),
+            BackupSchedule.Monthly => TimeSpan.FromDays(32),
+            _ => TimeSpan.FromDays(30),
+        };
+        return now - last <= allowed ? BackupHealth.Current : BackupHealth.Stale;
     }
 
     private string FormatTime(DateTimeOffset value)
