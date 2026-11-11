@@ -60,21 +60,36 @@ public sealed partial class WindowsToastNotifier : IWindowsNotifier
         }
     }
 
+    /// <summary>Writes <paramref name="content"/> to <paramref name="path"/> unless the file already holds exactly it.</summary>
+    /// <returns>True when the file was (re)written.</returns>
+    internal static bool WriteIfChanged(string path, byte[] content)
+    {
+        if (File.Exists(path) && File.ReadAllBytes(path).AsSpan().SequenceEqual(content))
+        {
+            return false;
+        }
+
+        var temp = path + ".tmp";
+        File.WriteAllBytes(temp, content);
+        File.Move(temp, path, overwrite: true);
+        return true;
+    }
+
     private ToastNotifier CreateNotifier()
     {
         string? iconPath = null;
         try
         {
             iconPath = Path.Combine(_paths.DataDirectory, "notification-icon.ico");
-            if (!File.Exists(iconPath))
+            var resource = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/astra.ico"));
+            if (resource is not null)
             {
-                var resource = Application.GetResourceStream(new Uri("pack://application:,,,/Resources/astra.ico"));
-                if (resource is not null)
-                {
-                    using var source = resource.Stream;
-                    using var target = File.Create(iconPath);
-                    source.CopyTo(target);
-                }
+                using var source = resource.Stream;
+                using var buffer = new MemoryStream();
+                source.CopyTo(buffer);
+
+                // Refresh the cached copy when the app icon changed (e.g. after an upgrade with new branding).
+                WriteIfChanged(iconPath, buffer.ToArray());
             }
         }
         catch (Exception ex) when (ex is IOException or UnauthorizedAccessException)

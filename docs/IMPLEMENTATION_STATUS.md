@@ -35,7 +35,7 @@ Last updated: 2026-11-11 (Phase 10 — release 1.0.0)
 - Dependency direction: App → Infrastructure → Core. Core has no package dependencies.
 - Packages: CommunityToolkit.Mvvm 8.4.2, Microsoft.Extensions.DependencyInjection 10.0.14, Microsoft.Extensions.Logging 10.0.14 (all MIT). Test: xUnit 2.9.3.
 - `app.manifest`: Per-Monitor-V2 DPI awareness, Windows 10/11 compatibility, `asInvoker`.
-- Application icon generated from a script (`assets/branding/generate-icon.ps1`) plus `assets/branding/astra-mark.svg`.
+- Application icon generated from a script (`assets/branding/generate-icon.ps1`) plus `assets/branding/astra-mark.svg`. *(Replaced in 1.1 by `assets/branding/build-brand-assets.ps1` and `assets/branding/source/astra-symbol.svg`.)*
 
 **Dependency injection & MVVM**
 - `CompositionRoot` configures all services; the provider is built with `ValidateOnBuild` and `ValidateScopes`.

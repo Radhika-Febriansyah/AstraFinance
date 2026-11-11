@@ -314,9 +314,9 @@
             <DockPanel>
                 <!-- Brand -->
                 <StackPanel DockPanel.Dock="Top" Orientation="Horizontal" Height="64" Margin="18,0,0,0">
-                    <Border Width="32" Height="32" CornerRadius="8" Background="{DynamicResource Brush.Accent}" VerticalAlignment="Center">
-                        <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="20" Height="20"
-                                     Foreground="{DynamicResource Brush.Accent.Foreground}" />
+                    <Border Width="32" Height="32" CornerRadius="7" Background="{StaticResource Brush.Brand.Navy}" VerticalAlignment="Center">
+                        <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="24" Height="24"
+                                     Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
                     </Border>
                     <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Subtitle}" Margin="12,0,0,0" VerticalAlignment="Center"
                                Visibility="{Binding IsSidebarOpen, Converter={StaticResource BoolToVisibility}}" />

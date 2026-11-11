@@ -83,6 +83,10 @@
     <Geometry x:Key="Icon.Trash">M3,6 H21 M19,6 V20 A2,2 0 0 1 17,22 H7 A2,2 0 0 1 5,20 V6 M8,6 V4 A2,2 0 0 1 10,2 H14 A2,2 0 0 1 16,4 V6</Geometry>
     <Geometry x:Key="Icon.Repeat">M17,2 L21,6 L17,10 M3,11 V10 A4,4 0 0 1 7,6 H21 M7,22 L3,18 L7,14 M21,13 V14 A4,4 0 0 1 17,18 H3</Geometry>
 
-    <!-- Brand mark: four-point "astra" star (Fill). -->
-    <Geometry x:Key="Brand.Star">M12,3 C12.7,8.2 15.8,11.3 21,12 C15.8,12.7 12.7,15.8 12,21 C11.3,15.8 8.2,12.7 3,12 C8.2,11.3 11.3,8.2 12,3 Z</Geometry>
+    <!--
+        Brand symbol ("Winged Star", filled): assets/branding/source/astra-symbol.svg scaled from its
+        100-unit grid to this 24-unit grid (x 0.24). Kept in sync by ThemeTests.
+        Fill with Brush.Brand.Gradient (light backgrounds) or Brush.Brand.Gradient.OnDark (Deep Navy).
+    -->
+    <Geometry x:Key="Brand.Symbol">M12,0.96 Q13.2,9.6 21.6,14.88 Q14.4,13.44 12.96,15.36 Q12.48,18.24 12,22.56 Q11.52,18.24 11.04,15.36 Q9.6,13.44 2.4,14.88 Q10.8,9.6 12,0.96 Z</Geometry>
 </ResourceDictionary>

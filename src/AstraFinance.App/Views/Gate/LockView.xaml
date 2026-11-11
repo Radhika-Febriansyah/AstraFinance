@@ -11,8 +11,8 @@
              Background="{DynamicResource Brush.Background}">
     <Grid>
         <StackPanel HorizontalAlignment="Center" VerticalAlignment="Center" Width="320" Margin="24">
-            <Border Width="64" Height="64" CornerRadius="16" Background="{DynamicResource Brush.Accent}" HorizontalAlignment="Center">
-                <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="36" Height="36" Foreground="{DynamicResource Brush.Accent.Foreground}" />
+            <Border Width="64" Height="64" CornerRadius="14" Background="{StaticResource Brush.Brand.Navy}" HorizontalAlignment="Center">
+                <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="48" Height="48" Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
             </Border>
             <TextBlock Text="{loc:Loc App.Name}" Style="{StaticResource Text.Title}" HorizontalAlignment="Center" Margin="0,20,0,4" />
             <TextBlock Text="{loc:Loc Lock.Prompt}" Style="{StaticResource Text.Secondary}" HorizontalAlignment="Center" Margin="0,0,0,24" />

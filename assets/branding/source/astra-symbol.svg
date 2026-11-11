@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Astra Finance — symbol master ("Winged Star").
+  The editable vector source for every brand asset. build-brand-assets.ps1 reads the path with
+  id="astra-symbol" from this file; edit the shape here, then re-run the script.
+  Grid: 100 x 100 units, symmetrical about x = 50. Gradient: Deep Navy (bottom-left) to Royal Blue (top-right).
+-->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="1024" height="1024">
+  <title>Astra Finance</title>
+  <defs>
+    <linearGradient id="astra-gradient" x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" stop-color="#172554"/>
+      <stop offset="1" stop-color="#2563EB"/>
+    </linearGradient>
+  </defs>
+  <path id="astra-symbol" fill="url(#astra-gradient)"
+        d="M50,4 Q55,40 90,62 Q60,56 54,64 Q52,76 50,94 Q48,76 46,64 Q40,56 10,62 Q45,40 50,4 Z"/>
+</svg>

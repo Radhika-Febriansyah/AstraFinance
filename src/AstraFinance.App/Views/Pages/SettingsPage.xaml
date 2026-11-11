@@ -416,8 +416,8 @@
                             <TextBlock Text="{loc:Loc Settings.Section.About}" Style="{StaticResource SectionHeader}" />
                             <Separator Margin="0,8,0,16" />
                             <StackPanel Orientation="Horizontal">
-                                <Border Width="44" Height="44" CornerRadius="10" Background="{DynamicResource Brush.Accent}">
-                                    <c:AstraIcon Data="{StaticResource Brand.Star}" IsFilled="True" Width="26" Height="26" Foreground="{DynamicResource Brush.Accent.Foreground}" />
+                                <Border Width="44" Height="44" CornerRadius="10" Background="{StaticResource Brush.Brand.Navy}">
+                                    <c:AstraIcon Data="{StaticResource Brand.Symbol}" IsFilled="True" Width="33" Height="33" Foreground="{StaticResource Brush.Brand.Gradient.OnDark}" />
                                 </Border>
                                 <StackPanel Margin="14,0,0,0" VerticalAlignment="Center">
                                     <TextBlock Text="{Binding AppName}" Style="{StaticResource Text.Subtitle}" />
